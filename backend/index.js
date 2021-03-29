@@ -37,6 +37,6 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/loadShop', (req, res) => {
+app.get('/api/loadShop', (req, res) => {
     res.send(testShop)
 })
