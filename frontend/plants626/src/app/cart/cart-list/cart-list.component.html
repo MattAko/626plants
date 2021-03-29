@@ -1,0 +1,7 @@
+<div class="flex flex-row justify-between" *ngFor="let product of products">
+    <h2>{{product.name}}</h2>
+    <div>
+        <p class="inline-block">{{product.price}}</p>
+        <p class="inline-block">qt:{{product.quantity}}</p>
+    </div>
+</div>
