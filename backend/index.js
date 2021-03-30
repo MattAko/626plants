@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
 
+const testDate = new Date('December 25, 1995 23:15:30')
 const testShop = 
 {
     "items": [
@@ -14,16 +15,18 @@ const testShop =
             "name": "monsterra",
             "price": 1000,
             "quantity": 1,
-            "imageUrl": "a",
-            "description": "this is a description"
+            "imageUrl": "https://media1.s-nbcnews.com/j/newscms/2021_07/3432670/the-sill-anthurium-pink-variant-small-balboa-cream-1440x-5fc7db953a572_6489d3a3c7733cc562bed6636987df36.fit-720w.jpg",
+            "description": "this is a description",
+            "posted": testDate
         },
         {
             "id": 2,
             "name": "monsterra marble",
             "price": 1500,
             "quantity": 1,
-            "imageUrl": "b",
-            "description": "looks like marble!"
+            "imageUrl": "https://www.stylist.co.uk/images/app/uploads/2019/03/22172018/retro-houseplant-trends-plants-interiors-2019-crop-1553275284-1600x1067.jpg",
+            "description": "looks like marble!",
+            "posted": testDate
         }
     ]
 }

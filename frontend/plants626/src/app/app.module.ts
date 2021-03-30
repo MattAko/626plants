@@ -14,6 +14,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ShopComponent } from './shop/shop.component';
 import { ShopItemComponent } from './shop/shop-item/shop-item.component';
+import { ProductPageComponent } from './shop/product-page/product-page.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ShopItemComponent } from './shop/shop-item/shop-item.component';
     CartComponent,
     CartListComponent,
     FooterComponent,
-    ShopItemComponent
+    ShopItemComponent,
+    ProductPageComponent
   ],
   imports: [
     BrowserModule,

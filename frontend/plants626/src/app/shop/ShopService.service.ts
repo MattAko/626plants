@@ -3,16 +3,21 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Product } from '../shared/Product.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({
+    providedIn: 'root'
+})
 export class ShopService {
-  ShopItems: Product[] = [];
+  ShopItems: Product[];
   shopChanged = new Subject<Product[]>();
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+      console.log('ShopService started...')
+  }
 
   /*
     Fetch shop for /api/loadShop
     */
   fetchShop() {
+      console.log('Fetching shop...')
     this.http
       .get<{ items: Product[] }>('/api/loadShop')
       .subscribe((response) => {
@@ -33,5 +38,9 @@ export class ShopService {
       console.log('Getting shop...')
       console.log(this.ShopItems.slice())
       return this.ShopItems.slice();
+  }
+
+  convertToDollars(cents: number){
+      return `${cents/100}.${cents}`
   }
 }

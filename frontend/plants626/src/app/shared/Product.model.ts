@@ -6,5 +6,6 @@ export class Product {
     public quantity: number,
     public imageUrl: string,
     public description: string, 
+    public posted: Date,
   ) {}
 }

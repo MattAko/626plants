@@ -7,7 +7,7 @@ import { ShopService } from './ShopService.service';
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.css'],
-  providers: [ShopService]
+  providers: []
 })
 export class ShopComponent implements OnInit {
   shopItems: Product[];
@@ -17,6 +17,7 @@ export class ShopComponent implements OnInit {
   ngOnInit(): void {
     this.shopService.fetchShop()
     this.shopChanged = this.shopService.shopChanged.subscribe((items: Product[]) => {
+      console.log('Shop has been changed')
       this.shopItems = items;
     });
   }
