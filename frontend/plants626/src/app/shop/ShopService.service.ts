@@ -1,17 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaypalButtonComponent } from '../paypal-button/paypal-button.component';
+import { Subject } from 'rxjs';
 import { Product } from '../shared/Product.model';
 
-@Injectable()
-export class ShopService{
-    constructor(private http: HttpClient){
+@Injectable({providedIn: 'root'})
+export class ShopService {
+  ShopItems: Product[] = [];
+  shopChanged = new Subject<Product[]>();
+  constructor(private http: HttpClient) {}
 
-    }
+  /*
+    Fetch shop for /api/loadShop
+    */
+  fetchShop() {
+    this.http
+      .get<{ items: Product[] }>('/api/loadShop')
+      .subscribe((response) => {
+        this.setShop(response.items);
+      });
+  }
 
-    getShop(){
-        this.http.get('/api/loadShop').subscribe(response => {
-            console.log(response);
-        })
-    }
+  /*
+    Update shop, mainly used for fetchShop()
+    */
+  setShop(products: Product[]) {
+    this.ShopItems = products;
+    this.shopChanged.next(this.ShopItems.slice());
+  }
+
+  /* @returns: returns copy of ShopItems */
+  getShop(){
+      console.log('Getting shop...')
+      console.log(this.ShopItems.slice())
+      return this.ShopItems.slice();
+  }
 }

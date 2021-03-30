@@ -38,5 +38,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/api/loadShop', (req, res) => {
+    console.log('Request received')
+    console.log(req)
     res.send(testShop)
 })

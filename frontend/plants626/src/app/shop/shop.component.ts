@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Product } from '../shared/Product.model';
 import { ShopService } from './ShopService.service';
 
 @Component({
@@ -8,11 +10,15 @@ import { ShopService } from './ShopService.service';
   providers: [ShopService]
 })
 export class ShopComponent implements OnInit {
-
+  shopItems: Product[];
+  shopChanged: Subscription;
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
-    this.shopService.getShop();
+    this.shopService.fetchShop()
+    this.shopChanged = this.shopService.shopChanged.subscribe((items: Product[]) => {
+      this.shopItems = items;
+    });
   }
 
 }
