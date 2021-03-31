@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Product } from 'src/app/shared/Product.model';
+import { ShopService } from '../ShopService.service';
 
 @Component({
   selector: 'app-product-page',
@@ -6,10 +10,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit {
+  product: Product;
+  subscription: Subscription;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private shopSerivce: ShopService) { }
 
   ngOnInit(): void {
+    this.shopSerivce.fetchShop();
+    this.route.params.subscribe((params: Params) => {
+      console.log(params)
+      this.shopSerivce.setLatestProduct(+params['id']);
+      this.subscription = this.shopSerivce.productUpdated.subscribe(
+        (product: Product) => {
+          this.product = product;
+        }
+      )
+      console.log(this.product)
+    })
   }
 
 }

@@ -19,7 +19,7 @@ const routes: Routes = [
     // ]
   },
   {
-    path: 'shop/:name', component: ProductPageComponent
+    path: 'shop/:id', component: ProductPageComponent
   },
   {
     path: 'faq', component: FaqComponent

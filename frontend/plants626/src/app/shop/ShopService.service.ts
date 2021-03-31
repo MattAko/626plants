@@ -9,6 +9,9 @@ import { Product } from '../shared/Product.model';
 export class ShopService {
   ShopItems: Product[];
   shopChanged = new Subject<Product[]>();
+  productUpdated = new Subject<Product>();
+  lastestProductId: number; 
+
   constructor(private http: HttpClient) {
       console.log('ShopService started...')
   }
@@ -31,6 +34,9 @@ export class ShopService {
   setShop(products: Product[]) {
     this.ShopItems = products;
     this.shopChanged.next(this.ShopItems.slice());
+    if(this.lastestProductId){
+      this.getProduct();
+    }
   }
 
   /* @returns: returns copy of ShopItems */
@@ -42,5 +48,17 @@ export class ShopService {
 
   convertToDollars(cents: number){
       return `${cents/100}.${cents}`
+  }
+
+  setLatestProduct(id: number){
+    this.lastestProductId = id;
+  } 
+
+  getProduct(){
+    this.ShopItems.find((product: Product) => {
+      if(product.id === this.lastestProductId){
+        this.productUpdated.next(product);
+      }
+    })
   }
 }
