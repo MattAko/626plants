@@ -1,4 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Product } from '../shared/Product.model';
@@ -11,6 +12,7 @@ export class ShopService {
   shopChanged = new Subject<Product[]>();
   productUpdated = new Subject<Product>();
   lastestProductId: number; 
+  latestProduct: Product; 
 
   constructor(private http: HttpClient) {
       console.log('ShopService started...')
@@ -35,6 +37,7 @@ export class ShopService {
     this.ShopItems = products;
     this.shopChanged.next(this.ShopItems.slice());
     if(this.lastestProductId){
+      this.fetchProduct()
       this.getProduct();
     }
   }
@@ -59,6 +62,16 @@ export class ShopService {
       if(product.id === this.lastestProductId){
         this.productUpdated.next(product);
       }
+    })
+  }
+
+  fetchProduct(){
+    let params = new HttpParams().set("id", "1");
+    this.http.get('/api/getProduct', { 
+      headers: new HttpHeaders({"Test" : "Hello"}), 
+      params: params
+    }).subscribe((response) => {
+      console.log(response);
     })
   }
 }

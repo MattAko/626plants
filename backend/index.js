@@ -6,7 +6,9 @@ const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
 
-const testDate = new Date('December 25, 1995 23:15:30')
+const jsonParser = bodyParser.json();
+
+const testDate = new Date('December 25, 1995 23:15:30');
 const testShop = 
 {
     "items": [
@@ -31,17 +33,26 @@ const testShop =
     ]
 }
 
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello');
-})
-
 
 app.get('/api/loadShop', (req, res) => {
-    console.log('Request received')
-    console.log(req)
+    console.log('Request received: /api/loadShop')
     res.send(testShop)
+})
+
+// Return product information
+app.get('/api/getProduct', jsonParser,(req, res) => {
+    console.log('Request received: /api/getProduct')
+    console.log(req.query)
+    const returnVal = testShop.items.find((item) => {
+        console.log(req.query.id)
+        if(item.id === +req.query.id){
+            return item
+        }
+    })
+    res.send(returnVal)
 })

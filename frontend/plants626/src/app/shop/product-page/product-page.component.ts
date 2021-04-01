@@ -18,14 +18,12 @@ export class ProductPageComponent implements OnInit {
   ngOnInit(): void {
     this.shopSerivce.fetchShop();
     this.route.params.subscribe((params: Params) => {
-      console.log(params)
       this.shopSerivce.setLatestProduct(+params['id']);
       this.subscription = this.shopSerivce.productUpdated.subscribe(
         (product: Product) => {
           this.product = product;
         }
       )
-      console.log(this.product)
     })
   }
 
