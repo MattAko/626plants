@@ -16,9 +16,8 @@ export class ProductPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private shopSerivce: ShopService) { }
 
   ngOnInit(): void {
-    this.shopSerivce.fetchShop();
     this.route.params.subscribe((params: Params) => {
-      this.shopSerivce.setLatestProduct(+params['id']);
+      this.shopSerivce.fetchProduct(params['id']);
       this.subscription = this.shopSerivce.productUpdated.subscribe(
         (product: Product) => {
           this.product = product;

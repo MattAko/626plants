@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from '../shared/Product.model';
+import { ShopItem } from '../shared/ShopItem.model';
 import { ShopService } from './ShopService.service';
 
 @Component({
@@ -10,14 +10,15 @@ import { ShopService } from './ShopService.service';
   providers: []
 })
 export class ShopComponent implements OnInit {
-  shopItems: Product[];
+  shopItems: ShopItem[];
   shopChanged: Subscription;
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
     this.shopService.fetchShop()
-    this.shopChanged = this.shopService.shopChanged.subscribe((items: Product[]) => {
+    this.shopChanged = this.shopService.shopChanged.subscribe((items: ShopItem[]) => {
       console.log('Shop has been changed')
+      console.log(items);
       this.shopItems = items;
     });
   }

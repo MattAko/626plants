@@ -1,77 +1,61 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Product } from '../shared/Product.model';
-
+import { ShopItem } from '../shared/ShopItem.model';
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShopService {
-  ShopItems: Product[];
-  shopChanged = new Subject<Product[]>();
+  ShopItems: ShopItem[]; 
+  shopChanged = new Subject<ShopItem[]>();
   productUpdated = new Subject<Product>();
-  lastestProductId: number; 
-  latestProduct: Product; 
 
   constructor(private http: HttpClient) {
-      console.log('ShopService started...')
+    console.log('ShopService started...');
   }
 
   /*
     Fetch shop for /api/loadShop
     */
   fetchShop() {
-      console.log('Fetching shop...')
+    console.log('Fetching shop...');
     this.http
-      .get<{ items: Product[] }>('/api/loadShop')
-      .subscribe((response) => {
-        this.setShop(response.items);
+      .get<ShopItem[]>('/api/loadShop')
+      .subscribe((response: ShopItem[]) => {
+        this.setShop(response);
       });
   }
 
   /*
     Update shop, mainly used for fetchShop()
     */
-  setShop(products: Product[]) {
+  setShop(products: ShopItem[]) {
     this.ShopItems = products;
     this.shopChanged.next(this.ShopItems.slice());
-    if(this.lastestProductId){
-      this.fetchProduct()
-      this.getProduct();
-    }
+    
   }
 
   /* @returns: returns copy of ShopItems */
-  getShop(){
-      console.log('Getting shop...')
-      console.log(this.ShopItems.slice())
-      return this.ShopItems.slice();
+  getShop() {
+    console.log('Getting shop...');
+    console.log(this.ShopItems.slice());
+    return this.ShopItems.slice();
   }
 
-  convertToDollars(cents: number){
-      return `${cents/100}.${cents}`
+  convertToDollars(cents: number) {
+    return `${cents / 100}.${cents}`;
   }
 
-  setLatestProduct(id: number){
-    this.lastestProductId = id;
-  } 
-
-  getProduct(){
-    this.ShopItems.find((product: Product) => {
-      if(product.id === this.lastestProductId){
-        this.productUpdated.next(product);
-      }
-    })
-  }
-
-  fetchProduct(){
-    let params = new HttpParams().set("id", "1");
-    this.http.get('/api/getProduct', { 
-      headers: new HttpHeaders({"Test" : "Hello"}), 
-      params: params
-    }).subscribe((response) => {
-      console.log(response);
-    })
+  fetchProduct(id: string) {
+    let params = new HttpParams().set('id', id);
+    return this.http
+      .get<Product>('/api/getProduct', {
+        params: params,
+      })
+      .subscribe((response: Product) => {
+        this.productUpdated.next(response);
+      });
   }
 }
