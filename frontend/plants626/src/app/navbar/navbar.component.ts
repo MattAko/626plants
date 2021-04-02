@@ -18,4 +18,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  openLink(url: string){
+    window.open(url);
+  }
 }
