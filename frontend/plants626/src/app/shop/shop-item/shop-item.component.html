@@ -1,0 +1,11 @@
+<div class="flex flex-col">
+  <img
+    class="w-96 h-96 object-cover cursor-pointer"
+    [src]="shopItem.thumbnailUrl"
+    [routerLink]="['/shop', shopItem.id]"
+  />
+  <div>
+    <h1 class="font-bold uppercase">{{ shopItem.name }}</h1>
+    <h2>{{ shopItem.price | currency }}</h2>
+  </div>
+</div>

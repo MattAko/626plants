@@ -2,17 +2,8 @@
   Shop
 </div>
 <ul class="max-w-6xl flex justify-evenly m-auto flex-wrap">
-  <li class="w-96" *ngFor="let item of shopItems">
-    <div class="flex flex-col">
-      <img
-        class="w-96 h-96 object-cover cursor-pointer"
-        [src]="item.thumbnailUrl"
-        [routerLink]="['/shop', item.id]"
-      />
-      <div>
-        <h1 class="font-bold uppercase">{{ item.name }}</h1>
-        <h2>{{ item.price | currency }}</h2>
-      </div>
-    </div>
-  </li>
+  <app-shop-item
+    *ngFor="let item of shopItems"
+    [itemDetails]="item"
+  ></app-shop-item>
 </ul>

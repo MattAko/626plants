@@ -4,14 +4,14 @@
     [src]="product.images[0]"
   />
   <div class="w-96 px-6 mt-10">
-    <h1 class="font-bold uppercase">
-      {{ product.name }} <span>{{ product.price | currency }} </span>
+    <h1 class="font-bold text-2xl uppercase">
+      {{ product.name }} 
     </h1>
     <h2>{{ product.price | currency }}</h2>
     <br />
     <p>Description:</p>
     <p>{{ product.description }}</p>
-    <button class="bg-green-500 border-gray-900 rounded-full px-20 py-3" (click)="AddToCart()">Add to Cart</button>
+    <button class="bg-green-500 border-gray-900 rounded-full w-full py-3" (click)="AddToCart()">Add to Cart</button>
     <p *ngIf="!available">This product is already in your cart!</p>
   </div>
 </div>
