@@ -29,7 +29,7 @@ import { ProductPageComponent } from './shop/product-page/product-page.component
     CartListComponent,
     FooterComponent,
     ShopItemComponent,
-    ProductPageComponent
+    ProductPageComponent,
   ],
   imports: [
     BrowserModule,
