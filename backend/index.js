@@ -1,12 +1,41 @@
-//import shop from './test-shop.js';
-
 // Express imports
 const express = require("express");
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
 
-const jsonParser = bodyParser.json();
+//const jsonParser = bodyParser.json();
+
+/*
+  Firebase setup:
+  This step required 'npm install firebase-admin --save'
+  Url's will be imported from secrets.json
+*/
+const admin = require('firebase-admin')
+const secrets = require('./secrets/secrets.json')
+const serviceAccount = require('./secrets/serviceAccount.json')
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: secrets.firebaseStorage
+})
+
+const bucket = admin.storage().bucket()
+const destFileName = 'dummy.txt';
+const filePath = './dummy.txt'
+
+const options = {
+  destination: 'new-dummy.txt',
+  metadata: {
+    metadata:{
+      event: 'Fall trip to zoo'
+    }
+  }
+}
+
+bucket.upload(filePath, options, (err, file) => {
+  console.log('hopefully it uploaded')
+})
 
 const testDate = new Date("December 25, 1995 23:15:30");
 const testShop = {
@@ -60,7 +89,7 @@ app.get("/api/loadShop", (req, res) => {
 });
 
 // Return product information
-app.get("/api/getProduct", jsonParser, (req, res) => {
+app.get("/api/getProduct", (req, res) => {
   console.log("Request received: /api/getProduct");
   console.log(req.query);
   const returnVal = testShop.items.find((item) => {
