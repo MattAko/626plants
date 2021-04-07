@@ -40,7 +40,7 @@ app.listen(port, () => {
 });
 
 /*
-  Import routes
+  Import routes, with the prefix '/api'
 */
 const myRoutes = require('./routes');
 app.use('/api', myRoutes)
