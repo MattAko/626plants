@@ -24,11 +24,13 @@
       required
     />
     <button
+      [disabled]="form.invalid"
       class="rounded-2xl max-w-screen-sm py-3 my-2.5 bg-green-400"
       type="submit"
     >
       Login
     </button>
+    <p class="text-red-500" *ngIf="errorMessage">{{ errorMessage }}</p>
     <a class="mx-auto text-blue-600 text-center pt-5" href="https://mattako.dev">Go to Main Site</a>
   </form>
 </div>

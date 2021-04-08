@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -9,8 +10,14 @@ import { AuthService } from '../auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   @ViewChild('form') loginForm: NgForm;
+  errorMessage: string;
+  errorSub: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.errorSub = this.authService.errorChanged.subscribe((errorMessage) => {
+      this.errorMessage = errorMessage;
+    })
+  }
 
   ngOnInit() {}
 
