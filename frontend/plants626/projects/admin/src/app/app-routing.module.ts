@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { EditStartComponent } from './manage/edit/edit-start/edit-start.component';
 import { EditComponent } from './manage/edit/edit.component';
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
   {
     path: 'manage',
     component: ManageComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -38,7 +40,7 @@ const appRoutes: Routes = [
           {
             path: '',
             component: EditStartComponent,
-            pathMatch: 'full'
+            pathMatch: 'full',
           },
           {
             path: ':id/edit',
