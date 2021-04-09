@@ -82,12 +82,16 @@ export class AuthService implements OnInit {
             If token VALID, login the user, then redirect to /manage.
     */
   autoLogin() {
+    if (!localStorage.getItem('userData')) {
+      return;
+    }
     const userData: {
       email: string;
       id: string;
       _token: string;
       _tokenExpirationDate: string;
     } = JSON.parse(localStorage.getItem('userData'));
+
     const loadedUser = new User(
       userData.email,
       userData.id,

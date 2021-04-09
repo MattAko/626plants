@@ -1,1 +1,6 @@
-<p>navbar works!</p>
+<nav class="w-full bg-white">
+  <ul class="flex justify-between items-center py-4 mx-20">
+    <li>Stuff</li>
+    <li *ngIf="loggedIn" (click)="onLogout()" class="bg-red-500 px-5 py-4 rounded-xl cursor-pointer">Logout</li>
+  </ul>
+</nav>
