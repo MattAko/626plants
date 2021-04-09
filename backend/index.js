@@ -44,3 +44,6 @@ app.listen(port, () => {
 */
 const myRoutes = require('./routes');
 app.use('/api', myRoutes)
+
+const adminRoutes = require('./routes-admin');
+app.use('/api', adminRoutes);
