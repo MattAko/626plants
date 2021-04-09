@@ -19,6 +19,11 @@ const appRoutes: Routes = [
     component: ManageComponent,
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'upload'
+      },
+      {
         path: 'upload',
         component: UploadComponent
       },
@@ -32,7 +37,8 @@ const appRoutes: Routes = [
         children: [
           {
             path: '',
-            component: EditStartComponent
+            component: EditStartComponent,
+            pathMatch: 'full'
           },
           {
             path: ':id/edit',

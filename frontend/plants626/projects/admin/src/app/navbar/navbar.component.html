@@ -1,9 +1,9 @@
 <nav class="w-full bg-white py-3 flex">
   <ul class="flex justify-between items-center w-full mx-20">
-    <li>
+    <li class="py-4">
       <ul>
-        <li [routerLink]="['/manage/receipts']">Receipts</li>
-        <li [routerLink]="['/manage/receipts']">Upload</li>
+        <li routerLinkActive="border-b-2 border-red-600" class="inline px-5 py-4 cursor-pointer" [routerLink]="['/manage/receipts']">Receipts</li>
+        <li routerLinkActive="border-b-2 border-red-600" class="inline px-5 py-4 cursor-pointer" [routerLink]="['/manage/upload']">Upload</li>
       </ul>
     </li>
     <li *ngIf="loggedIn" (click)="onLogout()" class="bg-red-500 px-5 py-4 rounded-xl cursor-pointer">Logout</li>
