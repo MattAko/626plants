@@ -1,3 +1,25 @@
 <div>
-    This is upload
+  <form #uploadForm="ngForm">
+      <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" ngModel required />
+      </div>
+      <div>
+          <label for="price">Price</label>
+          <input type="number" id="price" name="price" ngModel required />
+      </div>
+      <div>
+          <label for="quantity">Quantity</label>
+          <input type="number" id="quantity" name="quanity" ngModel required />
+      </div>
+      <div>
+          <label for="description">Description</label>
+          <textarea name="description" required ngModel></textarea>
+      </div>
+      <div>
+          <label for="images"></label>
+          <input (change)="onLoad($event.target.files)" id="images" accept="image/jpeg image/png" multiple name="images" type="file" required ngModel>
+          <img *ngIf="fileList" [src]="fileUrls">
+      </div>
+  </form>
 </div>
