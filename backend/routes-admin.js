@@ -2,6 +2,9 @@
 const express = require('express')
 const router = express.Router();
 
+const multer = require('multer');
+const upload = multer();
+
 const bodyParser = require("body-parser");
 const { json } = require("body-parser");
 const jsonParser = bodyParser.json();
@@ -55,5 +58,10 @@ router.route("/admin/login").post(jsonParser, (req, res) => {
     });
 });
 
+router.route("/admin/upload").post(upload.array('images', 6), (req, res) => {
+    console.log(req.body)
+    console.log(req.files)
+    res.send('Received upload')
+})
 
 module.exports = router;
