@@ -71,48 +71,54 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   let fileExtensions = [];
   let i = 0,
     j = 0;
-  console.log('the size is ' + size)
   for (let file of req.files) {
-    switch (file.mimetype) {
-      case "image/png":
-        fileExtensions.push("png");
-        break;
-      case "image/jpeg":
-        fileExtensions.push("jpg");
-        break;
-      default:
-        res.send("Mimetype could not be found");
+    if(file.mimetype==="image/png"){
+      fileExtensions.push("png");
+    } else if(file.mimetype==="image.jpeg"){
+      fileExtensions.push("jpg");
+    } else{
+      console.log('it broke')
+      res.status(400).send({message: "A file was neither jpeg nor png."})
+      return;
     }
-    fs.writeFile(`./test-files/image${i}.${fileExtensions[i]}`, file.buffer, () => {
-      j++;
-      if (j === size - 1) {
-        console.log(j)
-        // When all files have been written, begin uploading
-        uploadImages(size, fileExtensions);
+    
+    fs.writeFile(
+      `./test-files/image${i}.${fileExtensions[i]}`,
+      file.buffer,
+      () => {
+        j++;
+        if (j === size - 1) {
+          // When all files have been written, begin uploading
+          uploadImages(size, fileExtensions)
+        }
       }
-    });
+    );
     i++;
   }
+  res.status(200).send({message: 'OK'});
 });
 
 function uploadImages(size, extensions) {
-  console.log('Beginning upload...')
   let i;
+  let fileName;
+
   for (i = 0; i < size; i++) {
-    let fileName = `image${i}.${extensions[i]}`;
-    console.log(i)
-    bucket.upload('./test-files/' + fileName, {
-      destination: fileName,
-      resumable: true,
-      public: true
-    }, (err, file) => {
-      if(err){
-        console.log(err)
+    fileName = `image${i}.${extensions[i]}`;
+    bucket.upload(
+      "./test-files/" + fileName,
+      {
+        destination: fileName,
+        resumable: true,
+        public: true,
+      },
+      (err, file) => {
+        if (err) {
+          throw err;
+        }
+        console.log(file.metadata);
       }
-      //console.log(file)
-    });
+    );
   }
-  
 }
 
 module.exports = router;
