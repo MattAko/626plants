@@ -1,10 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { User } from '../auth/user.model';
 import { UploadForm } from '../shared/upload-form.model';
 
 @Injectable({ providedIn: 'root' })
 export class ManagementService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   upload(form: UploadForm) {
     console.log(form);
@@ -24,6 +26,10 @@ export class ManagementService {
     formData.append('description', form.description);
     formData.append('quantity', form.quantity.toString());
     formData.append('date', form.postedDate.toString());
+    this.authService.user.subscribe((user: User) => {
+      const token = user.token;
+      formData.append('token', token);
+    })
 
     // {
     //         headers: new HttpHeaders({

@@ -64,44 +64,73 @@ router.route("/admin/login").post(jsonParser, (req, res) => {
 /*
  *   @desc: Receives client uploaded data along with photos. Write files
  *      using the buffer, then upload to firebase storage
+ *   Note: The images must be written before uploading again because afaik you can't
+ *    send buffer data with bucket.upload()
  */
 const bucket = require("./bucket");
 router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   const size = req.files.length;
+  addToDatabase(req.body);
+
   let fileExtensions = [];
   let i = 0,
     j = 0;
+  // Write files using user data
   for (let file of req.files) {
-    if(file.mimetype==="image/png"){
+    if (file.mimetype === "image/png") {
       fileExtensions.push("png");
-    } else if(file.mimetype==="image.jpeg"){
+    } else if (file.mimetype === "image/jpeg") {
       fileExtensions.push("jpg");
-    } else{
-      console.log('it broke')
-      res.status(400).send({message: "A file was neither jpeg nor png."})
+    } else {
+      res.status(400).send({ message: "A file was neither jpeg nor png." });
       return;
     }
-    
+
     fs.writeFile(
       `./test-files/image${i}.${fileExtensions[i]}`,
       file.buffer,
       () => {
         j++;
-        if (j === size - 1) {
+        if (j >= size - 1) {
           // When all files have been written, begin uploading
-          uploadImages(size, fileExtensions)
+          uploadImages(size, fileExtensions);
         }
       }
     );
     i++;
   }
-  res.status(200).send({message: 'OK'});
+  res.status(200).send({ message: "OK" });
 });
 
+function addToDatabase(form) {
+  console.log('Creating new entry in database...')
+  const newProduct = {
+    name: form.name,
+    description: form.description,
+    price: +form.price,
+    quantity: +form.quantity,
+    postedDate: form.date,
+  };
+  axios
+    .post(
+      "https://plants-b6788-default-rtdb.firebaseio.com/products.json",
+      newProduct, { params: {
+        auth: form.token
+      }}
+    )
+    .then((response) => {
+      console.log("successful post to rtdb");
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 function uploadImages(size, extensions) {
+  console.log('Uplading images...')
   let i;
   let fileName;
-
   for (i = 0; i < size; i++) {
     fileName = `image${i}.${extensions[i]}`;
     bucket.upload(
@@ -115,7 +144,9 @@ function uploadImages(size, extensions) {
         if (err) {
           throw err;
         }
-        console.log(file.metadata);
+        console.log('Uploaded images successfully...')
+        //console.log(file.metadata);
+        //console.log(file.publicUrl());
       }
     );
   }
