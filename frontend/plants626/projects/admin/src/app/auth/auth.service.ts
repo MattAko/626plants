@@ -41,7 +41,6 @@ export class AuthService implements OnInit {
           const expirationDate = new Date(
             new Date().getTime() + +response.expiresIn * 1000
           );
-          console.log(expirationDate);
           const user = new User(
             response.email,
             response.localId,
@@ -49,9 +48,7 @@ export class AuthService implements OnInit {
             expirationDate
           );
           this.user.next(user);
-          console.log('user logged in')
           localStorage.setItem('userData', JSON.stringify(user));
-          console.log(JSON.stringify(user));
           this.autoLogout(+response.expiresIn * 1000);
           this.router.navigate(['/manage']);
         },
@@ -68,12 +65,12 @@ export class AuthService implements OnInit {
     */
   logout() {
     this.user.next(null);
-    this.router.navigate(['/login']);
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
     localStorage.removeItem('userData');
+    this.router.navigate(['/login']);
   }
 
   /*

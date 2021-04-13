@@ -1,2 +1,7 @@
-<p>view works!</p>
 <router-outlet></router-outlet>
+<div *ngFor="let prod of shop">
+   <p>{{ prod.name }}</p> 
+   <p>{{ prod.id }}</p>
+   <p>{{ prod.price}}</p>
+   <img [src]="prod.images[0]">
+</div>

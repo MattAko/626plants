@@ -104,7 +104,6 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   res.status(200).send({ message: "OK" });
 });
 
-
 /*
  *  @desc: Create new database entry
  *  @resolve: Returns unique key id for the database entry
@@ -120,20 +119,16 @@ async function addToDatabase(form, token) {
       postedDate: form.date,
     };
     axios
-      .post(
-        `${secrets.firebaseDatabase}/products.json`,
-        newProduct,
-        {
-          params: {
-            auth: token,
-          },
-        }
-      )
+      .post(`${secrets.firebaseDatabase}/products.json`, newProduct, {
+        params: {
+          auth: token,
+        },
+      })
       .then((response) => {
         resolve(response.data.name);
       })
       .catch((err) => {
-        reject(err); 
+        reject(err);
       });
   });
 }
@@ -143,7 +138,8 @@ async function addToDatabase(form, token) {
  */
 function uploadImages(size, extensions, key, token) {
   console.log("Uplading images...");
-  let i, j = 0;
+  let i,
+    j = 0;
   let imageUrls = {};
   let fileName;
   for (i = 0; i < size; i++) {
@@ -161,18 +157,25 @@ function uploadImages(size, extensions, key, token) {
         }
         imageUrls[`image${j}`] = file.publicUrl();
         j++;
-        if(j >= size){
+        if (j >= size) {
           console.log("Uploaded images successfully...");
-          axios.put(`${secrets.firebaseDatabase}/products/${key}/images.json`, imageUrls, { params: {
-            auth: token
-          }}).then(
-            (response) => {
-              console.log('added image urls')
-            }
-          ).catch((err) => {
-            //console.log(err)
-            console.log('there was an err')
-          })
+          axios
+            .put(
+              `${secrets.firebaseDatabase}/products/${key}/images.json`,
+              imageUrls,
+              {
+                params: {
+                  auth: token,
+                },
+              }
+            )
+            .then((response) => {
+              console.log("added image urls");
+            })
+            .catch((err) => {
+              //console.log(err)
+              console.log("there was an err");
+            });
         }
         //console.log(file.metadata);
         //console.log(file.publicUrl());
@@ -181,20 +184,42 @@ function uploadImages(size, extensions, key, token) {
   }
 }
 
-
-router.route('/admin/getShop').get(jsonParser, (req, res) => {
+router.route("/admin/getShop").get(jsonParser, (req, res) => {
   const token = req.query.auth;
-
-  axios.get(`${secrets.firebaseDatabase}/products.json`, {
-    params: {
-      auth: token
-    }
-  }).then((res) => {
-    console.log(res)
-    console.log('success?')
-  }).catch((err) => {
-    console.log(err);
-  })
-})
+  axios
+    .get(`${secrets.firebaseDatabase}/products.json`, {
+      params: {
+        auth: token,
+      },
+    })
+    .then((shop) => {
+      const shopItems = [];
+      for (let item in shop.data) {
+        let obj = shop.data[item];
+        let images = [];
+        if (obj.images) {
+          for (let image in obj.images) {
+            images.push(obj.images[image]);
+          }
+        }
+        shopItems.push({
+          id: item,
+          name: obj.name,
+          quantity: obj.quantity,
+          price: obj.price,
+          posted: obj.postedDate,
+          purcahsed: obj.purchased,
+          description: obj.description,
+          images: images,
+          receiptId: obj.receiptId,
+        });
+      }
+      res.send(shopItems)
+      console.log(shopItems);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 module.exports = router;

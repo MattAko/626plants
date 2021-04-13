@@ -8,17 +8,20 @@ import { Injectable } from '@angular/core';
 import { exhaustMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
+/*
+ * Injects the user token to all http requests if the user is logged in.
+ *
+ */
+
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    console.log('intercepting...')
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user) => {
         if (!user) {
-          console.log('user not found')
           return next.handle(req);
         }
         const modifiedReq = req.clone({

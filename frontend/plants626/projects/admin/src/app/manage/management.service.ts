@@ -1,14 +1,16 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
+import { AdminProduct } from '../shared/admin-product.model';
 import { UploadForm } from '../shared/upload-form.model';
 
 @Injectable({ providedIn: 'root' })
 export class ManagementService {
-  private token: string;
-  private tokenSubscription: Subscription;
+  shop = new Subject<AdminProduct[]>();
+  //shop: AdminProduct[] = [];
+
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   upload(form: UploadForm) {
@@ -35,13 +37,11 @@ export class ManagementService {
 
   getShop() {
     this.http
-      .get('/api/admin/getShop')
-      .subscribe((res) => {
-        console.log(res);
+      .get<AdminProduct[]>('/api/admin/getShop')
+      .subscribe((newShop: AdminProduct[]) => {
+        this.shop.next(newShop)
+        console.log(newShop)
       });
   }
-
-  ngOnDestroy() {
-    this.tokenSubscription.unsubscribe();
-  }
+  
 }
