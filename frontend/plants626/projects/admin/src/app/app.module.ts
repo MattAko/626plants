@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +13,7 @@ import { ReceiptsComponent } from './manage/receipts/receipts.component';
 import { ViewComponent } from './manage/view/view.component';
 import { EditComponent } from './manage/edit/edit.component';
 import { EditStartComponent } from './manage/edit/edit-start/edit-start.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { EditStartComponent } from './manage/edit/edit-start/edit-start.componen
     FormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

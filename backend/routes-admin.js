@@ -70,7 +70,7 @@ router.route("/admin/login").post(jsonParser, (req, res) => {
 const bucket = require("./bucket");
 router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   const size = req.files.length;
-  addToDatabase(req.body);
+  const token = req.query.auth;
 
   let fileExtensions = [];
   let i = 0,
@@ -91,9 +91,11 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
       file.buffer,
       () => {
         j++;
-        if (j >= size - 1) {
-          // When all files have been written, begin uploading
-          uploadImages(size, fileExtensions);
+        if (j >= size) {
+          // When all files have been written, create new database entry, then upload photos
+          addToDatabase(req.body, token).then((res) => {
+            uploadImages(size, fileExtensions, res, token);
+          });
         }
       }
     );
@@ -102,41 +104,54 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   res.status(200).send({ message: "OK" });
 });
 
-function addToDatabase(form) {
-  console.log('Creating new entry in database...')
-  const newProduct = {
-    name: form.name,
-    description: form.description,
-    price: +form.price,
-    quantity: +form.quantity,
-    postedDate: form.date,
-  };
-  axios
-    .post(
-      "https://plants-b6788-default-rtdb.firebaseio.com/products.json",
-      newProduct, { params: {
-        auth: form.token
-      }}
-    )
-    .then((response) => {
-      console.log("successful post to rtdb");
-      console.log(response);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+/*
+ *  @desc: Create new database entry
+ *  @resolve: Returns unique key id for the database entry
+ */
+async function addToDatabase(form, token) {
+  return new Promise((resolve, reject) => {
+    console.log("Creating new entry in database...");
+    const newProduct = {
+      name: form.name,
+      description: form.description,
+      price: +form.price,
+      quantity: +form.quantity,
+      postedDate: form.date,
+    };
+    axios
+      .post(
+        `${secrets.firebaseDatabase}/products.json`,
+        newProduct,
+        {
+          params: {
+            auth: token,
+          },
+        }
+      )
+      .then((response) => {
+        resolve(response.data.name);
+      })
+      .catch((err) => {
+        reject(err); 
+      });
+  });
 }
 
-function uploadImages(size, extensions) {
-  console.log('Uplading images...')
-  let i;
+/*
+ *  @desc: Upload images to storage, then add to the database
+ */
+function uploadImages(size, extensions, key, token) {
+  console.log("Uplading images...");
+  let i, j = 0;
+  let imageUrls = {};
   let fileName;
   for (i = 0; i < size; i++) {
     fileName = `image${i}.${extensions[i]}`;
     bucket.upload(
       "./test-files/" + fileName,
       {
-        destination: fileName,
+        destination: `${key}/${fileName}`,
         resumable: true,
         public: true,
       },
@@ -144,12 +159,42 @@ function uploadImages(size, extensions) {
         if (err) {
           throw err;
         }
-        console.log('Uploaded images successfully...')
+        imageUrls[`image${j}`] = file.publicUrl();
+        j++;
+        if(j >= size){
+          console.log("Uploaded images successfully...");
+          axios.put(`${secrets.firebaseDatabase}/products/${key}/images.json`, imageUrls, { params: {
+            auth: token
+          }}).then(
+            (response) => {
+              console.log('added image urls')
+            }
+          ).catch((err) => {
+            //console.log(err)
+            console.log('there was an err')
+          })
+        }
         //console.log(file.metadata);
         //console.log(file.publicUrl());
       }
     );
   }
 }
+
+
+router.route('/admin/getShop').get(jsonParser, (req, res) => {
+  const token = req.query.auth;
+
+  axios.get(`${secrets.firebaseDatabase}/products.json`, {
+    params: {
+      auth: token
+    }
+  }).then((res) => {
+    console.log(res)
+    console.log('success?')
+  }).catch((err) => {
+    console.log(err);
+  })
+})
 
 module.exports = router;

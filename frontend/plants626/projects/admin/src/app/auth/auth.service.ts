@@ -49,6 +49,7 @@ export class AuthService implements OnInit {
             expirationDate
           );
           this.user.next(user);
+          console.log('user logged in')
           localStorage.setItem('userData', JSON.stringify(user));
           console.log(JSON.stringify(user));
           this.autoLogout(+response.expiresIn * 1000);
