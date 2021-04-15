@@ -14,6 +14,7 @@ import { ViewComponent } from './manage/view/view.component';
 import { EditComponent } from './manage/edit/edit.component';
 import { EditStartComponent } from './manage/edit/edit-start/edit-start.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { ViewItemComponent } from './manage/view/view-item/view-item.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     ViewComponent,
     EditComponent,
     EditStartComponent,
+    ViewItemComponent,
   ],
   imports: [
     BrowserModule,

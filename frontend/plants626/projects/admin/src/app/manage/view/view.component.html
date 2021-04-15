@@ -1,7 +1,4 @@
 <router-outlet></router-outlet>
-<div *ngFor="let prod of shop">
-   <p>{{ prod.name }}</p> 
-   <p>{{ prod.id }}</p>
-   <p>{{ prod.price}}</p>
-   <img [src]="prod.images[0]">
+<div class="flex flex-col justify-center lg:w-4/5 w-80 lg:mx-auto">
+    <app-view-item *ngFor="let prod of shop" [item]="prod"></app-view-item>
 </div>

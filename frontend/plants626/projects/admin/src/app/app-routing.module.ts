@@ -23,7 +23,7 @@ const appRoutes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'upload'
+        redirectTo: 'view'
       },
       {
         path: 'upload',
