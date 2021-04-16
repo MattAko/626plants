@@ -61,6 +61,51 @@ router.route("/admin/login").post(jsonParser, (req, res) => {
     });
 });
 
+router
+  .route("/admin/editProduct")
+  .post(upload.array("images", 6), (req, res) => {
+    const size = req.files.length;
+    const token = req.query.auth;
+    const id = req.query.id;
+
+    let fileExtensions = getFileExtensions(req.files);
+    let i = 0,
+      j = 0;
+    // Write files using user data
+    for (let file of req.files) {
+      fs.writeFile(
+        `./test-files/image${i}.${fileExtensions[i]}`,
+        file.buffer,
+        () => {
+          j++;
+          if (j >= size) {
+            // When all files have been written, create new database entry, then upload photos
+            updateDatabase(req.body, id, token).then((res) => {
+              uploadImages(size, fileExtensions, res, token);
+            });
+          }
+        }
+      );
+      i++;
+    }
+    res.status(200).send({ message: "OK" });
+  });
+
+function getFileExtensions(files) {
+  let fileExtensions = [];
+  for (let file of files) {
+    if (file.mimetype === "image/png") {
+      fileExtensions.push("png");
+    } else if (file.mimetype === "image/jpeg") {
+      fileExtensions.push("jpg");
+    } else {
+      res.status(400).send({ message: "A file was neither jpeg nor png." });
+      return null;
+    }
+  }
+  return fileExtensions;
+}
+
 /*
  *   @desc: Receives client uploaded data along with photos. Write files
  *      using the buffer, then upload to firebase storage
@@ -72,20 +117,11 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   const size = req.files.length;
   const token = req.query.auth;
 
-  let fileExtensions = [];
+  let fileExtensions = getFileExtensions(req.files);
   let i = 0,
     j = 0;
   // Write files using user data
   for (let file of req.files) {
-    if (file.mimetype === "image/png") {
-      fileExtensions.push("png");
-    } else if (file.mimetype === "image/jpeg") {
-      fileExtensions.push("jpg");
-    } else {
-      res.status(400).send({ message: "A file was neither jpeg nor png." });
-      return;
-    }
-
     fs.writeFile(
       `./test-files/image${i}.${fileExtensions[i]}`,
       file.buffer,
@@ -112,6 +148,31 @@ async function addToDatabase(form, token) {
   return new Promise((resolve, reject) => {
     console.log("Creating new entry in database...");
     const newProduct = {
+      name: form.name,
+      description: form.description,
+      price: +form.price,
+      quantity: +form.quantity,
+      postedDate: form.date,
+    };
+    axios
+      .post(`${secrets.firebaseDatabase}/products.json`, newProduct, {
+        params: {
+          auth: token,
+        },
+      })
+      .then((response) => {
+        resolve(response.data.name);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+async function updateDatabase(form, token) {
+  return new Promise((resolve, reject) => {
+    console.log("Updating database");
+    const updatedProduct = {
       name: form.name,
       description: form.description,
       price: +form.price,
@@ -214,7 +275,7 @@ router.route("/admin/getShop").get(jsonParser, (req, res) => {
           receiptId: obj.receiptId,
         });
       }
-      res.send(shopItems)
+      res.send(shopItems);
       console.log(shopItems);
     })
     .catch((err) => {

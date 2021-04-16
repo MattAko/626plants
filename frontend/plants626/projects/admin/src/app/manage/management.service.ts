@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
 import { AdminProduct } from '../shared/admin-product.model';
@@ -8,7 +8,8 @@ import { UploadForm } from '../shared/upload-form.model';
 
 @Injectable({ providedIn: 'root' })
 export class ManagementService {
-  shop = new Subject<AdminProduct[]>();
+  shopChanged = new Subject<AdminProduct[]>();
+  shop: AdminProduct[] = [];
   //shop: AdminProduct[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -39,9 +40,17 @@ export class ManagementService {
     this.http
       .get<AdminProduct[]>('/api/admin/getShop')
       .subscribe((newShop: AdminProduct[]) => {
-        this.shop.next(newShop)
+        this.shopChanged.next(newShop)
+        this.shop = newShop;
         console.log(newShop)
       });
   }
-  
+ 
+  getProduct(id: string): AdminProduct{
+    console.log('searching...')
+    return this.shop.find(item => {
+      console.log(item.id)
+      return item.id === id
+    })
+  }
 }

@@ -4,5 +4,6 @@
     <p>{{ item.name }}</p>
     <p>{{ item.id }}</p>
     <p>{{ item.price }}</p>
+    <button [routerLink]="[item.id, 'edit']" class="bg-green-400 px-5 py-4 rounded">Edit</button>
   </div>
 </div>

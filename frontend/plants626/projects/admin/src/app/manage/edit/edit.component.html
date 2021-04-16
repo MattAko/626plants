@@ -1,1 +1,69 @@
-<p>edit works!</p>
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div>
+    <div>
+      <label for="name">Name</label>
+      <input
+        class="block md:w-96 w-52"
+        type="text"
+        id="name"
+        name="name"
+        ngModel
+        required
+      />
+    </div>
+    <div>
+      <label for="price">Price</label>
+      <input
+        class="block md:w-96 w-52"
+        type="number"
+        id="price"
+        name="price"
+        ngModel
+        required
+      />
+    </div>
+    <div>
+      <label for="quantity">Quantity</label>
+      <input
+        class="block md:w-96 w-52"
+        type="number"
+        id="quantity"
+        name="quantity"
+        ngModel
+        required
+      />
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <textarea
+        class="block md:w-96 w-52"
+        type="text"
+        name="description"
+        required
+        ngModel
+      ></textarea>
+    </div>
+    <div>
+      <label for="images">Images</label>
+      <input
+        class="block"
+        (change)="onLoad($event.target.files)"
+        id="images"
+        accept="image/jpeg image/png"
+        multiple
+        name="images"
+        type="file"
+        required
+        ngModel
+      />
+      <!-- <div *ngIf="fileUrls" class="overflow-x-scroll whitespace-nowrap">
+          <img class="mx-5 w-40 h-40 inline-block object-cover" *ngFor="let file of fileUrls" [src]="file" />
+      </div> -->
+    </div>
+  </div>
+  <div>
+    <p>Images</p> 
+    <img *ngFor="let img of product.images" [src]="img">
+  </div>
+  <button type="submit" class="bg-green-400 px-5 py-4 rounded">Upload</button>
+</form>

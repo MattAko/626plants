@@ -16,7 +16,7 @@ export class ViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.manage.getShop();
-    this.shopSub = this.manage.shop.subscribe(shop => {
+    this.shopSub = this.manage.shopChanged.subscribe(shop => {
       this.shop = shop;
     })    
   }
