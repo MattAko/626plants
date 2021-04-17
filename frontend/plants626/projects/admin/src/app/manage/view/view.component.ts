@@ -21,4 +21,8 @@ export class ViewComponent implements OnInit {
     })    
   }
 
+  onActivate(event: Event){
+    console.log('activated');
+    window.scroll(0,0);
+  }
 }

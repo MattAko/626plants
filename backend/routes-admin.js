@@ -63,7 +63,7 @@ router.route("/admin/login").post(jsonParser, (req, res) => {
 
 router
   .route("/admin/editProduct")
-  .post(upload.array("images", 6), (req, res) => {
+  .put(upload.array("images", 6), (req, res) => {
     const size = req.files.length;
     const token = req.query.auth;
     const id = req.query.id;

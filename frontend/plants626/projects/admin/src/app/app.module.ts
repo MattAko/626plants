@@ -15,6 +15,7 @@ import { EditComponent } from './manage/edit/edit.component';
 import { EditStartComponent } from './manage/edit/edit-start/edit-start.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ViewItemComponent } from './manage/view/view-item/view-item.component';
+import { CloseButtonComponent } from './shared/close-button/close-button.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ViewItemComponent } from './manage/view/view-item/view-item.component';
     EditComponent,
     EditStartComponent,
     ViewItemComponent,
+    CloseButtonComponent
   ],
   imports: [
     BrowserModule,

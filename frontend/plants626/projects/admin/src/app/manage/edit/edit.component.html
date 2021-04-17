@@ -1,6 +1,9 @@
 <form #form="ngForm" (ngSubmit)="onSubmit()">
   <div>
     <div>
+      <div class="float-right" [routerLink]="['/manage/view']">
+        <app-close-button></app-close-button>
+      </div>
       <label for="name">Name</label>
       <input
         class="block md:w-96 w-52"
@@ -56,14 +59,24 @@
         required
         ngModel
       />
-      <!-- <div *ngIf="fileUrls" class="overflow-x-scroll whitespace-nowrap">
-          <img class="mx-5 w-40 h-40 inline-block object-cover" *ngFor="let file of fileUrls" [src]="file" />
-      </div> -->
     </div>
   </div>
-  <div>
-    <p>Images</p> 
-    <img *ngFor="let img of product.images" [src]="img">
+  <button type="submit" class="bg-green-400 px-5 py-4 rounded">Edit</button>
+  <p>Images</p>
+  <div *ngIf="newImages" class="flex flex-wrap">
+    <img
+      class="lg:w-72 lg:h-72 w-40 h-40 px-5 py-5 object-cover"
+      *ngFor="let file of fileUrls"
+      [src]="file"
+    />
   </div>
-  <button type="submit" class="bg-green-400 px-5 py-4 rounded">Upload</button>
+
+  <div *ngIf="!newImages" class="flex flex-wrap">
+    <img
+      class="lg:w-72 lg:h-72 w-40 h-40 px-5 py-5 object-cover"
+      *ngFor="let img of product.images"
+      [src]="img"
+    />
+  </div>
 </form>
+<div class="w-full py-2 bg-black"></div>
