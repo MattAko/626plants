@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminProduct } from '../../../shared/admin-product.model';
 
 @Component({
@@ -9,9 +10,13 @@ import { AdminProduct } from '../../../shared/admin-product.model';
 export class ViewItemComponent implements OnInit {
   @Input('item') item: AdminProduct;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  onEdit(){
+    window.scroll(0,0)
+    this.router.navigate(['/manage/view', this.item.id, 'edit'])
+  }
 }

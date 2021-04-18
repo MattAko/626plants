@@ -1,6 +1,8 @@
+import { keyframes } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
+import { sanitizeIdentifier } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AdminProduct } from '../../shared/admin-product.model';
 import { UploadForm } from '../../shared/upload-form.model';
@@ -11,9 +13,9 @@ import { ManagementService } from '../management.service';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
 })
-export class EditComponent implements OnInit, AfterViewInit {
-  @ViewChild('form', { static: false }) form: NgForm;
-  fileList: FileList;
+export class EditComponent implements OnInit {
+  editForm: FormGroup;
+  fileList: FileList = null;
   fileUrls = null;
   newImages: boolean = false;
   product: AdminProduct;
@@ -26,37 +28,59 @@ export class EditComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.product = this.manage.getProduct(params['id']);
-      console.log(this.form);
+      if(this.product != this.manage.getProduct(params['id'])){
+        this.product = this.manage.getProduct(params['id']);
+        console.log(this.product)
+        this.initForm()
+      }
     });
   }
 
-  ngAfterViewInit() {
-    if (this.product) {
-      this.form.setValue({
-        name: this.product.name,
-        price: this.product.price,
-        quantity: this.product.quantity,
-        description: this.product.description,
-      });
-    }
+  /*
+   * Create the form reactively, all inputs required except images.
+   * Images not required here because we are editing the form,
+   * afaik, I cannot preload the input with a fileUrl
+   */
+  private initForm() {
+    this.editForm = new FormGroup({
+      name: new FormControl(this.product.name, [Validators.required]),
+      description: new FormControl(this.product.description, [
+        Validators.required,
+      ]),
+      price: new FormControl(this.product.price, [Validators.required]),
+      quantity: new FormControl(this.product.quantity, [
+        Validators.required,
+        Validators.pattern(/^[1-9]+[0-9]*$/),
+      ]),
+      images: new FormControl(null),
+    });
   }
 
+  /*
+   * Check for any changes, if changes were made, http put request will be made.
+   * Note: We cannot grab the FileList through Angular controls, so we manually had
+   *    to do that.
+   */
   onSubmit() {
-    const name = this.form.value['name'];
-    const quantity = this.form.value['quantity'];
-    const price = this.form.value['price'];
-    const description = this.form.value['description'];
-    const date = new Date();
-    const uploadForm = new UploadForm(
-      name,
-      quantity,
-      price,
-      description,
-      this.fileList,
-      date
-    );
-    this.manage.editProduct(uploadForm, this.product.id);
+    let changes = {};
+    let edited = false;
+    for(let control in this.editForm.controls){
+      if(!this.editForm.controls[control].pristine){
+        changes[control] = this.editForm.controls[control].value;
+        edited = true;
+      }
+    }
+    if(this.fileList){
+      edited = true
+      changes['images'] = this.fileList
+    }
+    if(edited){
+      this.manage.editProduct(changes, this.product.id);
+    } 
+    else{
+      console.log('No changes were made')
+    }
+    
   }
 
   onLoad(files: FileList) {

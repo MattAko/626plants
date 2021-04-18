@@ -1,4 +1,4 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
   <div>
     <div>
       <div class="float-right" [routerLink]="['/manage/view']">
@@ -10,8 +10,7 @@
         type="text"
         id="name"
         name="name"
-        ngModel
-        required
+        formControlName="name"
       />
     </div>
     <div>
@@ -21,8 +20,7 @@
         type="number"
         id="price"
         name="price"
-        ngModel
-        required
+        formControlName="price"
       />
     </div>
     <div>
@@ -32,8 +30,7 @@
         type="number"
         id="quantity"
         name="quantity"
-        ngModel
-        required
+        formControlName="quantity"
       />
     </div>
     <div>
@@ -42,8 +39,7 @@
         class="block md:w-96 w-52"
         type="text"
         name="description"
-        required
-        ngModel
+        formControlName="description"
       ></textarea>
     </div>
     <div>
@@ -56,8 +52,6 @@
         multiple
         name="images"
         type="file"
-        required
-        ngModel
       />
     </div>
   </div>

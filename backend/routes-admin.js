@@ -67,6 +67,9 @@ router
     const size = req.files.length;
     const token = req.query.auth;
     const id = req.query.id;
+    
+    console.log(req)
+    return;
 
     let fileExtensions = getFileExtensions(req.files);
     let i = 0,

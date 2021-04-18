@@ -51,18 +51,27 @@ export class ManagementService {
     });
   }
 
-  editProduct(form: UploadForm, id: string) {
+  /*
+   * Http PUT request, data sent as formData.
+   * @body: Changes made to the product 
+   * @params: Product ID
+   */
+  editProduct(changes: any, id: string) {
+    console.log('Editing product...')
     let formData: FormData = new FormData();
-    let i = 0,
-      len = form.imageFiles.length;
-    for (i = 0; i < len; i++) {
-      formData.append(`images`, form.imageFiles[i], form.imageFiles[i].name);
+    for(let change in changes){
+      if(change==="images"){
+        let images = changes[change]
+        let len = changes[change].length;
+        let i = 0;
+        for(i = 0; i < len; i++){
+          formData.append(`images`, images[i], images[i].name);
+        }
+      }
+      else{
+        formData.append(change, changes[change]);
+      }
     }
-    formData.append('name', form.name);
-    formData.append('price', form.price.toString());
-    formData.append('description', form.description);
-    formData.append('quantity', form.quantity.toString());
-    formData.append('date', form.postedDate.toString());
 
     this.http
       .put<Text>('/api/admin/editProduct', formData, {

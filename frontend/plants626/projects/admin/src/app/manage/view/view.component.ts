@@ -6,23 +6,18 @@ import { ManagementService } from '../management.service';
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+  styleUrls: ['./view.component.css'],
 })
 export class ViewComponent implements OnInit {
   shop: AdminProduct[];
   shopSub: Subscription;
 
-  constructor(private manage: ManagementService) { }
+  constructor(private manage: ManagementService) {}
 
   ngOnInit(): void {
     this.manage.getShop();
-    this.shopSub = this.manage.shopChanged.subscribe(shop => {
+    this.shopSub = this.manage.shopChanged.subscribe((shop) => {
       this.shop = shop;
-    })    
-  }
-
-  onActivate(event: Event){
-    console.log('activated');
-    window.scroll(0,0);
+    });
   }
 }
