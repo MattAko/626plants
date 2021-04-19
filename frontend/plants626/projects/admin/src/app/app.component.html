@@ -1,4 +1,12 @@
-<div class="bg-gradient-to-r from-green-400 to-blue-500 h-full font">
-  <app-navbar></app-navbar>
+<app-navbar
+  class="fixed top-0 bg-gradient-to-r from-green-400 to-blue-500 w-full font"
+  *ngIf="!mobileNavEnabled"
+></app-navbar>
+<app-mobile-nav
+  class="fixed top-0 bg-gradient-to-r from-green-400 to-blue-500 w-full font"
+  *ngIf="mobileNavEnabled"
+></app-mobile-nav>
+
+<div class="mt-16 bg-gradient-to-r from-green-400 to-blue-500 h-full font">
   <router-outlet></router-outlet>
 </div>

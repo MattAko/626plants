@@ -16,6 +16,7 @@ import { EditStartComponent } from './manage/edit/edit-start/edit-start.componen
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ViewItemComponent } from './manage/view/view-item/view-item.component';
 import { CloseButtonComponent } from './shared/close-button/close-button.component';
+import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CloseButtonComponent } from './shared/close-button/close-button.compone
     EditComponent,
     EditStartComponent,
     ViewItemComponent,
-    CloseButtonComponent
+    CloseButtonComponent,
+    MobileNavComponent,
   ],
   imports: [
     BrowserModule,

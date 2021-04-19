@@ -1,0 +1,32 @@
+<nav class="w-full py-3 flex justify-end px-10">
+  <ul class="p-2 cursor-pointer">
+    <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
+    <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
+    <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
+  </ul>
+</nav>
+<div *ngIf="dropdownVisible">
+  <ul>
+    <li
+      routerLinkActive="bg-white"
+      class="text-center px-5 py-4 cursor-pointer"
+      [routerLink]="['/manage/view']"
+    >
+      View
+    </li>
+    <li
+      routerLinkActive="bg-white"
+      class="text-center px-5 py-4 cursor-pointer"
+      [routerLink]="['/manage/receipts']"
+    >
+      Receipts
+    </li>
+    <li
+      routerLinkActive="bg-white"
+      class="text-center px-5 py-4 cursor-pointer"
+      [routerLink]="['/manage/upload']"
+    >
+      Upload
+    </li>
+  </ul>
+</div>

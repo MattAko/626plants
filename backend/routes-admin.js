@@ -84,7 +84,7 @@ router
     else{
       for (let file of req.files) {
         fs.writeFile(
-          `./test-files/image${i}.${fileExtensions[i]}`,
+          `./image-files/image${i}.${fileExtensions[i]}`,
           file.buffer,
           () => {
             j++;
@@ -134,7 +134,7 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   // Write files using user data
   for (let file of req.files) {
     fs.writeFile(
-      `./test-files/image${i}.${fileExtensions[i]}`,
+      `./image-files/image${i}.${fileExtensions[i]}`,
       file.buffer,
       () => {
         j++;
@@ -228,7 +228,7 @@ function uploadImages(size, extensions, key, token) {
   for (i = 0; i < size; i++) {
     fileName = `image${i}.${extensions[i]}`;
     bucket.upload(
-      "./test-files/" + fileName,
+      "./image-files/" + fileName,
       {
         destination: `${key}/${fileName}`,
         resumable: true,

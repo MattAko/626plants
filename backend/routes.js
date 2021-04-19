@@ -1,11 +1,3 @@
-/* 
-    Importing dummy test files. 
-    REMOVE LATER FOR PRODUCTION 
-*/
-const shop = require("./test-files/example");
-const shopItems = shop.shopItems;
-const testShop = shop.testShop;
-
 /*
     Routes, imported in index.js
     Routes here will be appended to '/api'
