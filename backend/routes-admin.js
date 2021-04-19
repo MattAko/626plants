@@ -13,6 +13,8 @@ const axios = require("axios"); // Axios for http requests
 
 const fs = require("fs");
 
+const bucket = require("./bucket");
+
 // Importing secrets
 const secrets = require("./secrets/secrets.json");
 const { Bucket } = require("@google-cloud/storage");
@@ -61,35 +63,41 @@ router.route("/admin/login").post(jsonParser, (req, res) => {
     });
 });
 
+/*
+ * Edit the product
+ * Check if the edit has new photos.
+ */
 router
   .route("/admin/editProduct")
   .put(upload.array("images", 6), (req, res) => {
     const size = req.files.length;
     const token = req.query.auth;
     const id = req.query.id;
-    
-    console.log(req)
-    return;
 
     let fileExtensions = getFileExtensions(req.files);
     let i = 0,
       j = 0;
     // Write files using user data
-    for (let file of req.files) {
-      fs.writeFile(
-        `./test-files/image${i}.${fileExtensions[i]}`,
-        file.buffer,
-        () => {
-          j++;
-          if (j >= size) {
-            // When all files have been written, create new database entry, then upload photos
-            updateDatabase(req.body, id, token).then((res) => {
-              uploadImages(size, fileExtensions, res, token);
-            });
+    if (size === 0) {
+      updateDatabase(req.body, id, token);
+    }
+    else{
+      for (let file of req.files) {
+        fs.writeFile(
+          `./test-files/image${i}.${fileExtensions[i]}`,
+          file.buffer,
+          () => {
+            j++;
+            if (j >= size) {
+              // When all files have been written, create new database entry, then upload photos
+              updateDatabase(req.body, id, token).then((res) => {
+                uploadImages(size, fileExtensions, id, token);
+              });
+            }
           }
-        }
-      );
-      i++;
+        );
+        i++;
+      }
     }
     res.status(200).send({ message: "OK" });
   });
@@ -115,7 +123,7 @@ function getFileExtensions(files) {
  *   Note: The images must be written before uploading again because afaik you can't
  *    send buffer data with bucket.upload()
  */
-const bucket = require("./bucket");
+
 router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
   const size = req.files.length;
   const token = req.query.auth;
@@ -132,8 +140,8 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
         j++;
         if (j >= size) {
           // When all files have been written, create new database entry, then upload photos
-          addToDatabase(req.body, token).then((res) => {
-            uploadImages(size, fileExtensions, res, token);
+          addToDatabase(req.body, token).then((uuid) => {
+            uploadImages(size, fileExtensions, uuid, token);
           });
         }
       }
@@ -150,6 +158,8 @@ router.route("/admin/upload").post(upload.array("images", 6), (req, res) => {
 async function addToDatabase(form, token) {
   return new Promise((resolve, reject) => {
     console.log("Creating new entry in database...");
+    const uuid = Date.now();
+    console.log(uuid)
     const newProduct = {
       name: form.name,
       description: form.description,
@@ -158,13 +168,13 @@ async function addToDatabase(form, token) {
       postedDate: form.date,
     };
     axios
-      .post(`${secrets.firebaseDatabase}/products.json`, newProduct, {
+      .put(`${secrets.firebaseDatabase}/products/${uuid}.json`, newProduct, {
         params: {
           auth: token,
         },
       })
       .then((response) => {
-        resolve(response.data.name);
+        resolve(uuid);
       })
       .catch((err) => {
         reject(err);
@@ -172,22 +182,30 @@ async function addToDatabase(form, token) {
   });
 }
 
-async function updateDatabase(form, token) {
+async function updateDatabase(form, id, token) {
   return new Promise((resolve, reject) => {
     console.log("Updating database");
+    console.log(form);
+    const price = isNaN(+form.price) ? undefined: +form.price; 
+    const quantity = isNaN(+form.quantity) ? undefined: +form.quantity;
     const updatedProduct = {
       name: form.name,
       description: form.description,
-      price: +form.price,
-      quantity: +form.quantity,
+      price: price,
+      quantity: quantity,
       postedDate: form.date,
     };
+    console.log(updatedProduct)
     axios
-      .post(`${secrets.firebaseDatabase}/products.json`, newProduct, {
-        params: {
-          auth: token,
-        },
-      })
+      .patch(
+        `${secrets.firebaseDatabase}/products/${id}.json`,
+        updatedProduct,
+        {
+          params: {
+            auth: token,
+          },
+        }
+      )
       .then((response) => {
         resolve(response.data.name);
       })
@@ -201,7 +219,8 @@ async function updateDatabase(form, token) {
  *  @desc: Upload images to storage, then add to the database
  */
 function uploadImages(size, extensions, key, token) {
-  console.log("Uplading images...");
+  console.log("Uploading images...");
+  console.log(key)
   let i,
     j = 0;
   let imageUrls = {};
@@ -233,16 +252,11 @@ function uploadImages(size, extensions, key, token) {
                 },
               }
             )
-            .then((response) => {
-              console.log("added image urls");
-            })
+            .then((response) => {})
             .catch((err) => {
-              //console.log(err)
               console.log("there was an err");
             });
         }
-        //console.log(file.metadata);
-        //console.log(file.publicUrl());
       }
     );
   }
@@ -279,7 +293,6 @@ router.route("/admin/getShop").get(jsonParser, (req, res) => {
         });
       }
       res.send(shopItems);
-      console.log(shopItems);
     })
     .catch((err) => {
       console.log(err);
