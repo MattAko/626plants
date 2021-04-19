@@ -8,25 +8,31 @@
 <div *ngIf="dropdownVisible">
   <ul>
     <li
-      routerLinkActive="bg-white"
-      class="text-center px-5 py-4 cursor-pointer"
+      routerLinkActive="text-white"
+      class="text-center mx-10 py-4 cursor-pointer"
       [routerLink]="['/manage/view']"
     >
       View
     </li>
     <li
-      routerLinkActive="bg-white"
-      class="text-center px-5 py-4 cursor-pointer"
+      routerLinkActive="text-white"
+      class="text-center mx-10 py-4 cursor-pointer"
       [routerLink]="['/manage/receipts']"
     >
       Receipts
     </li>
     <li
-      routerLinkActive="bg-white"
-      class="text-center px-5 py-4 cursor-pointer"
+      routerLinkActive="text-white"
+      class="text-center mx-10 py-4 cursor-pointer"
       [routerLink]="['/manage/upload']"
     >
       Upload
+    </li>
+    <li
+      class="bg-red-500 text-center px-5 py-4 cursor-pointer"
+      (click)="onLogout()" 
+    >
+      Logout
     </li>
   </ul>
 </div>

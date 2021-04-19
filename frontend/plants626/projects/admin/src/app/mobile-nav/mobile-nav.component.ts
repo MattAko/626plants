@@ -13,11 +13,9 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './mobile-nav.component.html',
   styleUrls: ['./mobile-nav.component.css'],
 })
-export class MobileNavComponent implements OnInit, OnDestroy {
-  loggedIn: boolean = false;
+export class MobileNavComponent implements OnInit{
   dropdownVisible: boolean = false;
 
-  private loggedInSubscription: Subscription;
 
   @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
     this.dropdownVisible = this.elRef.nativeElement.contains(event.target)
@@ -29,20 +27,11 @@ export class MobileNavComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private elRef: ElementRef) {}
 
   ngOnInit(): void {
-    this.loggedInSubscription = this.authService.user.subscribe((user) => {
-      if (user) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
-      }
-    });
+    
   }
 
   onLogout() {
     this.authService.logout();
   }
-
-  ngOnDestroy() {
-    this.loggedInSubscription.unsubscribe();
-  }
+  
 }
