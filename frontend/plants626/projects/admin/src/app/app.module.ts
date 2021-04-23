@@ -17,6 +17,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ViewItemComponent } from './manage/view/view-item/view-item.component';
 import { CloseButtonComponent } from './shared/close-button/close-button.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
+import { OrdersComponent } from './manage/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
     ViewItemComponent,
     CloseButtonComponent,
     MobileNavComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

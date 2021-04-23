@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { EditStartComponent } from './manage/edit/edit-start/edit-start.component';
 import { EditComponent } from './manage/edit/edit.component';
 import { ManageComponent } from './manage/manage.component';
+import { OrdersComponent } from './manage/orders/orders.component';
 import { ReceiptsComponent } from './manage/receipts/receipts.component';
 import { UploadComponent } from './manage/upload/upload.component';
 import { ViewComponent } from './manage/view/view.component';
@@ -28,6 +29,10 @@ const appRoutes: Routes = [
       {
         path: 'upload',
         component: UploadComponent
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent
       },
       {
         path: 'receipts',

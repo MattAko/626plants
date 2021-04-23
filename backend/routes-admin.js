@@ -166,6 +166,7 @@ async function addToDatabase(form, token) {
       price: +form.price,
       quantity: +form.quantity,
       postedDate: form.date,
+      visible: true,
     };
     axios
       .put(`${secrets.firebaseDatabase}/products/${uuid}.json`, newProduct, {
@@ -194,6 +195,7 @@ async function updateDatabase(form, id, token) {
       price: price,
       quantity: quantity,
       postedDate: form.date,
+      visible: form.visible,
     };
     console.log(updatedProduct)
     axios

@@ -1,12 +1,23 @@
-<div class="lg:w-1/3 px-14 w-auto mx-auto py-20">
-    <h1 class="text-5xl text-center">Upload</h1>
-  <form class="flex flex-col items-center" #uploadForm="ngForm" (ngSubmit)="onSubmit()">
+<div class="lg:w-1/3 md:px-8 mx-auto">
+  <h1 class="text-5xl text-center">Upload</h1>
+  <form
+    class="flex flex-col items-center"
+    #uploadForm="ngForm"
+    (ngSubmit)="onSubmit()"
+  >
     <div>
       <label for="name">Name</label>
-      <input class="block md:w-96 w-52" type="text" id="name" name="name" ngModel required />
+      <input
+        class="block md:w-96 w-52"
+        type="text"
+        id="name"
+        name="name"
+        ngModel
+        required
+      />
     </div>
     <div>
-      <label for="price">Price</label>
+      <label class="text-left" for="price">Price</label>
       <input
         class="block md:w-96 w-52"
         type="number"
@@ -29,7 +40,13 @@
     </div>
     <div>
       <label for="description">Description</label>
-      <textarea class="block md:w-96 w-52" type="text" name="description" required ngModel></textarea>
+      <textarea
+        class="block md:w-96 w-52"
+        type="text"
+        name="description"
+        required
+        ngModel
+      ></textarea>
     </div>
     <div>
       <label for="images">Images</label>
@@ -45,9 +62,15 @@
         ngModel
       />
       <div *ngIf="fileUrls" class="overflow-x-scroll whitespace-nowrap">
-          <img class="mx-5 w-40 h-40 inline-block object-cover" *ngFor="let file of fileUrls" [src]="file" />
+        <img
+          class="mx-5 w-40 h-40 inline-block object-cover"
+          *ngFor="let file of fileUrls"
+          [src]="file"
+        />
       </div>
     </div>
-    <button type="submit" class="bg-green-400 px-5 py-4 rounded">Upload</button>
+    <button type="submit" class="mt-5 bg-green-400 px-5 py-4 rounded">
+      Upload
+    </button>
   </form>
 </div>

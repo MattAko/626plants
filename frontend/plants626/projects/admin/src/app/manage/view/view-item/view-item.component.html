@@ -1,9 +1,12 @@
 <div class="flex flex-row flex-wrap justify-around  md:mx-5 my-8 p-5 border-black rounded border-solid border-2 px-auto">
-  <img class="lg:w-72 lg:h-72 w-52 h-52 rounded object-cover cursor-pointer" [src]="item.images[0]" />
-  <div class="px-5 lg:w-72 w-52">
+  <img class="lg:w-72 lg:h-72 w-52 h-52 mb-5 rounded object-cover cursor-pointer" [src]="item.images[0]" />
+  <div class="text-left lg:w-72 w-52">
     <p class="text-xl font-bold capitalize">{{ item.name }}</p>
     <p>ID#: {{ item.id }}</p>
     <p>{{ item.price | currency}}</p>
-    <button type="button" (click)="onEdit()" class="w-full bg-green-400 px-5 py-4 rounded">Edit</button>
+    <p>{{ item.description }}</p>
+  </div>
+  <div class="text-left">
+    <button type="button" (click)="onEdit()" class="mx-auto bg-green-400 px-7 py-4 rounded">Edit</button>
   </div>
 </div>

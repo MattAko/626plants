@@ -52,6 +52,7 @@ export class EditComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^[1-9]+[0-9]*$/),
       ]),
+      visible: new FormControl(this.product.visible, [Validators.required]),
       images: new FormControl(null),
     });
   }

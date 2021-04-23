@@ -9,6 +9,7 @@ export class AdminProduct{
         public posted: Date,
         public purchased: Date,
         public receiptId: any,
+        public visible: boolean,
 
     ){}
 }

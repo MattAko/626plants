@@ -1,62 +1,70 @@
-<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-  <div>
-    <div>
-      <div class="float-right" [routerLink]="['/manage/view']">
-        <app-close-button></app-close-button>
-      </div>
-      <label for="name">Name</label>
-      <input
-        class="block md:w-96 w-52"
-        type="text"
-        id="name"
-        name="name"
-        formControlName="name"
-      />
-    </div>
-    <div>
-      <label for="price">Price</label>
-      <input
-        class="block md:w-96 w-52"
-        type="number"
-        id="price"
-        name="price"
-        formControlName="price"
-      />
-    </div>
-    <div>
-      <label for="quantity">Quantity</label>
-      <input
-        class="block md:w-96 w-52"
-        type="number"
-        id="quantity"
-        name="quantity"
-        formControlName="quantity"
-      />
-    </div>
-    <div>
-      <label for="description">Description</label>
-      <textarea
-        class="block md:w-96 w-52"
-        type="text"
-        name="description"
-        formControlName="description"
-      ></textarea>
-    </div>
-    <div>
-      <label for="images">Images</label>
-      <input
-        class="block"
-        (change)="onLoad($event.target.files)"
-        id="images"
-        accept="image/jpeg image/png"
-        multiple
-        name="images"
-        type="file"
-      />
-    </div>
+<div class="absolute right-3.5 top-28" [routerLink]="['/manage/view']">
+  <app-close-button></app-close-button>
+</div>
+<h1 class="font-medium mt-2 text-3xl text-center">Edit Form</h1>
+<form
+  class="flex flex-col justify-center mt-5"
+  [formGroup]="editForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="mx-auto">
+    <label class="text-left" for="name">Name</label>
+    <input
+      class="block md:w-96 w-52"
+      type="text"
+      id="name"
+      name="name"
+      formControlName="name"
+    />
   </div>
-  <button type="submit" class="bg-green-400 px-5 py-4 rounded">Edit</button>
-  <p>Images</p>
+  <div class="mx-auto">
+    <label class="text-left" for="price">Price</label>
+    <input
+      class="block md:w-96 w-52"
+      type="number"
+      id="price"
+      name="price"
+      formControlName="price"
+    />
+  </div>
+  <div class="mx-auto">
+    <label for="quantity">Quantity</label>
+    <input
+      class="block md:w-96 w-52"
+      type="number"
+      id="quantity"
+      name="quantity"
+      formControlName="quantity"
+    />
+  </div>
+  <div class="mx-auto">
+    <label for="description">Description</label>
+    <textarea
+      class="block md:w-96 w-52"
+      type="text"
+      name="description"
+      formControlName="description"
+    ></textarea>
+  </div>
+  <div class="mx-auto">
+    <label>Visibility</label>
+    <select class="block md:w-96 w-52" formControlName="visible">
+      <option value="true">Public</option>
+      <option value="false">Hidden</option>
+    </select>
+  </div>
+  <div class="mt-2">
+    <label for="images">Images</label>
+    <input
+      class="block mx-auto"
+      (change)="onLoad($event.target.files)"
+      id="images"
+      accept="image/jpeg image/png"
+      multiple
+      name="images"
+      type="file"
+    />
+  </div>
   <div *ngIf="newImages" class="flex flex-wrap">
     <img
       class="lg:w-72 lg:h-72 w-40 h-40 px-5 py-5 object-cover"
@@ -64,7 +72,6 @@
       [src]="file"
     />
   </div>
-
   <div *ngIf="!newImages" class="flex flex-wrap">
     <img
       class="lg:w-72 lg:h-72 w-40 h-40 px-5 py-5 object-cover"
@@ -72,5 +79,8 @@
       [src]="img"
     />
   </div>
+  <button type="submit" class="mx-auto mb-5 bg-green-400 px-10 py-4 rounded">
+    Edit
+  </button>
 </form>
 <div class="w-full py-2 bg-black"></div>
