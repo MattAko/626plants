@@ -5,6 +5,12 @@
 */
 const express = require("express");
 const router = express.Router();
+const axios = require("axios")
+
+// Importing secrets
+const secrets = require("./secrets/secrets.json");
+const { Bucket } = require("@google-cloud/storage");
+const _API_KEY = secrets._API_KEY;
 
 /*
   @desc: Returns JSON of all ShopItems
@@ -16,9 +22,34 @@ const router = express.Router();
   }
 */
 router.route("/loadShop").get((req, res) => {
-  console.log("Request received: /api/loadShop");
-  console.log(shopItems);
-  res.send(shopItems);
+  // console.log("Request received: /api/loadShop");
+  // console.log(shopItems);
+  // res.send(shopItems);
+
+  console.log('loading shop for customer...')
+  axios
+    .get(`${secrets.firebaseDatabase}/products.json`, {
+      params: {
+        auth: secrets.APP_SECRET,
+      },
+    })
+    .then((shop) => {
+      const shopItems = [];
+      for (let item in shop.data) {
+        let obj = shop.data[item];
+        console.log(obj)
+        shopItems.push({
+          id: item,
+          name: obj.name,
+          price: obj.price,
+          thumbnailUrl: obj.images['image0'],
+        });
+      }
+      res.send(shopItems);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 /*
@@ -35,15 +66,44 @@ router.route("/loadShop").get((req, res) => {
   } 
 */
 router.route("/getProduct").get((req, res) => {
-  console.log("Request received: /api/getProduct");
-  console.log(req.query);
-  const returnVal = testShop.items.find((item) => {
-    console.log(req.query.id);
-    if (item.id === +req.query.id) {
-      return item;
-    }
-  });
-  res.send(returnVal);
+  // console.log("Request received: /api/getProduct");
+  // console.log(req.query);
+  // const returnVal = testShop.items.find((item) => {
+  //   console.log(req.query.id);
+  //   if (item.id === +req.query.id) {
+  //     return item;
+  //   }
+  // });
+  // res.send(returnVal);
+
+  axios
+    .get(`${secrets.firebaseDatabase}/products/${req.query.id}.json`, {
+      params: {
+        auth: secrets.APP_SECRET,
+      },
+    })
+    .then((shop) => {
+      const item = shop.data;
+      let images = []
+      if(item.images){
+        for(let image in item.images){
+          images.push(item.images[image]);
+        }
+      }
+      const product = {
+        id: req.query.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        images: images,
+        description: item.description,
+        posted: item.posted
+      }
+      res.send(product);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = router;
