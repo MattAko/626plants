@@ -15,6 +15,7 @@ import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ShopComponent } from './shop/shop.component';
 import { ShopItemComponent } from './shop/shop-item/shop-item.component';
 import { ProductPageComponent } from './shop/product-page/product-page.component';
+import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ProductPageComponent } from './shop/product-page/product-page.component
     FooterComponent,
     ShopItemComponent,
     ProductPageComponent,
+    MobileNavComponent,
   ],
   imports: [
     BrowserModule,

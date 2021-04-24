@@ -1,5 +1,6 @@
-<app-navbar></app-navbar>
-<div class="max-w-5x1 mx-auto">
+<app-navbar class="z-10 fixed top-0 w-full" *ngIf="!mobileNavEnabled"></app-navbar>
+<app-mobile-nav class="z-10 fixed top-0 w-full" *ngIf="mobileNavEnabled"></app-mobile-nav>
+<div class="max-w-5x1 mx-auto mt-10 md:mt-24">
   <router-outlet></router-outlet>
 </div>
 <app-footer></app-footer>

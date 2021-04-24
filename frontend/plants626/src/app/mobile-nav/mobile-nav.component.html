@@ -1,0 +1,40 @@
+<nav class="w-full py-3 flex bg-black justify-end px-10">
+  <ul class="p-2 cursor-pointer">
+    <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
+    <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
+    <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
+  </ul>
+</nav>
+<div *ngIf="dropdownVisible" class="bg-black rounded-b-2xl">
+  <ul class="text-artichoke">
+    <li
+      routerLinkActive="bg-artichoke text-black"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="text-center py-4 cursor-pointer"
+      [routerLink]="['/']"
+    >
+      Home
+    </li>
+    <li
+      routerLinkActive="bg-artichoke text-black"
+      class="text-center py-4 cursor-pointer"
+      [routerLink]="['/shop']"
+    >
+      Shop
+    </li>
+    <li
+      routerLinkActive="bg-artichoke text-black"
+      class="text-center py-4 cursor-pointer"
+      [routerLink]="['/faq']"
+    >
+      FAQ
+    </li>
+    <li
+      routerLinkActive="bg-artichoke text-black"
+      class="text-center py-4 cursor-pointer rounded-b-2xl"
+      [routerLink]="['/contact']"
+    >
+      Contact
+    </li>
+  </ul>
+</div>

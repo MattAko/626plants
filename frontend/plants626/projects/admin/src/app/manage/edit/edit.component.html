@@ -65,14 +65,14 @@
       type="file"
     />
   </div>
-  <div *ngIf="newImages" class="flex flex-wrap">
+  <div *ngIf="newImages" class="mx-auto flex justify-around flex-wrap">
     <img
       class="lg:w-72 lg:h-72 w-40 h-40 px-5 py-5 object-cover"
       *ngFor="let file of fileUrls"
       [src]="file"
     />
   </div>
-  <div *ngIf="!newImages" class="flex flex-wrap">
+  <div *ngIf="!newImages" class="mx-auto flex justify-around flex-wrap">
     <img
       class="lg:w-72 lg:h-72 w-40 h-40 px-5 py-5 object-cover"
       *ngFor="let img of product.images"
