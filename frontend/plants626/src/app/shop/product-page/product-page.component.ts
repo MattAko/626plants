@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/CartService.service';
 import { Product } from 'src/app/shared/Product.model';
+import { WindowService } from 'src/app/WindowService.service';
 import { ShopService } from '../ShopService.service';
 
 @Component({
@@ -10,15 +11,20 @@ import { ShopService } from '../ShopService.service';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css'],
 })
-export class ProductPageComponent implements OnInit {
+export class ProductPageComponent implements OnInit, OnDestroy {
   product: Product;
   subscription: Subscription;
   available: Boolean = true;
 
+  selectedImage: number = 0;
+  windowSubscription: Subscription;
+  mobile: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private shopSerivce: ShopService,
-    private cartService: CartService
+    private cartService: CartService,
+    private windowService: WindowService
   ) {}
 
   ngOnInit(): void {
@@ -28,9 +34,14 @@ export class ProductPageComponent implements OnInit {
         (product: Product) => {
           this.product = product;
           this.available = !this.cartService.CheckItem(this.product);
-          console.log(this.available);
         }
       );
+    });
+
+    this.mobile = this.windowService.mobileEnabled;
+    console.log(this.mobile)
+    this.windowService.innerWidthChanged.subscribe((width) => {
+      this.mobile = this.windowService.mobileEnabled;
     });
   }
 
@@ -43,5 +54,13 @@ export class ProductPageComponent implements OnInit {
     } else {
       this.available = false;
     }
+  }
+
+  ngOnDestroy() {
+    this.windowSubscription.unsubscribe();
+  }
+
+  onImageClick(index: number){
+    this.selectedImage = index;
   }
 }

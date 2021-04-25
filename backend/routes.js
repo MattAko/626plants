@@ -37,7 +37,6 @@ router.route("/loadShop").get((req, res) => {
       const shopItems = [];
       for (let item in shop.data) {
         let obj = shop.data[item];
-        console.log(obj)
         shopItems.push({
           id: item,
           name: obj.name,

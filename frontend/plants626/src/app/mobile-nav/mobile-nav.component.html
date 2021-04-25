@@ -1,14 +1,14 @@
-<nav class="w-full py-3 flex bg-black justify-end px-10">
+<nav class="w-full py-3 flex bg-green justify-end px-10">
   <ul class="p-2 cursor-pointer">
     <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
     <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
     <li class="h-0.5 w-5 border-2 my-1 rounded"></li>
   </ul>
 </nav>
-<div *ngIf="dropdownVisible" class="bg-black rounded-b-2xl">
-  <ul class="text-artichoke">
+<div *ngIf="dropdownVisible" class="bg-green rounded-b-2xl">
+  <ul class="text-white">
     <li
-      routerLinkActive="bg-artichoke text-black"
+      routerLinkActive="bg-black text-green"
       [routerLinkActiveOptions]="{ exact: true }"
       class="text-center py-4 cursor-pointer"
       [routerLink]="['/']"
