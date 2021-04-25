@@ -16,6 +16,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ShopItemComponent } from './shop/shop-item/shop-item.component';
 import { ProductPageComponent } from './shop/product-page/product-page.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
+import { CloseButtonComponent } from './shared/close-button/close-button.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
     ShopItemComponent,
     ProductPageComponent,
     MobileNavComponent,
+    CloseButtonComponent,
   ],
   imports: [
     BrowserModule,

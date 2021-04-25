@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { CartService } from './CartService.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,10 @@ export class AppComponent implements OnInit {
   mobileNavEnabled: boolean;
   innerWidth: any;
 
+  constructor(private cartService: CartService){
+
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
@@ -21,5 +26,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.mobileNavEnabled = this.innerWidth <= this.md;
+    this.cartService.LoadStorage();
   }
 }

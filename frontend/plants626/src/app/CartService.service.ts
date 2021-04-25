@@ -3,19 +3,7 @@ import { Product } from './shared/Product.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  tempDate = new Date('December 25, 1995 23:15:30');
-  shoppingCart: Product[] = [
-    new Product(4, 'Monsterra', 1400, 1, [''], 'a green plant', this.tempDate),
-    new Product(
-      5,
-      'Monsterra marble',
-      15000,
-      1,
-      [''],
-      'a green plant with some white',
-      this.tempDate
-    ),
-  ];
+  shoppingCart: Product[] = []; 
 
   constructor() {}
 
@@ -24,23 +12,25 @@ export class CartService {
   }
 
   /*
-        Add a product to shopping cart array
-    */
+   *  Add a product to shopping cart array, then add to localStorage
+   */
   Add(product: Product) {
     this.shoppingCart.push(product);
+    this.UpdateStorage();
   }
 
   /*
-        Removes the given index from shopping cart array
-    */
+   *  Removes the given index from shopping cart array
+   */
   Remove(index: number) {
     this.shoppingCart.splice(index);
+    this.UpdateStorage();
   }
 
   /*
-        Checks if given product is already in cart
-        @return: Boolean; true if product is found, false otherwise.
-    */
+   *    Checks if given product is already in cart
+   *    @return: Boolean: true if product is found, false otherwise.
+   */
   CheckItem(product: Product): Boolean {
       if(this.shoppingCart.find((value: Product) => {
           if(value.id===product.id){
@@ -52,5 +42,23 @@ export class CartService {
           return false;
       }
     
+  }
+
+  /*
+   *  Add the cart to localStorage
+   */
+  UpdateStorage(){
+    localStorage.setItem('cart', JSON.stringify(this.shoppingCart))
+    localStorage.setItem('cart-date', (new Date()).toString())
+  }
+
+  /*
+   *
+   */
+  LoadStorage(){
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if(cart){
+      this.shoppingCart = cart;
+    }
   }
 }

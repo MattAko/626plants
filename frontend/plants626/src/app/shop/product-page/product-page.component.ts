@@ -39,7 +39,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     });
 
     this.mobile = this.windowService.mobileEnabled;
-    console.log(this.mobile)
+    console.log('mobile:' + this.mobile)
     this.windowSubscription = this.windowService.innerWidthChanged.subscribe((width) => {
       this.mobile = this.windowService.mobileEnabled;
     });
