@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-mobile-nav',
@@ -6,14 +6,11 @@ import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./mobile-nav.component.css'],
 })
 export class MobileNavComponent {
-  constructor(private elRef: ElementRef) {}
-
+  @ViewChild('hamburger') hamburgerMenuRef;
   dropdownVisible: boolean = false;
 
+  // Toggle dropdown menu based on whether the user clicks the hamburger menu.
   @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
-    this.dropdownVisible = this.elRef.nativeElement.contains(event.target)
-      ? !this.dropdownVisible
-      : false;
-    console.log(this.dropdownVisible);
+    this.dropdownVisible = this.hamburgerMenuRef.nativeElement.contains(event.target) ? !this.dropdownVisible : false;
   }
 }
