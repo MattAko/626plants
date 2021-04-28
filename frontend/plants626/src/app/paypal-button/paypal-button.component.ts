@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActionSequence } from 'selenium-webdriver';
 
 declare let paypal: any;
 @Component({
@@ -25,18 +24,22 @@ export class PaypalButtonComponent implements OnInit {
 
   private onApprove(data, actions){
     console.log('onApprove called');
-    return actions.order.capture();
+    return actions.order.capture().then((details) => {
+      console.log('Transaction completed');
+      console.log(details)
+    });
   }
 
   private createOrder(data, actions){
     console.log('Create order called');
+    console.log(actions)
     return actions.order.create({
       purchase_units: [{
         description: 'Test order',
         currency_code: 'USD',
         value: 'amt',
         amount: {
-          value: '1.50'
+          value: '17.50'
         }
       }]
     })

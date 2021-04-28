@@ -1,13 +1,18 @@
-<div class="flex flex-row justify-around mx-auto" *ngFor="let product of products">
-  <img
-    [src]="product.images[0]"
-    class="w-24 h-24 object-cover"
-    alt="product-image"
-  />
-  <h2>{{ product.name }}</h2>
-  <div>
-    <p>{{ product.price | currency }}</p>
-    <p>Quantity {{ product.quantity }}</p>
+<div *ngFor="let product of products">
+  <div class="flex flex-row justify-between my-5">
+    <div class="flex flex-row">
+      <img
+        [src]="product.images[0]"
+        class="w-24 h-24 object-cover"
+        alt="product-image"
+      />
+      <div class="px-5">
+        <h2 class="font-bold capitalize">{{ product.name }}</h2>
+        <p class="font-thin">{{ product.price | currency }}</p>
+        <p class="font-thin">Quantity x{{ product.quantity }}</p>
+      </div>
+    </div>
+    <app-close-button (click)="removeFromCart(product.id)" class="self-center"></app-close-button>
   </div>
-  <app-close-button class="self-center"></app-close-button>
+  <hr />
 </div>
