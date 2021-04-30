@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CartService } from '../CartService.service';
+import { Cart } from '../shared/Cart.model';
 import { Product } from '../shared/Product.model';
 
 @Component({
@@ -8,18 +10,18 @@ import { Product } from '../shared/Product.model';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  products: Product[];
-  subtotal: number = 0;
-  shipping: number;
-  total: number = 0;
+  cart: Cart;
+  cartSubscription: Subscription;
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.products = this.cartService.getItems();
-    console.log(this.products);
-    for (let x of this.products) {
-      this.subtotal = this.subtotal + x.price;
-    }
-    this.total = this.shipping ? this.subtotal + this.shipping: this.subtotal;
+    this.cart = this.cartService.cart;
+    this.cartSubscription = this.cartService.cartChanged.subscribe(
+      (cart: Cart) => {
+        this.cart = cart;
+      }
+    );
   }
+
+  
 }
