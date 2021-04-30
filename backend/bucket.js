@@ -13,20 +13,7 @@ admin.initializeApp({
 })
 
 const bucket = admin.storage().bucket()
-const destFileName = 'dummy.txt';
-const filePath = './dummy.txt'
 
-const options = {
-  destination: 'new-dummy.txt',
-  metadata: {
-    metadata:{
-      event: 'Fall trip to zoo'
-    }
-  }
-}
-
-bucket.upload(filePath, options, (err, file) => {
-  console.log('hopefully it uploaded')
-})
+console.log('Bucket is running');
 
 module.exports = bucket;
