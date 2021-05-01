@@ -1,21 +1,24 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Cart } from './shared/Cart.model';
 import { Product } from './shared/Product.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  //shoppingCart: Product[] = [];
-  //shoppingCartChanged = new Subject<Product[]>();
   private _cart = new Cart([], 0, 0, 0);
   cartChanged = new Subject<Cart>();
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   get cart() {
     return this._cart;
   }
 
+  /*
+   * Update both subtotal and total for shopping cart
+   */
   updateTotal() {
     let total: number = 0;
     this._cart.products.map((cartItem) => {
@@ -34,7 +37,7 @@ export class CartService {
    */
   Add(product: Product) {
     this._cart.products.push(product);
-    this.UpdateStorage();
+    this.updateStorage();
     this.cartChanged.next(this._cart);
     this.updateTotal();
   }
@@ -42,16 +45,16 @@ export class CartService {
   /*
    *  Removes the given index from shopping cart array
    */
-  Remove(index: number) {
+  remove(index: number) {
     this._cart.products.splice(index, 1);
-    this.UpdateStorage();
+    this.updateStorage();
     this.cartChanged.next(this._cart);
   }
 
   /*
    * Removes item based on ID
    */
-  RemoveItem(id: number) {
+  removeItem(id: number) {
     console.log('removing item...');
     this._cart.products.map((product, index) => {
       console.log(product);
@@ -60,7 +63,7 @@ export class CartService {
         this._cart.products.splice(index, 1);
         this.cartChanged.next(this._cart);
         this.updateTotal();
-        this.UpdateStorage();
+        this.updateStorage();
         return;
       }
     });
@@ -70,7 +73,7 @@ export class CartService {
    *    Checks if given product is already in cart
    *    @return: Boolean: true if product is found, false otherwise.
    */
-  CheckItem(product: Product): Boolean {
+  checkItem(product: Product): Boolean {
     if (
       this._cart.products.find((value: Product) => {
         if (value.id === product.id) {
@@ -87,7 +90,7 @@ export class CartService {
   /*
    *  Add the cart to localStorage
    */
-  UpdateStorage() {
+  updateStorage() {
     localStorage.setItem('cart', JSON.stringify(this._cart.products));
     localStorage.setItem('cart-date', new Date().toString());
   }
@@ -97,11 +100,31 @@ export class CartService {
    *  If found, set 'shoppingCart' and set '_total'
    *  @return: None
    */
-  LoadStorage() {
+  loadStorage() {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (cart) {
       this._cart.products = cart;
       this.updateTotal();
     }
+  }
+
+  /*
+   *  Authorize shopping cart
+   */
+  authorizeCart() {
+    return this.http
+      .post('/api/authorizeCart', {
+        cart: this._cart,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(errorResponse: HttpErrorResponse) {
+    const { error } = errorResponse;
+    console.log(error);
+    if (error.invalid) {
+      return throwError('Invalid cart');
+    }
+    return throwError('Error thrown');
   }
 }

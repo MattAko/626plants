@@ -33,7 +33,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       this.subscription = this.shopSerivce.productUpdated.subscribe(
         (product: Product) => {
           this.product = product;
-          this.available = !this.cartService.CheckItem(this.product);
+          this.available = !this.cartService.checkItem(this.product);
         }
       );
     });
@@ -48,7 +48,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   // Adds product to the shopping cart
   AddToCart() {
     // If the product is already in cart, do not add to cart, otherwise, add the product to the cart
-    if (!this.cartService.CheckItem(this.product)) {
+    if (!this.cartService.checkItem(this.product)) {
       this.cartService.Add(this.product);
       console.log('Added to cart');
     } else {

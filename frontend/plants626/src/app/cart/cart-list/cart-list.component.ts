@@ -23,7 +23,7 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   removeFromCart(id: number) {
-    this.cartService.RemoveItem(id);
+    this.cartService.removeItem(id);
   }
 
   ngOnDestroy(){

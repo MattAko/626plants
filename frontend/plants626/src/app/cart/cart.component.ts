@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from '../CartService.service';
 import { Cart } from '../shared/Cart.model';
-import { Product } from '../shared/Product.model';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +12,7 @@ import { Product } from '../shared/Product.model';
 export class CartComponent implements OnInit {
   cart: Cart;
   cartSubscription: Subscription;
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.cart = this.cartService.cart;
@@ -23,5 +23,21 @@ export class CartComponent implements OnInit {
     );
   }
 
-  
+  /*
+   *  Check if cart is valid before going to checkout
+   */
+  authorizeCart(){
+    interface authorizedCart{
+      valid: boolean
+    }
+    this.cartService.authorizeCart().subscribe((response: authorizedCart) => {
+      console.log(response)
+      if(response.valid){
+        this.router.navigate(['/checkout']);
+      }
+      else{
+        console.log('Error received')
+      }
+    })
+  } 
 }

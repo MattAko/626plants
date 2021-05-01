@@ -1,7 +1,6 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { stringify } from '@angular/compiler/src/util';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Product } from '../shared/Product.model';
 import { ShopItem } from '../shared/ShopItem.model';
 @Injectable({

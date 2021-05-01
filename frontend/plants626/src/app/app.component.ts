@@ -26,6 +26,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.mobileNavEnabled = this.innerWidth <= this.md;
-    this.cartService.LoadStorage();
+    this.cartService.loadStorage();
   }
 }
