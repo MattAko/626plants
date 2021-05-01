@@ -5,11 +5,14 @@
 */
 const express = require("express");
 const router = express.Router();
-const axios = require("axios")
+const axios = require("axios");
+const bodyParser = require("body-parser");
+const jsonParser = bodyParser.json();
 
 // Importing secrets
 const secrets = require("./secrets/secrets.json");
 const { Bucket } = require("@google-cloud/storage");
+const { app } = require("firebase-admin");
 const _API_KEY = secrets._API_KEY;
 
 /*
@@ -22,33 +25,33 @@ const _API_KEY = secrets._API_KEY;
   }
 */
 router.route("/loadShop").get((req, res) => {
-  // console.log("Request received: /api/loadShop");
-  // console.log(shopItems);
-  // res.send(shopItems);
+    // console.log("Request received: /api/loadShop");
+    // console.log(shopItems);
+    // res.send(shopItems);
 
-  console.log('loading shop for customer...')
-  axios
-    .get(`${secrets.firebaseDatabase}/products.json`, {
-      params: {
-        auth: secrets.APP_SECRET,
-      },
-    })
-    .then((shop) => {
-      const shopItems = [];
-      for (let item in shop.data) {
-        let obj = shop.data[item];
-        shopItems.push({
-          id: item,
-          name: obj.name,
-          price: obj.price,
-          thumbnailUrl: obj.images['image0'],
+    console.log("loading shop for customer...");
+    axios
+        .get(`${secrets.firebaseDatabase}/products.json`, {
+            params: {
+                auth: secrets.APP_SECRET,
+            },
+        })
+        .then((shop) => {
+            const shopItems = [];
+            for (let item in shop.data) {
+                let obj = shop.data[item];
+                shopItems.push({
+                    id: item,
+                    name: obj.name,
+                    price: obj.price,
+                    thumbnailUrl: obj.images["image0"],
+                });
+            }
+            res.send(shopItems);
+        })
+        .catch((err) => {
+            console.log(err);
         });
-      }
-      res.send(shopItems);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 });
 
 /*
@@ -65,34 +68,97 @@ router.route("/loadShop").get((req, res) => {
   } 
 */
 router.route("/getProduct").get((req, res) => {
-  axios
-    .get(`${secrets.firebaseDatabase}/products/${req.query.id}.json`, {
-      params: {
-        auth: secrets.APP_SECRET,
-      },
-    })
-    .then((shop) => {
-      const item = shop.data;
-      let images = []
-      if(item.images){
-        for(let image in item.images){
-          images.push(item.images[image]);
-        }
-      }
-      const product = {
-        id: req.query.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        images: images,
-        description: item.description,
-        posted: item.posted
-      }
-      res.send(product);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    axios
+        .get(`${secrets.firebaseDatabase}/products/${req.query.id}.json`, {
+            params: {
+                auth: secrets.APP_SECRET,
+            },
+        })
+        .then((shop) => {
+            const item = shop.data;
+            let images = [];
+            if (item.images) {
+                for (let image in item.images) {
+                    images.push(item.images[image]);
+                }
+            }
+            const product = {
+                id: req.query.id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                images: images,
+                description: item.description,
+                posted: item.posted,
+            };
+            res.send(product);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
+
+/*
+  Retrieve user cart, authorize
+*/
+router.route("/authorizeCart").post(jsonParser, (req, res) => {
+    //console.log(req.body);
+    const { cart } = req.body;
+    axios
+        .get(`${secrets.firebaseDatabase}/products.json`, {
+            params: {
+                auth: secrets.APP_SECRET,
+            },
+        })
+        .then((response) => {
+            const { valid, errorId } = AuthorizeCart(cart, response.data);
+            const invalid = !valid;
+            if (invalid) {
+                console.log('Invalid cart')
+                res.status(400);
+                res.json({ invalid: invalid, errorId: errorId });
+            } else {
+                res.status(200);
+                res.json({ valid: true });
+            }
+        });
+});
+
+/*
+  @input: client: Cart, server: {id: Product} 
+  Cart: {
+    products: Products[],
+    subtotal: number,
+    shipping: number,
+    total: number
+  }
+  @return: boolean
+*/
+function AuthorizeCart(client, server) {
+    let valid = true;
+    let check = true;
+    let clientProducts = client.products;
+    let errors = [];
+    // Check user cart item ID's, then ensure the validity of the cart
+    // If error found, add
+    for (let i = 0; i < client.products.length; i++) {
+        for (let product in server) {
+            check = true;
+            if (product === clientProducts[i].id) {
+                check =
+                    check && server[product].price === clientProducts[i].price;
+                check =
+                    check &&
+                    server[product].quantity <= clientProducts[i].quantity;
+                if (!check) {
+                    errors.push(clientProducts[i].id);
+                    valid = false;
+                }
+            }
+        }
+    }
+    console.log(errors)
+    return { valid: valid, errorId: errors };
+}
 
 module.exports = router;
