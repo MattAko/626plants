@@ -15,6 +15,7 @@ export class CartComponent implements OnInit, OnDestroy {
   cartSubscription: Subscription;
   errors: number[];
   errorProducts: Product[];
+  loading: boolean = false;
 
   constructor(private cartService: CartService, private router: Router ) {}
 
@@ -33,6 +34,7 @@ export class CartComponent implements OnInit, OnDestroy {
    *  @return none
    */
   authorizeCart() {
+    this.loading = true;
     interface authorizedCart {
       valid: boolean;
     }
@@ -43,6 +45,7 @@ export class CartComponent implements OnInit, OnDestroy {
         }
       },
       (errors: any) => {
+        this.loading = false;
         this.errors = errors;
         this.errorProducts = [];  // reset
         this.errors.map((errorId) => {

@@ -16,19 +16,26 @@
       </li>
       <hr class="my-2" />
     </ul>
-    <button
-      type="button"
-      [disabled]="cart.products.length == 0"
-      (click)="authorizeCart()"
-      class="bg-artichoke rounded-xl px-5 py-4"
-    >
-      Proceed to Checkout
-    </button>
-    <div *ngIf="errors">
-      <p>There was an error processing your order as a result of these items:</p>
-      <p *ngFor="let prod of errorProducts">
-        {{ prod.name }}
-      </p>
+    <div *ngIf="!loading" class="text-center">
+      <button
+        type="button"
+        [disabled]="cart.products.length == 0"
+        (click)="authorizeCart()"
+        class="bg-artichoke rounded-xl px-5 py-4 text-center"
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+    <div *ngIf="loading" class="flex justify-center">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div class="text-red-500" *ngIf="errors">
+      <ul class="list-inside list-disc">
+        There was an error processing your order as a result of these items:
+        <li *ngFor="let prod of errorProducts">
+          {{ prod.name }}
+        </li>
+      </ul>
     </div>
   </div>
 </div>

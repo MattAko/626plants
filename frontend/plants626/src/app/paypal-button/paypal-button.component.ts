@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CartService } from '../CartService.service';
+import { Cart } from '../shared/Cart.model';
 
 declare let paypal: any;
 @Component({
@@ -9,18 +10,34 @@ declare let paypal: any;
 })
 export class PaypalButtonComponent implements OnInit {
   @ViewChild('button', { static: true }) paypalElement: ElementRef;
+  cart: Cart;
+
   constructor(private cartService: CartService) {}
 
-  paypalConfig = {
-    createOrder: this.createOrder,
-    onApprove: this.onApprove,
-    onError: (err) => {
-      console.log('There was an error: ' + err);
-    },
-  };
-
   ngOnInit(): void {
-    paypal.Buttons(this.paypalConfig).render(this.paypalElement.nativeElement);
+    this.cart = this.cartService.cart;
+    let paypalConfig = {
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [
+            {
+              description: 'Test order',
+              currency_code: 'USD',
+              value: 'amt',
+              amount: {
+                value: this.cart.total,
+                description: '626plants'
+              },
+            },
+          ],
+        });
+      },
+      onApprove: this.onApprove,
+      onError: (err) => {
+        console.log('There was an error: ' + err);
+      },
+    };
+    paypal.Buttons(paypalConfig).render(this.paypalElement.nativeElement);
   }
 
   private onApprove(data, actions) {
@@ -31,21 +48,19 @@ export class PaypalButtonComponent implements OnInit {
     });
   }
 
-  private createOrder(data, actions) {
-    console.log('Create order called');
-    console.log(actions);
-    console.log(data);
-    return actions.order.create({
-      purchase_units: [
-        {
-          description: 'Test order',
-          currency_code: 'USD',
-          value: 'amt',
-          amount: {
-            value: '25.12',
-          },
-        },
-      ],
-    });
-  }
+  // private createOrder(data, actions) {
+  //   console.log('Create order called');
+  //   return actions.order.create({
+  //     purchase_units: [
+  //       {
+  //         description: 'Test order',
+  //         currency_code: 'USD',
+  //         value: 'amt',
+  //         amount: {
+  //           value: this.total,
+  //         },
+  //       },
+  //     ],
+  //   });
+  // }
 }

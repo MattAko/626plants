@@ -65,11 +65,8 @@ export class CartService {
    * Removes item based on ID
    */
   removeItem(id: number) {
-    console.log('removing item...');
     this._cart.products.map((product, index) => {
-      console.log(product);
       if (product.id === id) {
-        console.log(product.id + ' is the same as ' + id);
         this._cart.products.splice(index, 1);
         this.cartChanged.next(this._cart);
         this.updateTotal();
@@ -112,8 +109,6 @@ export class CartService {
    */
   loadStorage() {
     const cart = JSON.parse(localStorage.getItem('cart'));
-    console.log('loading from storage...');
-    console.log(cart);
     if (cart) {
       this._cart.products = cart;
       this.updateTotal();

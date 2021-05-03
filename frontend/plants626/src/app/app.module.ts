@@ -18,6 +18,7 @@ import { ProductPageComponent } from './shop/product-page/product-page.component
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 import { CloseButtonComponent } from './shared/close-button/close-button.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     MobileNavComponent,
     CloseButtonComponent,
     CheckoutComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
