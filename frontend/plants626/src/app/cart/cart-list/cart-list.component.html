@@ -1,4 +1,4 @@
-<div *ngFor="let product of products">
+<div *ngFor="let product of products;">
   <div class="flex flex-row justify-between my-5">
     <div class="flex flex-row">
       <img
@@ -14,5 +14,5 @@
     </div>
     <app-close-button (click)="removeFromCart(product.id)" class="self-center"></app-close-button>
   </div>
-  <hr />
+  <hr/>
 </div>

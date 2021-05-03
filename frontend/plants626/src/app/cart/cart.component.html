@@ -24,6 +24,12 @@
     >
       Proceed to Checkout
     </button>
+    <div *ngIf="errors">
+      <p>There was an error processing your order as a result of these items:</p>
+      <p *ngFor="let prod of errorProducts">
+        {{ prod.name }}
+      </p>
+    </div>
   </div>
 </div>
 <div *ngIf="!cart">Cart is loading...</div>

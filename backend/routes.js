@@ -79,10 +79,10 @@ router.route("/getProduct").get((req, res) => {
                 }
             }
             const product = {
-                id: req.query.id,
+                id: +req.query.id,
                 name: item.name,
-                price: item.price,
-                quantity: item.quantity,
+                price: +item.price,
+                quantity: +item.quantity,
                 images: images,
                 description: item.description,
                 posted: item.posted,
@@ -140,7 +140,8 @@ function AuthorizeCart(client, server) {
     for (let i = 0; i < client.products.length; i++) {
         for (let product in server) {
             check = true;
-            if (product === clientProducts[i].id) {
+            if (+product === +clientProducts[i].id) {
+                console.log(server[product].price === clientProducts[i].price);
                 check =
                     check && server[product].price === clientProducts[i].price;
                 check =
@@ -150,9 +151,10 @@ function AuthorizeCart(client, server) {
                     errors.push(+clientProducts[i].id);
                     valid = false;
                 }
-            }
+            } 
         }
     }
+    console.log("checking errors...");
     console.log(errors);
     return { valid: valid, errorId: errors };
 }

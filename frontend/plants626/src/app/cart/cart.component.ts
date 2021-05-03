@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from '../CartService.service';
 import { Cart } from '../shared/Cart.model';
+import { Product } from '../shared/Product.model';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cart: Cart;
   cartSubscription: Subscription;
-  constructor(private cartService: CartService, private router: Router) {}
+  errors: number[];
+  errorProducts: Product[];
+
+  constructor(private cartService: CartService, private router: Router ) {}
 
   ngOnInit(): void {
     this.cart = this.cartService.cart;
@@ -25,19 +29,32 @@ export class CartComponent implements OnInit {
 
   /*
    *  Check if cart is valid before going to checkout
+   *  @param none
+   *  @return none
    */
-  authorizeCart(){
-    interface authorizedCart{
-      valid: boolean
+  authorizeCart() {
+    interface authorizedCart {
+      valid: boolean;
     }
-    this.cartService.authorizeCart().subscribe((response: authorizedCart) => {
-      console.log(response)
-      if(response.valid){
-        this.router.navigate(['/checkout']);
+    this.cartService.authorizeCart().subscribe(
+      (response: authorizedCart) => {
+        if (response.valid) {
+          this.router.navigate(['/checkout']);
+        }
+      },
+      (errors: any) => {
+        this.errors = errors;
+        this.errorProducts = [];  // reset
+        this.errors.map((errorId) => {
+          console.log(this.cartService.getItem(errorId))
+          this.errorProducts.push(this.cartService.getItem(errorId))
+          console.log(this.errorProducts)
+        })
       }
-      else{
-        console.log('Error received')
-      }
-    })
-  } 
+    );
+  }
+
+  ngOnDestroy() {
+    this.cartSubscription.unsubscribe();
+  }
 }

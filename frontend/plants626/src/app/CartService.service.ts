@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Cart } from './shared/Cart.model';
 import { Product } from './shared/Product.model';
@@ -26,6 +26,16 @@ export class CartService {
     });
     this._cart.total = total;
     this._cart.subtotal = total;
+  }
+
+  /*
+   *  Search for a product in the cart based on the id
+   *  Used for throwing errors when processing cart
+   *  @param id: number
+   *  @return product: Product
+   */
+  getItem(id: number) {
+    return this._cart.products.find((prod) => prod.id === id);
   }
 
   getItems() {
@@ -102,6 +112,8 @@ export class CartService {
    */
   loadStorage() {
     const cart = JSON.parse(localStorage.getItem('cart'));
+    console.log('loading from storage...');
+    console.log(cart);
     if (cart) {
       this._cart.products = cart;
       this.updateTotal();
@@ -119,12 +131,17 @@ export class CartService {
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(errorResponse: HttpErrorResponse) {
+  /*
+   *  Throw errors on authorize cart failures
+   *  @param errorResponse: HttpErrorResponse
+   *  @return: throwError()
+   */
+  handleError(errorResponse: HttpErrorResponse) {
     const { error } = errorResponse;
-    console.log(error);
     if (error.invalid) {
-      return throwError('Invalid cart');
+      return throwError(error.errorId);
+    } else {
+      return throwError('Error thrown');
     }
-    return throwError('Error thrown');
   }
 }
