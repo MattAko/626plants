@@ -25,10 +25,6 @@ const _API_KEY = secrets._API_KEY;
   }
 */
 router.route("/loadShop").get((req, res) => {
-    // console.log("Request received: /api/loadShop");
-    // console.log(shopItems);
-    // res.send(shopItems);
-
     console.log("loading shop for customer...");
     axios
         .get(`${secrets.firebaseDatabase}/products.json`, {
@@ -41,7 +37,7 @@ router.route("/loadShop").get((req, res) => {
             for (let item in shop.data) {
                 let obj = shop.data[item];
                 shopItems.push({
-                    id: item,
+                    id: +item,
                     name: obj.name,
                     price: obj.price,
                     thumbnailUrl: obj.images["image0"],
@@ -114,7 +110,7 @@ router.route("/authorizeCart").post(jsonParser, (req, res) => {
             const { valid, errorId } = AuthorizeCart(cart, response.data);
             const invalid = !valid;
             if (invalid) {
-                console.log('Invalid cart')
+                console.log("Invalid cart");
                 res.status(400);
                 res.json({ invalid: invalid, errorId: errorId });
             } else {
@@ -151,13 +147,13 @@ function AuthorizeCart(client, server) {
                     check &&
                     server[product].quantity <= clientProducts[i].quantity;
                 if (!check) {
-                    errors.push(clientProducts[i].id);
+                    errors.push(+clientProducts[i].id);
                     valid = false;
                 }
             }
         }
     }
-    console.log(errors)
+    console.log(errors);
     return { valid: valid, errorId: errors };
 }
 
