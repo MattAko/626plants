@@ -4,7 +4,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Cart } from './shared/Cart.model';
 
@@ -17,13 +17,14 @@ export class CartService {
   private _productIds: number[] = [];
   private _cart = new Cart([], 0, 0, 0); // for visual purposes
   cartChanged = new Subject<Cart>();
+  authorized = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {}
 
   get cart() {
     return this._cart;
   }
-
+  
   /*
    * Update both subtotal and total for shopping cart
    */
@@ -135,7 +136,9 @@ export class CartService {
   }
 
   /*
-   *
+   *  Fetch cart details using product ID's
+   *  @param none
+   *  @return none
    */
   fetchCart() {
     if (this._productIds) {

@@ -42,10 +42,12 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.authorizeCart().subscribe(
       (response: authorizedCart) => {
         if (response.valid) {
+          this.cartService.authorized.next(true);
           this.router.navigate(['/checkout']);
         }
       },
       (errors: any) => {
+        this.cartService.authorized.next(false)
         this.loading = false;
         this.errors = errors;
         this.errorProducts = [];  // reset
