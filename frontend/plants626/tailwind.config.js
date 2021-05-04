@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   prefix: "",
   purge: {
@@ -8,10 +10,18 @@ module.exports = {
     extend: {
       colors: {
         green: "#29524A",
+        lightgreen: "#90ee90",
         artichoke: "#94A187",
         black: "#06070E",
         khaki: "#C5AFA0",
         pink: "#E9BCB7",
+        transparent: "transparent",
+        black: colors.black,
+        white: colors.white,
+        gray: colors.trueGray,
+        indigo: colors.indigo,
+        red: colors.rose,
+        yellow: colors.amber,
       },
     },
   },

@@ -1,13 +1,21 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Cart } from './shared/Cart.model';
-import { Product } from './shared/Product.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private _cart = new Cart([], 0, 0, 0);
+  /*
+   * Customer adds the ID's of the products they want to checkout to cart
+   * CartService retrieves the cart details from the server
+   */
+  private _productIds: number[] = [];
+  private _cart = new Cart([], 0, 0, 0); // for visual purposes
   cartChanged = new Subject<Cart>();
 
   constructor(private http: HttpClient) {}
@@ -43,12 +51,13 @@ export class CartService {
   }
 
   /*
-   *  Add a product to shopping cart array, then add to localStorage
+   *  Add product ID to productIds array, then add to localStorage
+   *  Updating cart not required since user cannot add to cart within cart screen
+   *  @param id: number
    */
-  Add(product: Product) {
-    this._cart.products.push(product);
+  add(id: number) {
+    this._productIds.push(id);
     this.updateStorage();
-    this.cartChanged.next(this._cart);
     this.updateTotal();
   }
 
@@ -62,32 +71,32 @@ export class CartService {
   }
 
   /*
-   * Removes item based on ID
+   *  Remove item based on ID, update cart, then update storage
+   *  @param id: number
    */
   removeItem(id: number) {
     this._cart.products.map((product, index) => {
       if (product.id === id) {
         this._cart.products.splice(index, 1);
-        this.cartChanged.next(this._cart);
         this.updateTotal();
+        this.cartChanged.next(this._cart);
+      }
+    });
+    this._productIds.map((productId, index) => {
+      if (productId === id) {
+        this._productIds.splice(index, 1);
         this.updateStorage();
-        return;
       }
     });
   }
 
   /*
-   *    Checks if given product is already in cart
-   *    @return: Boolean: true if product is found, false otherwise.
+   *  Check if item is already in user's cart
+   *  @param id: number
+   *  @return: boolean; true if item is in cart
    */
-  checkItem(product: Product): Boolean {
-    if (
-      this._cart.products.find((value: Product) => {
-        if (value.id === product.id) {
-          return value;
-        }
-      })
-    ) {
+  check(id: number): Boolean {
+    if (this._productIds.find((ID) => ID === id)) {
       return true;
     } else {
       return false;
@@ -98,7 +107,7 @@ export class CartService {
    *  Add the cart to localStorage
    */
   updateStorage() {
-    localStorage.setItem('cart', JSON.stringify(this._cart.products));
+    localStorage.setItem('productIds', JSON.stringify(this._productIds));
     localStorage.setItem('cart-date', new Date().toString());
   }
 
@@ -108,10 +117,9 @@ export class CartService {
    *  @return: None
    */
   loadStorage() {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    if (cart) {
-      this._cart.products = cart;
-      this.updateTotal();
+    const productIds = JSON.parse(localStorage.getItem('productIds'));
+    if (productIds) {
+      this._productIds = productIds;
     }
   }
 
@@ -124,6 +132,26 @@ export class CartService {
         cart: this._cart,
       })
       .pipe(catchError(this.handleError));
+  }
+
+  /*
+   *
+   */
+  fetchCart() {
+    if (this._productIds) {
+      console.log('Fetching products');
+      console.log(this._productIds);
+      this.http
+        .post<Cart>('/api/getCart', {
+          productIds: this._productIds,
+        })
+        .subscribe((cart) => {
+          this._cart = cart;
+          this.cartChanged.next(this._cart);
+        });
+    } else {
+      console.log('Cart is empty');
+    }
   }
 
   /*

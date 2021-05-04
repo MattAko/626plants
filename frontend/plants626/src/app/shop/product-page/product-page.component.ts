@@ -16,6 +16,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   available: Boolean = true;
 
+  added: boolean = false;
   selectedImage: number = 0;
   windowSubscription: Subscription;
   mobile: boolean;
@@ -33,7 +34,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       this.subscription = this.shopSerivce.productUpdated.subscribe(
         (product: Product) => {
           this.product = product;
-          this.available = !this.cartService.checkItem(this.product);
+          console.log(this.product)
+          this.available = !this.cartService.check(this.product.id);
         }
       );
     });
@@ -46,12 +48,15 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   // Adds product to the shopping cart
-  AddToCart() {
+  addToCart() {
     // If the product is already in cart, do not add to cart, otherwise, add the product to the cart
-    if (!this.cartService.checkItem(this.product)) {
-      this.cartService.Add(this.product);
+    console.log(this.cartService.check(this.product.id))
+    if (!this.cartService.check(this.product.id)) {
+      this.cartService.add(this.product.id);
       console.log('Added to cart');
+      this.added = true;
     } else {
+      this.added = false;
       this.available = false;
     }
   }
@@ -62,5 +67,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   onImageClick(index: number){
     this.selectedImage = index;
+    console.log(this.selectedImage)
   }
 }

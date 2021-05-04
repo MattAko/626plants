@@ -94,6 +94,46 @@ router.route("/getProduct").get((req, res) => {
         });
 });
 
+router.route("/getCart").post(jsonParser, (req, res) => {
+    const { body } = req;
+    axios
+        .get(`${secrets.firebaseDatabase}/products.json`, {
+            params: {
+                auth: secrets.APP_SECRET,
+            },
+        })
+        .then((response) => {
+            const { data } = response;
+            const products = [];
+            for (let id of body.productIds) {
+                if (!data[id]) {
+                    res.status(400);
+                    res.send("Product ID not found or available.");
+                }
+                const { images, visible, ...productData } = data[id];
+                if (!visible) {
+                    res.status(400);
+                    res.send("Product ID not found or available.");
+                }
+                let imagesArray = [];
+                for(let img in images){
+                    imagesArray.push(images[img])
+                }
+                products.push({
+                    id: id,
+                    ...productData,
+                    images: imagesArray
+                });
+            }
+            let subtotal = 0;
+            for(let prod of products){
+                subtotal += prod.price;
+            }
+            const cart = { products: products, subtotal: subtotal, total: subtotal, shipping: 0} 
+            res.send(cart);
+        });
+});
+
 /*
   Retrieve user cart, authorize
 */
@@ -151,7 +191,7 @@ function AuthorizeCart(client, server) {
                     errors.push(+clientProducts[i].id);
                     valid = false;
                 }
-            } 
+            }
         }
     }
     console.log("checking errors...");
