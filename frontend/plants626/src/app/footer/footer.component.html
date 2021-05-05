@@ -1,16 +1,35 @@
-<div class="bg-black text-pink mt-20 py-15">
-    <div class="lg:mx-20 mx-5 py-5 flex justify-around flex-wrap">
-        <ul>
-            <h1 class="font-bold text-2xl">Socials</h1>
-            <img src="/assets/img/facebook-logo.svg" class="inline-block">
-            <img src="assets/img/instagram-logo.svg" class="fill inline-block" >
-        </ul>
-        <ul class="list-inside list-disc">
-            <h2 class="font-bold text-2xl">Links</h2>
-            <li>Home</li>
-            <li>Shop</li>
-            <li>Contact</li>
-            <li>FAQ</li>
-        </ul>
+<div class="bg-gray-200 text-black py-20">
+  <div
+    class="lg:mx-20 mx-5 py-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 content-left gap-10"
+  >
+    <div>
+      <h1 class="font-bold text-3xl md:text-4xl mb-5">626plants</h1>
     </div>
+    <div>
+      <h1 class="font-bold text-xl mb-5">Socials</h1>
+      <a href="https://www.facebook.com/626succulents" target="_blank">
+        <img
+          src="/assets/img/facebook-logo.svg"
+          class="fill-black inline-block px-1"
+        />
+      </a>
+      <a href="https://www.instagram.com/626plants/" target="_blank">
+        <img
+          src="assets/img/instagram-logo.svg"
+          class="fill-black inline-block px-1"
+        />
+      </a>
+    </div>
+    <ul>
+      <h2 class="font-bold text-xl mb-5">Links</h2>
+      <li class="cursor-pointer py-1" [routerLink]="['/']">Home</li>
+      <li class="cursor-pointer py-1" [routerLink]="['/shop']">Shop</li>
+      <li class="cursor-pointer py-1" [routerLink]="['/contact']">Contact</li>
+      <li class="cursor-pointer py-1" [routerLink]="['/faq']">FAQ</li>
+    </ul>
+    <div>
+      <img class="w-60" src="assets/img/paypal.png" />
+    </div>
+  </div>
+  <p class="mt-10 text-center">©2021 626Plants. All rights reserved.</p>
 </div>

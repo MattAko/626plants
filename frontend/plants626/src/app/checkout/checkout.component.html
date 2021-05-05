@@ -1,4 +1,4 @@
-<div *ngIf="cart" class="lg:mx-auto flex flex-wrap w-full justify-evenly">
+<div *ngIf="cart && !paid" class="lg:mx-auto flex flex-wrap w-full justify-evenly">
   <div class="w-5/6 lg:w-2/3 lg:px-8 mt-10 lg:mt-0">
     <h1 class="text-2xl my-5">Your Items</h1>
     <div class="w-full flex justify-evenly m-auto flex-wrap">
@@ -32,7 +32,12 @@
       </li>
       <hr class="my-2" />
     </ul>
-    <app-paypal-button></app-paypal-button>
+    <div class="w-full lg:w-5/6">
+      <app-paypal-button></app-paypal-button>
+    </div>
   </div>
 </div>
 <div *ngIf="!cart">Cart is loading...</div>
+<div *ngIf="paid">
+  Thanks for your purchase! You should receive an email shortly with your order ID.
+</div>

@@ -18,13 +18,14 @@ export class CartService {
   private _cart = new Cart([], 0, 0, 0); // for visual purposes
   cartChanged = new Subject<Cart>();
   authorized = new BehaviorSubject<boolean>(false);
+  paid = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {}
 
   get cart() {
     return this._cart;
   }
-  
+
   /*
    * Update both subtotal and total for shopping cart
    */
@@ -122,6 +123,18 @@ export class CartService {
     if (productIds) {
       this._productIds = productIds;
     }
+  }
+
+  /*
+   *  Clear the cart
+   *  @param none
+   *  @return none
+   */
+  empty() {
+    this._productIds = [];
+    this._cart = new Cart([], 0, 0, 0);
+    localStorage.removeItem('productIds');
+    localStorage.removeItem('cart-date');
   }
 
   /*
