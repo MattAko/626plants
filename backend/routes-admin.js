@@ -17,7 +17,6 @@ const bucket = require("./bucket");
 
 // Importing secrets
 const secrets = require("./secrets/secrets.json");
-const { Bucket } = require("@google-cloud/storage");
 const _API_KEY = secrets._API_KEY;
 
 /*

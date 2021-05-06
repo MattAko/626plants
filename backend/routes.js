@@ -11,9 +11,10 @@ const jsonParser = bodyParser.json();
 
 // Importing secrets
 const secrets = require("./secrets/secrets.json");
-const { Bucket } = require("@google-cloud/storage");
-const { app } = require("firebase-admin");
-const _API_KEY = secrets._API_KEY;
+
+// Import paypal
+const paypal = require("./payment/paypal");
+
 
 /*
   Returns JSON of all ShopItems
@@ -133,6 +134,17 @@ router.route("/getCart").post(jsonParser, (req, res) => {
             res.send(cart);
         });
 });
+
+router.route("/onapprove").post(jsonParser, (req, res) => {
+    //const { data } = req.body; 
+    //console.log(data)
+    const { orderID, payerID } = req.body.data
+    console.log(orderID)
+    paypal.captureOrder(orderID);
+    res.status(200);
+    res.send('OK')
+})
+
 
 /*
   Retrieve user cart, authorize
