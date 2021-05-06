@@ -36,7 +36,7 @@ export class ManagementService {
 
   getShop() {
     this.http
-      .get<AdminProduct[]>('/api/admin/getShop')
+      .get<AdminProduct[]>('/api/admin/shop')
       .subscribe((newShop: AdminProduct[]) => {
         this.shopChanged.next(newShop);
         this.shop = newShop;
@@ -73,7 +73,7 @@ export class ManagementService {
     }
 
     this.http
-      .put<Text>('/api/admin/editProduct', formData, {
+      .put<Text>('/api/admin/edit', formData, {
         headers: new HttpHeaders().set('Accept', 'application/json'),
         params: new HttpParams().set('id', id),
       })

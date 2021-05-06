@@ -15,11 +15,6 @@ const jsonParser = bodyParser.json();
 // Axios
 const axios = require("axios"); // Axios for http requests
 
-//
-const fs = require("fs");
-
-const bucket = require("./bucket");
-
 // Importing secrets
 const secrets = require("./secrets/secrets.json");
 const _API_KEY = secrets._API_KEY;
@@ -27,13 +22,12 @@ const _API_KEY = secrets._API_KEY;
 // Import Database management system
 const dbms = require("./firebase/dbms");
 
-/*
-  @route: /api/admin/login
-  @desc: Post to firebase authentication API with our API_KEY
-    success: return response to client
-    error: return custom error response to client
-    (this is because firebase error returns the API KEY)
-*/
+/**
+ * @route "/api/admin/login"
+ * Authenticate user via firebase authentication with our API_KEY
+ * On success, return auth token to client
+ * On failure, return custom error response
+ */
 router.route("/admin/login").post(jsonParser, (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -70,37 +64,36 @@ router.route("/admin/login").post(jsonParser, (req, res) => {
         });
 });
 
-/*
- * Edit the product
- * Check if the edit has new photos.
+/**
+ * @route "/api/admin/edit"
+ * Modify the data for a specific product ID
  */
-router
-    .route("/admin/editProduct")
-    .put(upload.array("images", 6), async (req, res) => {
-        const size = req.files.length;
-        const { auth, id } = req.query;
-        const form = req.body;
+router.route("/admin/edit").put(upload.array("images", 6), async (req, res) => {
+    const size = req.files.length;
+    const { auth, id } = req.query;
+    const form = req.body;
 
-        let fileExtensions = dbms.getFileExtensions(req.files);
+    let fileExtensions = dbms.getFileExtensions(req.files);
 
-        if (size === 0) {
-            await dbms.updateDatabase(form, id, auth);
-        } else {
-            await dbms.writeImages(req.files, fileExtensions);
-            const imageUrls = await dbms.uploadImages(
-                size,
-                fileExtensions,
-                id,
-                auth
-            );
-            await dbms.updateDatabase(form, id, auth);
-            await dbms.putImages(id, imageUrls, auth);
-        }
+    if (size === 0) {
+        await dbms.updateDatabase(form, id, auth);
+    } else {
+        await dbms.writeImages(req.files, fileExtensions);
+        const imageUrls = await dbms.uploadImages(
+            size,
+            fileExtensions,
+            id,
+            auth
+        );
+        await dbms.updateDatabase(form, id, auth);
+        await dbms.putImages(id, imageUrls, auth);
+    }
 
-        res.status(200).send({ message: "OK" });
-    });
+    res.status(200).send({ message: "OK" });
+});
 
 /**
+ * @route "/api/admin/upload"
  * Parse through client form data using node package 'multer'
  * NOTE: Multer stores files under req.files and form data under req.body
  * Upload new product following these steps:
@@ -136,7 +129,11 @@ router
         res.status(200).send({ message: "OK" });
     });
 
-router.route("/admin/getShop").get(jsonParser, (req, res) => {
+/**
+ * @route "/api/admin/shop"
+ * Return client an array of shopItems
+ */
+router.route("/admin/shop").get(jsonParser, (req, res) => {
     const token = req.query.auth;
     axios
         .get(`${secrets.firebaseDatabase}/products.json`, {
