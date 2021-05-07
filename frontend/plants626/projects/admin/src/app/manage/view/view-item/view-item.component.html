@@ -3,6 +3,7 @@
   <div class="text-left lg:w-72 w-52">
     <p class="text-xl font-bold capitalize">{{ item.name }}</p>
     <p>ID#: {{ item.id }}</p>
+    <p>{{ item.visible ? 'Public': 'Hidden'}}</p>
     <p>{{ item.price | currency}}</p>
     <p>{{ item.description }}</p>
   </div>

@@ -7,8 +7,7 @@ export class AdminProduct{
         public price: number,
         public quantity: number,
         public posted: Date,
-        public purchased: Date,
-        public receiptId: any,
+        public status: string,
         public visible: boolean,
 
     ){}

@@ -41,7 +41,7 @@ async function uploadImages(size, extensions, key, token) {
                 },
                 (err, file) => {
                     if (err) {
-                        reject(err)
+                        reject(err);
                     }
                     imageUrls[`image${j}`] = file.publicUrl();
                     j++;
@@ -52,7 +52,7 @@ async function uploadImages(size, extensions, key, token) {
                 }
             );
         }
-    })
+    });
 }
 
 /**
@@ -74,58 +74,58 @@ async function putImages(key, imageUrls, token) {
                 }
             )
             .then((response) => {
-                resolve(response)
+                resolve(response);
             })
             .catch((error) => {
-                reject(error)
+                reject(error);
             });
-    })
+    });
 }
 
 /**
- * 
- * @param {*} form 
- * @param {*} id 
- * @param {*} token 
- * @returns 
+ *
+ * @param {*} form
+ * @param {*} id
+ * @param {*} token
+ * @returns
  */
 async function updateDatabase(form, id, token) {
-  return new Promise((resolve, reject) => {
-    console.log("Updating database");
-    const price = isNaN(+form.price) ? undefined: +form.price; 
-    const quantity = isNaN(+form.quantity) ? undefined: +form.quantity;
-    const updatedProduct = {
-      name: form.name,
-      description: form.description,
-      price: price,
-      quantity: quantity,
-      postedDate: form.date,
-      visible: form.visible,
-    };
-    console.log(updatedProduct)
-    axios
-      .patch(
-        `${secrets.firebaseDatabase}/products/${id}.json`,
-        updatedProduct,
-        {
-          params: {
-            auth: token,
-          },
-        }
-      )
-      .then((response) => {
-        resolve();
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
+    return new Promise((resolve, reject) => {
+        console.log("Updating database");
+        const price = isNaN(+form.price) ? undefined : +form.price;
+        const quantity = isNaN(+form.quantity) ? undefined : +form.quantity;
+        const updatedProduct = {
+            name: form.name,
+            description: form.description,
+            price: price,
+            quantity: quantity,
+            postedDate: form.date,
+            visible: form.visible,
+        };
+        console.log(updatedProduct);
+        axios
+            .patch(
+                `${secrets.firebaseDatabase}/products/${id}.json`,
+                updatedProduct,
+                {
+                    params: {
+                        auth: token,
+                    },
+                }
+            )
+            .then((response) => {
+                resolve();
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
 }
 
 /**
- * Write multiple images to system inside the directory, 'image-files' 
- * @param {Files} files An object of files that has been processed by the middleware multer 
- * @param {string[]} fileExtensions Contains the extensions for all the files 
+ * Write multiple images to system inside the directory, 'image-files'
+ * @param {Files} files An object of files that has been processed by the middleware multer
+ * @param {string[]} fileExtensions Contains the extensions for all the files
  * @returns {Promise} Promise object returns undefined
  */
 async function writeImages(files, fileExtensions) {
@@ -135,8 +135,8 @@ async function writeImages(files, fileExtensions) {
         let i = 0,
             j = 0;
         let size = files.length;
-    
-        console.log('Writing images...')
+
+        console.log("Writing images...");
         // Begin writing files...
         for (let file of files) {
             fs.writeFile(
@@ -146,21 +146,21 @@ async function writeImages(files, fileExtensions) {
                     j++;
                     // When all files has been written, return
                     if (j >= size) {
-                        console.log('Writing images complete')
+                        console.log("Writing images complete");
                         resolve();
                     }
                 }
             );
             i++;
         }
-    })
+    });
 }
 
 /**
- * Upload new entry to the database 
+ * Upload new entry to the database
  * @param {FormData} form Object that contains form data, processed by middleware 'multer'
- * @param {string} token User auth token 
- * @returns {Promise} Promise object that contains the uuid of the product 
+ * @param {string} token User auth token
+ * @returns {Promise} Promise object that contains the uuid of the product
  */
 async function addToDatabase(form, token) {
     return new Promise((resolve, reject) => {
@@ -176,18 +176,22 @@ async function addToDatabase(form, token) {
             available: true,
         };
         axios
-            .put(`${secrets.firebaseDatabase}/products/${uuid}.json`, newProduct, {
-                params: {
-                    auth: token,
-                },
-            })
+            .put(
+                `${secrets.firebaseDatabase}/products/${uuid}.json`,
+                newProduct,
+                {
+                    params: {
+                        auth: token,
+                    },
+                }
+            )
             .then((response) => {
                 resolve(uuid);
             })
             .catch((err) => {
                 reject(err);
             });
-    })
+    });
 }
 
 function getFileExtensions(files) {
@@ -211,70 +215,67 @@ function getFileExtensions(files) {
  * Delete a specific product ID from the database
  * @param {number} id Product ID
  * @param {string} token User auth token
- * @returns {Promise} Promise object that resolves with firebase 
+ * @returns {Promise} Promise object that resolves with firebase
  */
-async function deleteProduct(id, token){
+async function deleteProduct(id, token) {
     return new Promise((resolve, reject) => {
-        axios.delete(`${secrets.firebaseDatabase}/products/${id}.json`, {
-            params: {
-                auth: token,
-            },
-        })
-        .then((response) => {
-            console.log(`Product ${id} has been deleted.`)
-            resolve(response);
-        })
-        .catch((error) => {
-            console.error(error);
-            reject(error);
-        })
-    })
+        axios
+            .delete(`${secrets.firebaseDatabase}/products/${id}.json`, {
+                params: {
+                    auth: token,
+                },
+            })
+            .then((response) => {
+                console.log(`Product ${id} has been deleted.`);
+                resolve(response);
+            })
+            .catch((error) => {
+                console.error(error);
+                reject(error);
+            });
+    });
 }
 
 /**
- * Get array of shop items 
+ * Get array of shop items
  * @param {string} token User auth token
  * @returns {Promise} Promise object contains array of shopItems
  */
-async function getShop(token){
+async function getShop(token) {
     return new Promise((resolve, reject) => {
         axios
-        .get(`${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"`, {
-            params: {
-                auth: token,
-            },
-        })
-        .then((shop) => {
-            const shopItems = [];
-            for (let item in shop.data) {
-                let obj = shop.data[item];
-                let images = [];
-                if (obj.images) {
-                    for (let image in obj.images) {
-                        images.push(obj.images[image]);
-                    }
+            .get(
+                `${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"`,
+                {
+                    params: {
+                        auth: token,
+                    },
                 }
-                shopItems.push({
-                    id: item,
-                    name: obj.name,
-                    quantity: obj.quantity,
-                    price: obj.price,
-                    posted: obj.postedDate,
-                    available: obj.available,
-                    description: obj.description,
-                    images: images,
-                    receiptId: obj.receiptId,
-                });
-            }
-            resolve(shopItems);
-        })
-        .catch((error) => {
-            console.error('There was an error getting products.')
-            console.error(error)
-            reject(error);
-        })
-
-    })
+            )
+            .then((shop) => {
+                const shopItems = [];
+                for (let item in shop.data) {
+                    let { ...obj } = shop.data[item];
+                    let images = [];
+                    if (obj.images) {
+                        for (let image in obj.images) {
+                            images.push(obj.images[image]);
+                        }
+                    }
+                    shopItems.push({
+                        ...obj,
+                        images: images,
+                        id: item,
+                    });
+                }
+                resolve(shopItems);
+            })
+            .catch((error) => {
+                console.error("There was an error getting products.");
+                console.error(error);
+                reject(error);
+            });
+    });
 }
 
 module.exports = {
