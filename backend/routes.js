@@ -15,7 +15,6 @@ const secrets = require("./secrets/secrets.json");
 // Import paypal
 const paypal = require("./payment/paypal");
 
-
 /*
   Returns JSON of all ShopItems
   @return: ShopItem: {
@@ -117,34 +116,36 @@ router.route("/getCart").post(jsonParser, (req, res) => {
                     res.send("Product ID not found or available.");
                 }
                 let imagesArray = [];
-                for(let img in images){
-                    imagesArray.push(images[img])
+                for (let img in images) {
+                    imagesArray.push(images[img]);
                 }
                 products.push({
                     id: id,
                     ...productData,
-                    images: imagesArray
+                    images: imagesArray,
                 });
             }
             let subtotal = 0;
-            for(let prod of products){
+            for (let prod of products) {
                 subtotal += prod.price;
             }
-            const cart = { products: products, subtotal: subtotal, total: subtotal, shipping: 0} 
+            const cart = {
+                products: products,
+                subtotal: subtotal,
+                total: subtotal,
+                shipping: 0,
+            };
             res.send(cart);
         });
 });
 
 router.route("/onapprove").post(jsonParser, (req, res) => {
-    //const { data } = req.body; 
-    //console.log(data)
-    const { orderID, payerID } = req.body.data
-    console.log(orderID)
+    const { orderID, payerID } = req.body.data;
+    console.log(orderID);
     paypal.captureOrder(orderID);
     res.status(200);
-    res.send('OK')
-})
-
+    res.send("OK");
+});
 
 /*
   Retrieve user cart, authorize

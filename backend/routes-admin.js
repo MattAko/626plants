@@ -170,10 +170,10 @@ router.route("/admin/shop").get(jsonParser, (req, res) => {
         });
 });
 
-router.route("/admin/delete").get(jsonParser, async (req, res) => {
+router.route("/admin/delete").post(jsonParser, async (req, res) => {
   const token = req.query.auth;
   const { id } = req.body;
-  await dbms.deleteProduct(id).catch((err) => {
+  await dbms.deleteProduct(id, token).catch((err) => {
     res.status(400);
     res.send(`There was an error trying to delete product ${id}`)
   });

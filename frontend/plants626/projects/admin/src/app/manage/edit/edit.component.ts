@@ -97,4 +97,10 @@ export class EditComponent implements OnInit {
     }
     this.newImages = true;
   }
+
+  onDelete(){
+    if(confirm(`Are you sure you want to delete ${this.product.name}?\nID: ${this.product.id}`)){
+      this.manage.deleteProduct(this.product.id);
+    }
+  }
 }

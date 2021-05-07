@@ -44,7 +44,7 @@ export class ManagementService {
       });
   }
 
-  getProduct(id: string): AdminProduct {
+  getProduct(id: number): AdminProduct {
     return this.shop.find((item) => {
       return item.id === id;
     });
@@ -55,7 +55,7 @@ export class ManagementService {
    * @body: Changes made to the product 
    * @params: Product ID
    */
-  editProduct(changes: any, id: string) {
+  editProduct(changes: any, id: number) {
     console.log('Editing product...')
     let formData: FormData = new FormData();
     for(let change in changes){
@@ -75,10 +75,18 @@ export class ManagementService {
     this.http
       .put<Text>('/api/admin/edit', formData, {
         headers: new HttpHeaders().set('Accept', 'application/json'),
-        params: new HttpParams().set('id', id),
+        params: new HttpParams().set('id', id.toString()),
       })
       .subscribe((res) => {
         console.log(res);
       });
+  }
+
+  deleteProduct(id: number){
+    this.http.post('/api/admin/delete', {
+      id: id
+    }).subscribe((res) => {
+      console.log(res)
+    })
   }
 }

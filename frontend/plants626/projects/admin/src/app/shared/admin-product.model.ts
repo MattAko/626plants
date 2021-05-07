@@ -1,6 +1,6 @@
 export class AdminProduct{
     constructor(
-        public id: string,
+        public id: number,
         public description: string,
         public images: string[],
         public name: string,

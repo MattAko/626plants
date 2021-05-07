@@ -79,8 +79,13 @@
       [src]="img"
     />
   </div>
-  <button type="submit" class="mx-auto mb-5 bg-green-400 px-10 py-4 rounded">
-    Edit
-  </button>
+  <div class="flex justify-between">
+    <button type="button" (click)="onDelete()" class="mb-5 bg-red-500 w-28 py-4 rounded">
+      Delete
+    </button>
+    <button type="submit" class="mb-5 bg-lightgreen w-28 py-4 rounded">
+      Edit
+    </button>
+  </div>
 </form>
-<div class="w-full py-2 bg-black"></div>
+<hr class="mb-10"/>
