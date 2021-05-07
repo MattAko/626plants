@@ -170,4 +170,16 @@ router.route("/admin/shop").get(jsonParser, (req, res) => {
         });
 });
 
+router.route("/admin/delete").get(jsonParser, async (req, res) => {
+  const token = req.query.auth;
+  const { id } = req.body;
+  await dbms.deleteProduct(id).catch((err) => {
+    res.status(400);
+    res.send(`There was an error trying to delete product ${id}`)
+  });
+  res.status(200);
+  res.send(`Product ${id} has been deleted`)
+
+})
+
 module.exports = router;

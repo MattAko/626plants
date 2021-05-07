@@ -206,6 +206,30 @@ function getFileExtensions(files) {
     return fileExtensions;
 }
 
+/**
+ * Delete a specific product ID from the database
+ * @param {number} id Product ID
+ * @param {string} token User auth token
+ * @returns {Promise} Promise object that resolves with firebase 
+ */
+async function deleteProduct(id, token){
+    return new Promise((resolve, reject) => {
+        axios.delete(`${secrets.firebaseDatabase}/products/${id}.json`, {
+            params: {
+                auth: token,
+            },
+        })
+        .then((response) => {
+            console.log(`Product ${id} has been deleted.`)
+            resolve(response);
+        })
+        .catch((error) => {
+            console.error(error);
+            reject(error);
+        })
+    })
+}
+
 module.exports = {
     uploadImages: uploadImages,
     putImages: putImages,
@@ -213,4 +237,5 @@ module.exports = {
     getFileExtensions: getFileExtensions,
     addToDatabase: addToDatabase,
     updateDatabase: updateDatabase,
+    deleteProduct: deleteProduct,
 };
