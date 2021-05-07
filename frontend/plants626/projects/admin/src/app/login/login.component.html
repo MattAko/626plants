@@ -1,36 +1,38 @@
-<div class="py-20 flex justify-center min-w-max">
-  <form
-    class="flex items-center flex-col bg-white md:w-2/3 md:px-14 px-5 pb-32 rounded-3xl"
-    #form="ngForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <h1 class="mt-24 mb-12">626plants</h1>
-    <input
-      class="mx-5 block focus:ring-transparent my-2.5 py-3 max-w-screen-md lg:w-96 rounded-md border-none bg-gray-400 placeholder-gray-500"
-      placeholder="Email"
-      type="text"
-      id="email"
-      name="email"
-      ngModel
-      required
-    />
-    <input
-      class="focus:ring-transparent my-2.5 py-3 max-w-screen-sm rounded-md lg:w-96 border-none bg-gray-400 placeholder-gray-500"
-      placeholder="Password"
-      type="password"
-      id="password"
-      name="password"
-      ngModel
-      required
-    />
-    <button
-      [disabled]="form.invalid"
-      class="rounded-2xl px-24 max-w-screen-sm py-3 my-2.5 bg-green-400 lg:w-96"
-      type="submit"
+<div class="h-screen">
+  <div class="py-20 flex justify-center min-w-max">
+    <form
+      class="flex items-center flex-col bg-white md:w-2/3 md:px-14 px-5 pb-32 rounded-3xl"
+      #form="ngForm"
+      (ngSubmit)="onSubmit()"
     >
-      Login
-    </button>
-    <p class="text-red-500" *ngIf="errorMessage">{{ errorMessage }}</p>
-    <a class="mx-auto text-blue-600 text-center pt-5" href="https://mattako.dev">Go to Main Site</a>
-  </form>
+      <h1 class="mt-24 mb-12">626plants</h1>
+      <input
+        class="mx-5 block focus:ring-transparent my-2.5 py-3 max-w-screen-md lg:w-96 rounded-md border-none bg-gray-400 placeholder-gray-500"
+        placeholder="Email"
+        type="text"
+        id="email"
+        name="email"
+        ngModel
+        required
+      />
+      <input
+        class="focus:ring-transparent my-2.5 py-3 max-w-screen-sm rounded-md lg:w-96 border-none bg-gray-400 placeholder-gray-500"
+        placeholder="Password"
+        type="password"
+        id="password"
+        name="password"
+        ngModel
+        required
+      />
+      <button
+        [disabled]="form.invalid"
+        class="rounded-2xl px-24 max-w-screen-sm py-3 my-2.5 bg-lightgreen lg:w-96"
+        type="submit"
+      >
+        Login
+      </button>
+      <p class="text-red-500" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <a class="mx-auto text-blue-600 text-center pt-5" href="https://mattako.dev">Go to Main Site</a>
+    </form>
+  </div>
 </div>

@@ -173,6 +173,7 @@ async function addToDatabase(form, token) {
             quantity: +form.quantity,
             postedDate: form.date,
             visible: true,
+            available: true,
         };
         axios
             .put(`${secrets.firebaseDatabase}/products/${uuid}.json`, newProduct, {
@@ -230,6 +231,52 @@ async function deleteProduct(id, token){
     })
 }
 
+/**
+ * Get array of shop items 
+ * @param {string} token User auth token
+ * @returns {Promise} Promise object contains array of shopItems
+ */
+async function getShop(token){
+    return new Promise((resolve, reject) => {
+        axios
+        .get(`${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"`, {
+            params: {
+                auth: token,
+            },
+        })
+        .then((shop) => {
+            const shopItems = [];
+            for (let item in shop.data) {
+                let obj = shop.data[item];
+                let images = [];
+                if (obj.images) {
+                    for (let image in obj.images) {
+                        images.push(obj.images[image]);
+                    }
+                }
+                shopItems.push({
+                    id: item,
+                    name: obj.name,
+                    quantity: obj.quantity,
+                    price: obj.price,
+                    posted: obj.postedDate,
+                    available: obj.available,
+                    description: obj.description,
+                    images: images,
+                    receiptId: obj.receiptId,
+                });
+            }
+            resolve(shopItems);
+        })
+        .catch((error) => {
+            console.error('There was an error getting products.')
+            console.error(error)
+            reject(error);
+        })
+
+    })
+}
+
 module.exports = {
     uploadImages: uploadImages,
     putImages: putImages,
@@ -238,4 +285,5 @@ module.exports = {
     addToDatabase: addToDatabase,
     updateDatabase: updateDatabase,
     deleteProduct: deleteProduct,
+    getShop: getShop,
 };

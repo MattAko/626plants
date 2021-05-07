@@ -25,9 +25,13 @@ const paypal = require("./payment/paypal");
   }
 */
 router.route("/loadShop").get((req, res) => {
+    /*
+scores.json?orderBy="$value"&startAt=50&print=pretty
+products.json?orderBy="available"&equalTo=true
+    */
     console.log("loading shop for customer...");
     axios
-        .get(`${secrets.firebaseDatabase}/products.json`, {
+        .get(`${secrets.firebaseDatabase}/products.json?orderBy="available"&equalTo=true`, {
             params: {
                 auth: secrets.APP_SECRET,
             },

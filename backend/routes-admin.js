@@ -130,44 +130,18 @@ router
     });
 
 /**
- * @route "/api/admin/shop"
  * Return client an array of shopItems
+ * @route "/api/admin/shop"
  */
-router.route("/admin/shop").get(jsonParser, (req, res) => {
+router.route("/admin/shop").get(jsonParser, async (req, res) => {
     const token = req.query.auth;
-    axios
-        .get(`${secrets.firebaseDatabase}/products.json`, {
-            params: {
-                auth: token,
-            },
-        })
-        .then((shop) => {
-            const shopItems = [];
-            for (let item in shop.data) {
-                let obj = shop.data[item];
-                let images = [];
-                if (obj.images) {
-                    for (let image in obj.images) {
-                        images.push(obj.images[image]);
-                    }
-                }
-                shopItems.push({
-                    id: item,
-                    name: obj.name,
-                    quantity: obj.quantity,
-                    price: obj.price,
-                    posted: obj.postedDate,
-                    purcahsed: obj.purchased,
-                    description: obj.description,
-                    images: images,
-                    receiptId: obj.receiptId,
-                });
-            }
-            res.send(shopItems);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    const shopItems = await dbms.getShop(token).catch((error) => {
+        res.status(400);
+        res.send('Unable to load shop')
+    })
+    res.send(shopItems)
+
+    
 });
 
 router.route("/admin/delete").post(jsonParser, async (req, res) => {
