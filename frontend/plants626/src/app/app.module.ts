@@ -19,6 +19,7 @@ import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 import { CloseButtonComponent } from './shared/close-button/close-button.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     CloseButtonComponent,
     CheckoutComponent,
     LoadingSpinnerComponent,
+    ConfirmationComponent,
   ],
   imports: [
     BrowserModule,

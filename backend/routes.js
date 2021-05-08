@@ -155,9 +155,7 @@ router.route("/onapprove").post(jsonParser, async (req, res) => {
     res.status(200);
     res.json({
         status: "Success",
-        order: {
-            ...results
-        }
+        ...results
     });
 });
 

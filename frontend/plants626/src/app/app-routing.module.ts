@@ -8,6 +8,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ProductPageComponent } from './shop/product-page/product-page.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthGuard } from './auth/auth-guard.service';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
     path: 'checkout',
     component: CheckoutComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'confirmation',
+    component: ConfirmationComponent,
   },
   {
     path: '',

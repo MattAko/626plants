@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Cart } from './shared/Cart.model';
+import { Order } from './shared/Order.model';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -19,6 +20,7 @@ export class CartService {
   cartChanged = new Subject<Cart>();
   authorized = new BehaviorSubject<boolean>(false);
   paid = new BehaviorSubject<boolean>(false);
+  confirmation: Order;
 
   constructor(private http: HttpClient) {}
 
