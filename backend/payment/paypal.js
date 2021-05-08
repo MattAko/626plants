@@ -18,13 +18,15 @@ async function captureOrder(orderId) {
         const capture = await paypalClient.client().execute(request);
         // Save the capture ID to database.
         console.log('Here is the captured payment...')
-        console.log(capture);
-        const captureID = capture.result.purchase_units[0].payments.captures[0].id;
+        console.log(capture.result);
+        console.log(capture.result.purchase_units[0])
+        //const captureID = capture.result.purchase_units[0].payments.captures[0].id;
+        return capture.result;
     }
     catch(err){
-
         // Handle errors
-        console.error(err);
+        console.log('There was an error capturing a payment.');
+        throw TypeError('Error capturing a payment');
     }
 }
 

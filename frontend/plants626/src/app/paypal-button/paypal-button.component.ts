@@ -1,7 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CartService } from '../CartService.service';
 import { Cart } from '../shared/Cart.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 declare let paypal: any;
 @Component({
@@ -13,46 +16,67 @@ export class PaypalButtonComponent implements OnInit {
   @ViewChild('button', { static: true }) paypalElement: ElementRef;
   cart: Cart;
 
-  constructor(private cartService: CartService, private http: HttpClient) {}
+  constructor(private cartService: CartService, private http: HttpClient, private router: Router) {}
+
+  handleError(error: HttpErrorResponse){
+    return throwError('Error capturing payment');
+  }
 
   ngOnInit(): void {
     this.cart = this.cartService.cart;
+    let items = [];
+    this.cartService.cart.products.map((prod) => {
+      const item = {
+        name: prod.name,
+        unit_amount: {
+          value: prod.price,
+          currency_code: 'USD'
+        },
+        quantity: prod.quantity,
+      }
+      items.push(item);
+    });
+    console.log(items)
     let paypalConfig = {
       createOrder: (data, actions) => {
         return actions.order.create({
           purchase_units: [
             {
               description: '626Plants',
-              currency_code: 'USD',
-              value: 'amt',
-              amount: {
+              amount: {                
+                currency_code: 'USD',
                 value: this.cart.total,
-                description: '626Plants'
+                breakdown: {
+                  item_total: {
+                    currency_code: 'USD',
+                    value: this.cart.total 
+                  }
+                }
               },
+              items: items
             },
           ],
         });
       },
       onApprove: (data, actions) => {
-
         this.http.post('/api/onapprove', {
           data: data
         })
+        .pipe(catchError(this.handleError))
         .subscribe((response) => {
           console.log(response);
-        })
-        console.log(data)
-        console.log('actions')
-        console.log(actions)
-        return actions.order.capture().then((details) => {
           this.cartService.empty();
-          console.log('Transaction completed');
-          console.log(details);
+          this.router.navigate(['/'])
         })
-      },
-      onError: (err) => {
-        console.log('There was an error: ' + err);
-      },
+        // console.log(data)
+        // console.log('actions')
+        // console.log(actions)
+        // return actions.order.capture().then((details) => {
+        //   this.cartService.empty();
+        //   console.log('Transaction completed');
+        //   console.log(details);
+        // })
+      }
     };
     paypal.Buttons(paypalConfig).render(this.paypalElement.nativeElement);
   }

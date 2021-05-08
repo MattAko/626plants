@@ -83,10 +83,10 @@ async function putImages(key, imageUrls, token) {
 }
 
 /**
- *
- * @param {*} form
- * @param {*} id
- * @param {*} token
+ * Edit the database based on changes that were made
+ * @param {FormData} form FormData object that contains the form inputs
+ * @param {number} id Product ID#
+ * @param {string} token User auth token
  * @returns
  */
 async function updateDatabase(form, id, token) {
@@ -99,7 +99,6 @@ async function updateDatabase(form, id, token) {
             description: form.description,
             price: price,
             quantity: quantity,
-            postedDate: form.date,
             visible: form.visible,
         };
         console.log(updatedProduct);
@@ -194,6 +193,11 @@ async function addToDatabase(form, token) {
     });
 }
 
+/**
+ * Grab the file extension from the file that was uploaded.
+ * @param {files} files File object array(?) that contains the file mimetype.
+ * @returns {string[]} Array of file extensions.
+ */
 function getFileExtensions(files) {
     let fileExtensions = [];
     for (let file of files) {

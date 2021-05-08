@@ -25,13 +25,9 @@ const paypal = require("./payment/paypal");
   }
 */
 router.route("/loadShop").get((req, res) => {
-    /*
-scores.json?orderBy="$value"&startAt=50&print=pretty
-products.json?orderBy="available"&equalTo=true
-    */
     console.log("loading shop for customer...");
     axios
-        .get(`${secrets.firebaseDatabase}/products.json?orderBy="available"&equalTo=true`, {
+        .get(`${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"`, {
             params: {
                 auth: secrets.APP_SECRET,
             },
@@ -143,12 +139,26 @@ router.route("/getCart").post(jsonParser, (req, res) => {
         });
 });
 
-router.route("/onapprove").post(jsonParser, (req, res) => {
+router.route("/onapprove").post(jsonParser, async (req, res) => {
     const { orderID, payerID } = req.body.data;
     console.log(orderID);
-    paypal.captureOrder(orderID);
+
+    // Capture the order, then return order information to client
+    const results = await paypal.captureOrder(orderID).catch((err) => {
+        res.status(500);
+        res.json({
+            message: "Error capturing the payment"
+        })
+    })
+    console.log('Here is the payer')
+    console.log(results)
     res.status(200);
-    res.send("OK");
+    res.json({
+        status: "Success",
+        order: {
+            ...results
+        }
+    });
 });
 
 /*
