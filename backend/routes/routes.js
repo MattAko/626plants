@@ -10,10 +10,10 @@ const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 
 // Importing secrets
-const secrets = require("./secrets/secrets.json");
+const secrets = require("../secrets/secrets.json");
 
 // Import paypal
-const paypal = require("./payment/paypal");
+const paypal = require("../payment/paypal");
 
 /*
   Returns JSON of all ShopItems
@@ -27,7 +27,7 @@ const paypal = require("./payment/paypal");
 router.route("/loadShop").get((req, res) => {
     console.log("loading shop for customer...");
     axios
-        .get(`${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"`, {
+        .get(`${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"&orderBy="visible"&equalTo=true`, {
             params: {
                 auth: secrets.APP_SECRET,
             },
@@ -36,6 +36,9 @@ router.route("/loadShop").get((req, res) => {
             const shopItems = [];
             for (let item in shop.data) {
                 let obj = shop.data[item];
+                if(!obj.visible){
+                    continue;
+                }
                 shopItems.push({
                     id: +item,
                     name: obj.name,

@@ -72,14 +72,12 @@ export class ManagementService {
       }
     }
 
-    this.http
-      .put<Text>('/api/admin/edit', formData, {
+    return this.http
+      .put('/api/admin/edit', formData, {
         headers: new HttpHeaders().set('Accept', 'application/json'),
         params: new HttpParams().set('id', id.toString()),
       })
-      .subscribe((res) => {
-        console.log(res);
-      });
+      
   }
 
   deleteProduct(id: number){

@@ -1,9 +1,9 @@
 <div class="flex flex-row flex-wrap justify-around  md:mx-5 my-8">
   <img class="lg:w-72 lg:h-72 w-52 h-52 mb-5 rounded object-cover cursor-pointer" [src]="item.images[0]" />
-  <div class="text-left lg:w-72 w-52">
-    <p class="text-xl font-bold capitalize">{{ item.name }}</p>
+  <div class="text-left text-sm lg:w-72 w-52">
+    <p class="text-lg font-semibold">{{ item.name }}</p>
+    <p class="px-5 text-center py-2 mb-5" [ngClass]="{'bg-gray-700 text-white': !item.visible, 'bg-lightgreen': item.visible}">{{ item.visible ? 'Public': 'Hidden'}}</p>
     <p>ID#: {{ item.id }}</p>
-    <p>{{ item.visible ? 'Public': 'Hidden'}}</p>
     <p>{{ item.price | currency}}</p>
     <p>{{ item.description }}</p>
   </div>

@@ -15,8 +15,8 @@ app.get('/admin', (req, res) => {
 /*
   Import routes, with the prefix '/api'
 */
-const myRoutes = require('./routes');
+const myRoutes = require('./routes/routes');
 app.use('/api', myRoutes)
 
-const adminRoutes = require('./routes-admin');
+const adminRoutes = require('./routes/routes-admin');
 app.use('/api', adminRoutes);

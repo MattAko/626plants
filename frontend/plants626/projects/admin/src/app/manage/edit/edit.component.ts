@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { sanitizeIdentifier } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AdminProduct } from '../../shared/admin-product.model';
 import { UploadForm } from '../../shared/upload-form.model';
 import { ManagementService } from '../management.service';
@@ -23,15 +23,16 @@ export class EditComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private manage: ManagementService
+    private manage: ManagementService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      if(this.product != this.manage.getProduct(params['id'])){
+      if (this.product != this.manage.getProduct(params['id'])) {
         this.product = this.manage.getProduct(params['id']);
-        console.log(this.product)
-        this.initForm()
+        console.log(this.product);
+        this.initForm();
       }
     });
   }
@@ -65,23 +66,28 @@ export class EditComponent implements OnInit {
   onSubmit() {
     let changes = {};
     let edited = false;
-    for(let control in this.editForm.controls){
-      if(!this.editForm.controls[control].pristine){
+    for (let control in this.editForm.controls) {
+      if (!this.editForm.controls[control].pristine) {
         changes[control] = this.editForm.controls[control].value;
         edited = true;
       }
     }
-    if(this.fileList){
-      edited = true
-      changes['images'] = this.fileList
+    if (this.fileList) {
+      edited = true;
+      changes['images'] = this.fileList;
     }
-    if(edited){
-      this.manage.editProduct(changes, this.product.id);
-    } 
-    else{
-      console.log('No changes were made')
+    if (edited) {
+      this.manage
+        .editProduct(changes, this.product.id)
+        .subscribe((res: any) => {
+          if(res.message==="OK"){
+            this.manage.getShop();
+            this.router.navigate(['/manage/view'])
+          }
+        });
+    } else {
+      console.log('No changes were made');
     }
-    
   }
 
   onLoad(files: FileList) {
@@ -98,8 +104,12 @@ export class EditComponent implements OnInit {
     this.newImages = true;
   }
 
-  onDelete(){
-    if(confirm(`Are you sure you want to delete ${this.product.name}?\nID: ${this.product.id}`)){
+  onDelete() {
+    if (
+      confirm(
+        `Are you sure you want to delete ${this.product.name}?\nID: ${this.product.id}`
+      )
+    ) {
       this.manage.deleteProduct(this.product.id);
     }
   }

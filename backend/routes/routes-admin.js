@@ -16,11 +16,11 @@ const jsonParser = bodyParser.json();
 const axios = require("axios"); // Axios for http requests
 
 // Importing secrets
-const secrets = require("./secrets/secrets.json");
+const secrets = require("../secrets/secrets.json");
 const _API_KEY = secrets._API_KEY;
 
 // Import Database management system
-const dbms = require("./firebase/dbms");
+const dbms = require("../firebase/dbms");
 
 /**
  * @route "/api/admin/login"

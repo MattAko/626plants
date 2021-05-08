@@ -99,7 +99,7 @@ async function updateDatabase(form, id, token) {
             description: form.description,
             price: price,
             quantity: quantity,
-            visible: form.visible,
+            visible: form.visible==='true' ? true: false,
         };
         console.log(updatedProduct);
         axios
