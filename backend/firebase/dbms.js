@@ -14,6 +14,7 @@ const secrets = require("../secrets/secrets.json");
 
 // Node filesystem
 const fs = require("fs");
+const { throws } = require("assert");
 
 /**
  * Upload images to google cloud storage
@@ -99,7 +100,7 @@ async function updateDatabase(form, id, token) {
             description: form.description,
             price: price,
             quantity: quantity,
-            visible: form.visible==='true' ? true: false,
+            visible: form.visible === "true" ? true : false,
         };
         console.log(updatedProduct);
         axios
@@ -282,6 +283,50 @@ async function getShop(token) {
     });
 }
 
+async function updateProductStatus(productID, status) {
+    await axios
+        .patch(
+            `${secrets.firebaseDatabase}/products/${productID}.json`,
+            {
+                status: status,
+            },
+            {
+                params: {
+                    auth: secrets.APP_SECRET,
+                },
+            }
+        )
+        .then((response) => {
+            return;
+        })
+        .catch((error) => {
+            return;
+        });
+}
+
+/**
+ * Create a new receipt and add it to Firebase database.
+ * @param {number} orderID The order ID created by PayPal
+ * @param {number[]} productIDs Array of product ID's
+ * @param {number} captureID ID of the payment capture
+ * @param {Payer} payer Payer object for the person who paid for the order
+ * @param {string} status The order status
+ * @param {Shipping} shipping Shipping object that contains info about shipping address
+ */
+function addReceipt(orderID, productIDs, captureID, payer, status, shipping) {
+    axios.put(`${secrets.firebaseDatabase}/receipts/${orderID}.json`, {
+        products: productIDs,
+        captureID: captureID,
+        payer: payer,
+        status: status,
+        shipping: shipping
+    }, {
+        params: {
+            auth: secrets.APP_SECRET
+        }
+    });
+}
+
 module.exports = {
     uploadImages: uploadImages,
     putImages: putImages,
@@ -291,4 +336,6 @@ module.exports = {
     updateDatabase: updateDatabase,
     deleteProduct: deleteProduct,
     getShop: getShop,
+    addReceipt: addReceipt,
+    updateProductStatus: updateProductStatus,
 };

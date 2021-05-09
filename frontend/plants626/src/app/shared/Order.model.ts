@@ -3,8 +3,10 @@ export interface Order {
   status: string;
   purchase_units: any[];
   payer: {
-    given_name: string;
-    surname: string;
+    name: {
+      given_name: string;
+      surname: string;
+    };
     email_address: string;
   };
 }

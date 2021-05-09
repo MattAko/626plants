@@ -20,6 +20,7 @@ async function captureOrder(orderId) {
         console.log('Here is the captured payment...')
         console.log(capture.result);
         console.log(capture.result.purchase_units[0])
+        console.log(capture.result.purchase_units[0].payments.captures[0].id);
         //const captureID = capture.result.purchase_units[0].payments.captures[0].id;
         return capture.result;
     }

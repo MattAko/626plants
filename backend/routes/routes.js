@@ -14,6 +14,7 @@ const secrets = require("../secrets/secrets.json");
 
 // Import paypal
 const paypal = require("../payment/paypal");
+const dbms = require("../firebase/dbms");
 
 /*
   Returns JSON of all ShopItems
@@ -142,9 +143,10 @@ router.route("/getCart").post(jsonParser, (req, res) => {
         });
 });
 
-router.route("/onapprove").post(jsonParser, async (req, res) => {
+router.route("/approve").post(jsonParser, async (req, res) => {
+    console.log('/apporve')
+    console.log(req.body.data)
     const { orderID, payerID } = req.body.data;
-    console.log(orderID);
 
     // Capture the order, then return order information to client
     const results = await paypal.captureOrder(orderID).catch((err) => {
@@ -152,9 +154,11 @@ router.route("/onapprove").post(jsonParser, async (req, res) => {
         res.json({
             message: "Error capturing the payment"
         })
+        return;
     })
-    console.log('Here is the payer')
-    console.log(results)
+    const { id, payer } = results; 
+    const captureID = results.purchase_units[0].payments.captures[0].id;
+    await dbms.addReceipt(id, [1234, 5678], captureID, payer, 'processing', results.purchase_units[0].shipping);
     res.status(200);
     res.json({
         status: "Success",
@@ -166,7 +170,6 @@ router.route("/onapprove").post(jsonParser, async (req, res) => {
   Retrieve user cart, authorize
 */
 router.route("/authorizeCart").post(jsonParser, (req, res) => {
-    //console.log(req.body);
     const { cart } = req.body;
     axios
         .get(`${secrets.firebaseDatabase}/products.json`, {

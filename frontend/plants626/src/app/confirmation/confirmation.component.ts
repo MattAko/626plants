@@ -18,8 +18,9 @@ export class ConfirmationComponent implements OnInit {
     if(!this.cartService.confirmation){
       this.router.navigate(['/']);
     }
-    const { given_name, surname, email_address } = this.cartService.confirmation.payer;
-    this.payer = given_name + ' ' + surname;
+    const { name, email_address } = this.cartService.confirmation.payer;
+    this.payer = name.given_name + ' ' + name.surname;
+    // this.payer = given_name + ' ' + surname;
     this.email_address = email_address;
     this.id = this.cartService.confirmation.id;
   }
