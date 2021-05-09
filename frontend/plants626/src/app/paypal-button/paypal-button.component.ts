@@ -67,6 +67,7 @@ export class PaypalButtonComponent implements OnInit {
         this.http
           .post<Order>('/api/approve', {
             data: data,
+            products: this.cartService.productIds,
           })
           .pipe(catchError(this.handleError))
           .subscribe((response) => {

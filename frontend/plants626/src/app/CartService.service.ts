@@ -22,7 +22,12 @@ export class CartService {
   paid = new BehaviorSubject<boolean>(false);
   confirmation: Order;
 
+  
   constructor(private http: HttpClient) {}
+  
+  get productIds(){
+    return this._productIds.slice();
+  }
 
   get cart() {
     return this._cart;

@@ -14,7 +14,8 @@ const secrets = require("../secrets/secrets.json");
 
 // Import paypal
 const paypal = require("../payment/paypal");
-const dbms = require("../firebase/dbms");
+const db_products = require("../firebase/products");
+const db_receipts = require("../firebase/receipts");
 
 /*
   Returns JSON of all ShopItems
@@ -146,6 +147,7 @@ router.route("/getCart").post(jsonParser, (req, res) => {
 router.route("/approve").post(jsonParser, async (req, res) => {
     console.log('/apporve')
     console.log(req.body.data)
+    const { products } = req.body;
     const { orderID, payerID } = req.body.data;
 
     // Capture the order, then return order information to client
@@ -158,7 +160,7 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     })
     const { id, payer } = results; 
     const captureID = results.purchase_units[0].payments.captures[0].id;
-    await dbms.addReceipt(id, [1234, 5678], captureID, payer, 'processing', results.purchase_units[0].shipping);
+    await db_receipts.Add(id, products, captureID, payer, 'processing', results.purchase_units[0].shipping); 
     res.status(200);
     res.json({
         status: "Success",

@@ -19,8 +19,9 @@ const axios = require("axios"); // Axios for http requests
 const secrets = require("../secrets/secrets.json");
 const _API_KEY = secrets._API_KEY;
 
-// Import Database management system
-const dbms = require("../firebase/dbms");
+// Import Database management systems
+const db_products = require("../firebase/products");
+const func = require("../firebase/functions");
 
 /**
  * @route "/api/admin/login"
@@ -73,20 +74,20 @@ router.route("/admin/edit").put(upload.array("images", 6), async (req, res) => {
     const { auth, id } = req.query;
     const form = req.body;
 
-    let fileExtensions = dbms.getFileExtensions(req.files);
+    let fileExtensions = func.getFileExtensions(req.files);
 
     if (size === 0) {
-        await dbms.updateDatabase(form, id, auth);
+        await db_products.Update(form, id, auth);
     } else {
-        await dbms.writeImages(req.files, fileExtensions);
-        const imageUrls = await dbms.uploadImages(
+        await func.writeImages(req.files, fileExtensions);
+        const imageUrls = await db_products.uploadImages(
             size,
             fileExtensions,
             id,
             auth
         );
-        await dbms.updateDatabase(form, id, auth);
-        await dbms.putImages(id, imageUrls, auth);
+        await db_products.Update(form, id, auth);
+        await db_products.putImages(id, imageUrls, auth);
     }
 
     res.status(200).send({ message: "OK" });
@@ -111,20 +112,20 @@ router
         const files = req.files;
 
         // 1. get File extensions
-        const fileExtensions = dbms.getFileExtensions(files);
+        const fileExtensions = func.getFileExtensions(files);
         // 2.
-        await dbms.writeImages(files, fileExtensions);
+        await func.writeImages(files, fileExtensions);
         // 3.
-        const uuid = await dbms.addToDatabase(req.body, token);
+        const uuid = await db_products.Add(req.body, token);
         // 4.
-        const imageUrls = await dbms.uploadImages(
+        const imageUrls = await db_products.uploadImages(
             size,
             fileExtensions,
             uuid,
             token
         );
         // 5.
-        await dbms.putImages(uuid, imageUrls, token);
+        await db_products.putImages(uuid, imageUrls, token);
 
         res.status(200).send({ message: "OK" });
     });
@@ -135,7 +136,7 @@ router
  */
 router.route("/admin/shop").get(jsonParser, async (req, res) => {
     const token = req.query.auth;
-    const shopItems = await dbms.getShop(token).catch((error) => {
+    const shopItems = await db_products.GetAvailable(token).catch((error) => {
         res.status(400);
         res.send('Unable to load shop')
     })
@@ -147,7 +148,7 @@ router.route("/admin/shop").get(jsonParser, async (req, res) => {
 router.route("/admin/delete").post(jsonParser, async (req, res) => {
   const token = req.query.auth;
   const { id } = req.body;
-  await dbms.deleteProduct(id, token).catch((err) => {
+  await db_products.Delete(id, token).catch((err) => {
     res.status(400);
     res.send(`There was an error trying to delete product ${id}`)
   });

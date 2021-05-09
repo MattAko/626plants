@@ -84,13 +84,13 @@ async function putImages(key, imageUrls, token) {
 }
 
 /**
- * Edit the database based on changes that were made
+ * Edit the queries for a single product, based on the given id.
  * @param {FormData} form FormData object that contains the form inputs
  * @param {number} id Product ID#
  * @param {string} token User auth token
  * @returns
  */
-async function updateDatabase(form, id, token) {
+async function Update(form, id, token) {
     return new Promise((resolve, reject) => {
         console.log("Updating database");
         const price = isNaN(+form.price) ? undefined : +form.price;
@@ -123,46 +123,12 @@ async function updateDatabase(form, id, token) {
 }
 
 /**
- * Write multiple images to system inside the directory, 'image-files'
- * @param {Files} files An object of files that has been processed by the middleware multer
- * @param {string[]} fileExtensions Contains the extensions for all the files
- * @returns {Promise} Promise object returns undefined
- */
-async function writeImages(files, fileExtensions) {
-    return new Promise((resolve, reject) => {
-        // i increments when writeFile has been start
-        // j increments when writeFile has been completed
-        let i = 0,
-            j = 0;
-        let size = files.length;
-
-        console.log("Writing images...");
-        // Begin writing files...
-        for (let file of files) {
-            fs.writeFile(
-                `./image-buffer/image${i}.${fileExtensions[i]}`,
-                file.buffer,
-                () => {
-                    j++;
-                    // When all files has been written, return
-                    if (j >= size) {
-                        console.log("Writing images complete");
-                        resolve();
-                    }
-                }
-            );
-            i++;
-        }
-    });
-}
-
-/**
  * Upload new entry to the database
  * @param {FormData} form Object that contains form data, processed by middleware 'multer'
  * @param {string} token User auth token
  * @returns {Promise} Promise object that contains the uuid of the product
  */
-async function addToDatabase(form, token) {
+async function Add(form, token) {
     return new Promise((resolve, reject) => {
         const uuid = Date.now();
         console.log("Creating new entry in database with uuid: " + uuid);
@@ -195,34 +161,12 @@ async function addToDatabase(form, token) {
 }
 
 /**
- * Grab the file extension from the file that was uploaded.
- * @param {files} files File object array(?) that contains the file mimetype.
- * @returns {string[]} Array of file extensions.
- */
-function getFileExtensions(files) {
-    let fileExtensions = [];
-    for (let file of files) {
-        if (file.mimetype === "image/png") {
-            fileExtensions.push("png");
-        } else if (file.mimetype === "image/jpeg") {
-            fileExtensions.push("jpg");
-        } else {
-            res.status(400).send({
-                message: "A file was neither jpeg nor png.",
-            });
-            return null;
-        }
-    }
-    return fileExtensions;
-}
-
-/**
  * Delete a specific product ID from the database
  * @param {number} id Product ID
  * @param {string} token User auth token
  * @returns {Promise} Promise object that resolves with firebase
  */
-async function deleteProduct(id, token) {
+async function Delete(id, token) {
     return new Promise((resolve, reject) => {
         axios
             .delete(`${secrets.firebaseDatabase}/products/${id}.json`, {
@@ -246,7 +190,7 @@ async function deleteProduct(id, token) {
  * @param {string} token User auth token
  * @returns {Promise} Promise object contains array of shopItems
  */
-async function getShop(token) {
+async function GetAvailable(token) {
     return new Promise((resolve, reject) => {
         axios
             .get(
@@ -304,38 +248,18 @@ async function updateProductStatus(productID, status) {
         });
 }
 
-/**
- * Create a new receipt and add it to Firebase database.
- * @param {number} orderID The order ID created by PayPal
- * @param {number[]} productIDs Array of product ID's
- * @param {number} captureID ID of the payment capture
- * @param {Payer} payer Payer object for the person who paid for the order
- * @param {string} status The order status
- * @param {Shipping} shipping Shipping object that contains info about shipping address
- */
-function addReceipt(orderID, productIDs, captureID, payer, status, shipping) {
-    axios.put(`${secrets.firebaseDatabase}/receipts/${orderID}.json`, {
-        products: productIDs,
-        captureID: captureID,
-        payer: payer,
-        status: status,
-        shipping: shipping
-    }, {
-        params: {
-            auth: secrets.APP_SECRET
-        }
-    });
+
+// TODO: Make an update function that allows for more dynamic queries
+async function UpdateNew(){
+
 }
 
 module.exports = {
     uploadImages: uploadImages,
     putImages: putImages,
-    writeImages: writeImages,
-    getFileExtensions: getFileExtensions,
-    addToDatabase: addToDatabase,
-    updateDatabase: updateDatabase,
-    deleteProduct: deleteProduct,
-    getShop: getShop,
-    addReceipt: addReceipt,
+    Add: Add,
+    Update: Update,
+    Delete: Delete,
+    GetAvailable: GetAvailable,
     updateProductStatus: updateProductStatus,
 };
