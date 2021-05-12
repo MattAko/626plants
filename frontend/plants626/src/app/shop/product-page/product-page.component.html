@@ -8,29 +8,48 @@
     </h1>
     <h2 class="inline">{{ product.price | currency }}</h2>
   </div>
-  <img *ngIf="mobile" [src]="product.images[this.selectedImage]" class="w-80 h-80 object-cover"/>
+  <img
+    *ngIf="mobile"
+    [src]="product.images[this.selectedImage]"
+    class="w-80 h-80 object-cover"
+  />
   <div
     class="overflow-x-auto whitespace-nowrap lg:grid lg:grid-cols-1 lg:grid-cols-2"
   >
     <img
       *ngFor="let image of product.images; let imgIndex = index"
       class="inline-block w-16 h-16 lg:w-80 lg:h-80 object-cover cursor-pointer m-4"
-      [ngClass]="{'filter grayscale': imgIndex===selectedImage}"
+      [ngClass]="{ 'filter grayscale': imgIndex === selectedImage }"
       [src]="image"
       (click)="onImageClick(imgIndex)"
     />
   </div>
   <div class="w-96 px-6 mt-10">
     <h1 class="font-bold text-2xl capitalize">
-      {{ product.name}}
+      {{ product.name }}
     </h1>
-    <h2>{{ product.price | currency }}</h2>
+    <div>
+      <h2 *ngIf="!product.sold">{{ product.price | currency }}</h2>
+      <h2 *ngIf="product.sold" class="italic">Sold</h2>
+    </div>
     <br />
     <p>{{ product.description }}</p>
-    <button class="bg-pink rounded-full w-full mt-8 py-3" (click)="addToCart()">
+    <button
+      [disabled]="product.sold"
+      [ngClass]="{ 'cursor-not-allowed': product.sold }"
+      class="bg-pink rounded-full w-full mt-8 py-3"
+      (click)="addToCart()"
+    >
       Add to Cart
     </button>
-    <p *ngIf="!available" class="text-center text-red-500">This product is already in your cart!</p>
-    <p *ngIf="added" class="text-center text-green bg-lightgreen border-green px-10 py-2 mx-0 border mt-5">Item added to your cart.</p>
+    <p *ngIf="!available" class="text-center text-red-500">
+      This product is already in your cart!
+    </p>
+    <p
+      *ngIf="added"
+      class="text-center text-green bg-lightgreen border-green px-10 py-2 mx-0 border mt-5"
+    >
+      Item added to your cart.
+    </p>
   </div>
 </div>

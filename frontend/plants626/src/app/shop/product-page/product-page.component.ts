@@ -41,7 +41,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     });
 
     this.mobile = this.windowService.mobileEnabled;
-    console.log('mobile:' + this.mobile)
     this.windowSubscription = this.windowService.innerWidthChanged.subscribe((width) => {
       this.mobile = this.windowService.mobileEnabled;
     });
@@ -63,6 +62,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.windowSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   onImageClick(index: number){

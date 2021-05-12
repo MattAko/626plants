@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ShopItem } from '../shared/ShopItem.model';
 import { ShopService } from './ShopService.service';
@@ -9,7 +9,7 @@ import { ShopService } from './ShopService.service';
   styleUrls: ['./shop.component.css'],
   providers: []
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, OnDestroy {
   shopItems: ShopItem[];
   shopChanged: Subscription;
   constructor(private shopService: ShopService) { }
@@ -21,6 +21,10 @@ export class ShopComponent implements OnInit {
       console.log(items);
       this.shopItems = items;
     });
+  }
+
+  ngOnDestroy(){
+    this.shopChanged.unsubscribe();
   }
 
 }

@@ -7,5 +7,6 @@ export class Product {
     public images: string[],
     public description: string, 
     public posted: Date,
+    public sold: boolean
   ) {}
 }
