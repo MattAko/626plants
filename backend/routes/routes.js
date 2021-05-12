@@ -26,33 +26,53 @@ const db_receipts = require("../firebase/receipts");
     thumbnailUrl: string
   }
 */
-router.route("/loadShop").get((req, res) => {
+router.route("/loadShop").get(jsonParser,  async (req, res) => {
+    const { visible } = req.query;
     console.log("loading shop for customer...");
-    axios
-        .get(`${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"&orderBy="visible"&equalTo=true`, {
-            params: {
-                auth: secrets.APP_SECRET,
-            },
-        })
-        .then((shop) => {
-            const shopItems = [];
-            for (let item in shop.data) {
-                let obj = shop.data[item];
-                if(!obj.visible){
-                    continue;
-                }
-                shopItems.push({
-                    id: +item,
-                    name: obj.name,
-                    price: obj.price,
-                    thumbnailUrl: obj.images["image0"],
-                });
-            }
-            res.send(shopItems);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+
+    let shop = await db_products.GetAvailable(secrets.APP_SECRET, visible);
+    if(shop){
+        let shopItems = [];
+        for(let item of shop){
+            console.log(item)
+            shopItems.push({
+                id: +item.id,
+                name: item.name,
+                price: +item.price,
+                thumbnailUrl: item.images[0],
+                sold: item.sold,
+            });
+        }
+        res.send(shopItems);
+    } else {
+        res.status(400);
+        res.send('Error');
+    }
+    // axios
+    //     .get(`${secrets.firebaseDatabase}/products.json?orderBy="visible"&equalTo=true`, {
+    //         params: {
+    //             auth: secrets.APP_SECRET,
+    //         },
+    //     })
+    //     .then((shop) => {
+    //         const shopItems = [];
+    //         for (let item in shop.data) {
+    //             let obj = shop.data[item];
+    //             if(!obj.visible){
+    //                 continue;
+    //             }
+    //             shopItems.push({
+    //                 id: +item,
+    //                 name: obj.name,
+    //                 price: obj.price,
+    //                 thumbnailUrl: obj.images["image0"],
+    //             });
+    //         }
+    //         res.send(shopItems);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
 });
 
 /*
@@ -161,6 +181,8 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     const { id, payer } = results; 
     const captureID = results.purchase_units[0].payments.captures[0].id;
     await db_receipts.Add(id, products, captureID, payer, 'processing', results.purchase_units[0].shipping); 
+    await db_products.UpdateStatus(products, 'processing');
+    await db_products.UpdateMultiple(products, 'sold', true);
     res.status(200);
     res.json({
         status: "Success",

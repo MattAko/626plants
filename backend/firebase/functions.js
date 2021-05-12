@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 /**
  * Grab the file extension from the file that was uploaded.
  * @param {files} files File object array(?) that contains the file mimetype.

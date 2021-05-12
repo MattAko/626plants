@@ -15,6 +15,7 @@ const secrets = require("../secrets/secrets.json");
 // Node filesystem
 const fs = require("fs");
 const { throws } = require("assert");
+const { resolve } = require("path");
 
 /**
  * Upload images to google cloud storage
@@ -139,7 +140,8 @@ async function Add(form, token) {
             quantity: +form.quantity,
             postedDate: form.date,
             visible: true,
-            available: true,
+            status: "available",
+            sold: false,
         };
         axios
             .put(
@@ -186,15 +188,16 @@ async function Delete(id, token) {
 }
 
 /**
- * Get array of shop items
+ * Get array of shop items, filtered based on visibility.
  * @param {string} token User auth token
+ * @param {boolean} visible Filter items
  * @returns {Promise} Promise object contains array of shopItems
  */
-async function GetAvailable(token) {
+async function GetAvailable(token, visible) {
     return new Promise((resolve, reject) => {
         axios
             .get(
-                `${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="available"`,
+                `${secrets.firebaseDatabase}/products.json?orderBy="visible"&equalTo=${visible}`,
                 {
                     params: {
                         auth: token,
@@ -212,6 +215,7 @@ async function GetAvailable(token) {
                         }
                     }
                     shopItems.push({
+                        thumbnailUrl: obj.images["image0"],
                         ...obj,
                         images: images,
                         id: item,
@@ -227,32 +231,57 @@ async function GetAvailable(token) {
     });
 }
 
-async function updateProductStatus(productID, status) {
+
+/**
+ * Update multiple children, from the /products/key 
+ * @param {number[]} productIds Array of product IDs
+ * @param {string} key Name of the key
+ * @param {any} value Value of the new key
+ */
+async function UpdateMultiple(productIds, key, value) {
+    let changes = {};
+    for (let id of productIds) {
+        changes[`${id}/${key}`] = value;
+    }
     await axios
-        .patch(
-            `${secrets.firebaseDatabase}/products/${productID}.json`,
-            {
-                status: status,
+        .patch(`${secrets.firebaseDatabase}/products.json`, changes, {
+            params: {
+                auth: secrets.APP_SECRET,
             },
-            {
-                params: {
-                    auth: secrets.APP_SECRET,
-                },
-            }
-        )
+        })
         .then((response) => {
             return;
         })
         .catch((error) => {
+            console.log(error)
             return;
         });
 }
 
+async function UpdateStatus(productIds, status) {
+    let changes = {};
+    for (let id of productIds) {
+        changes[`${id}/status`] = status;
+        //changes[id] = { status: status }
+    }
+    console.log(changes);
+    await axios
+        .patch(`${secrets.firebaseDatabase}/products.json`, changes, {
+            params: {
+                auth: secrets.APP_SECRET,
+            },
+        })
+        .then((response) => {
+            return;
+        })
+        .catch((error) => {
+            console.log(error)
+            return;
+        });
+}
 
 // TODO: Make an update function that allows for more dynamic queries
-async function UpdateNew(){
-
-}
+async function UpdateNew() {}
 
 module.exports = {
     uploadImages: uploadImages,
@@ -261,5 +290,6 @@ module.exports = {
     Update: Update,
     Delete: Delete,
     GetAvailable: GetAvailable,
-    updateProductStatus: updateProductStatus,
+    UpdateStatus: UpdateStatus,
+    UpdateMultiple: UpdateMultiple,
 };
