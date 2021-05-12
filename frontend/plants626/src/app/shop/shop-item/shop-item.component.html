@@ -6,6 +6,11 @@
   />
   <div>
     <h1 class="font-bold">{{ shopItem.name }}</h1>
-    <h2>{{ shopItem.price | currency }}</h2>
+    <div *ngIf="shopItem.sold">
+      <h2 class="italic">Sold</h2>
+    </div>
+    <div *ngIf="!shopItem.sold">
+      <h2>{{ shopItem.price | currency }}</h2>
+    </div>
   </div>
 </div>

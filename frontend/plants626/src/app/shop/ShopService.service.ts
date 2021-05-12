@@ -20,8 +20,11 @@ export class ShopService {
     */
   fetchShop() {
     console.log('Fetching shop...');
+    let params = new HttpParams().set('visible', 'true');
     this.http
-      .get<ShopItem[]>('/api/loadShop')
+      .get<ShopItem[]>('/api/loadShop', {
+        params: params
+      })
       .subscribe((response: ShopItem[]) => {
         this.setShop(response);
       });
