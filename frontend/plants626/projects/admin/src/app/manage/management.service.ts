@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { AdminProduct } from '../shared/admin-product.model';
 import { UploadForm } from '../shared/upload-form.model';
@@ -34,14 +34,20 @@ export class ManagementService {
       });
   }
 
-  getShop() {
+  getShop(visible: boolean) {
     this.http
-      .get<AdminProduct[]>('/api/admin/shop')
+      .get<AdminProduct[]>('/api/admin/shop', {
+        params: new HttpParams().set('visible', `${visible}`),
+      })
       .subscribe((newShop: AdminProduct[]) => {
         this.shopChanged.next(newShop);
         this.shop = newShop;
         console.log(newShop);
       });
+  }
+
+  getOrders(): Observable<AdminProduct[]> | any{
+    return this.http.get<AdminProduct[]>('/api/admin/orders')
   }
 
   getProduct(id: number): AdminProduct {
@@ -52,39 +58,38 @@ export class ManagementService {
 
   /*
    * Http PUT request, data sent as formData.
-   * @body: Changes made to the product 
+   * @body: Changes made to the product
    * @params: Product ID
    */
   editProduct(changes: any, id: number) {
-    console.log('Editing product...')
+    console.log('Editing product...');
     let formData: FormData = new FormData();
-    for(let change in changes){
-      if(change==="images"){
-        let images = changes[change]
+    for (let change in changes) {
+      if (change === 'images') {
+        let images = changes[change];
         let len = changes[change].length;
         let i = 0;
-        for(i = 0; i < len; i++){
+        for (i = 0; i < len; i++) {
           formData.append(`images`, images[i], images[i].name);
         }
-      }
-      else{
+      } else {
         formData.append(change, changes[change]);
       }
     }
 
-    return this.http
-      .put('/api/admin/edit', formData, {
-        headers: new HttpHeaders().set('Accept', 'application/json'),
-        params: new HttpParams().set('id', id.toString()),
-      })
-      
+    return this.http.put('/api/admin/edit', formData, {
+      headers: new HttpHeaders().set('Accept', 'application/json'),
+      params: new HttpParams().set('id', id.toString()),
+    });
   }
 
-  deleteProduct(id: number){
-    this.http.post('/api/admin/delete', {
-      id: id
-    }).subscribe((res) => {
-      console.log(res)
-    })
+  deleteProduct(id: number) {
+    this.http
+      .post('/api/admin/delete', {
+        id: id,
+      })
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }

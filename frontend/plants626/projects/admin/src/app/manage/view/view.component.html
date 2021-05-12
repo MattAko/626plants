@@ -2,5 +2,9 @@
   <router-outlet></router-outlet>
   <h1 class="text-center text-5xl mb-5 font-semibold">Shop</h1>
   <p class="italic text-center">Here are all the items in the shop</p>
+  <div>
+    <app-toggle-button></app-toggle-button> 
+    <span class="inline">Visible</span>
+  </div>
   <app-view-item *ngFor="let prod of shop" [item]="prod"></app-view-item>
 </div>

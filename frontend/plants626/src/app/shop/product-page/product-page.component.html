@@ -36,7 +36,7 @@
     <p>{{ product.description }}</p>
     <button
       [disabled]="product.sold"
-      [ngClass]="{ 'cursor-not-allowed': product.sold }"
+      [ngClass]="{ 'cursor-not-allowed': product.sold, 'bg-pink': !product.sold, 'bg-gray-600': product.sold}"
       class="bg-pink rounded-full w-full mt-8 py-3"
       (click)="addToCart()"
     >

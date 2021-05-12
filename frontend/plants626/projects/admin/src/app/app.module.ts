@@ -18,6 +18,8 @@ import { ViewItemComponent } from './manage/view/view-item/view-item.component';
 import { CloseButtonComponent } from './shared/close-button/close-button.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 import { OrdersComponent } from './manage/orders/orders.component';
+import { ToggleButton } from './shared/toggle-button/toggle-button.component';
+import { OrderItemComponent } from './manage/orders/order-item/order-item.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { OrdersComponent } from './manage/orders/orders.component';
     CloseButtonComponent,
     MobileNavComponent,
     OrdersComponent,
+    ToggleButton,
+    OrderItemComponent,
   ],
   imports: [
     BrowserModule,

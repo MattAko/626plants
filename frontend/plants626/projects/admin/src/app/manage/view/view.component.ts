@@ -15,7 +15,7 @@ export class ViewComponent implements OnInit {
   constructor(private manage: ManagementService) {}
 
   ngOnInit(): void {
-    this.manage.getShop();
+    this.manage.getShop(true);
     this.shopSub = this.manage.shopChanged.subscribe((shop) => {
       this.shop = shop;
     });

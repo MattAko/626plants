@@ -81,7 +81,7 @@ export class EditComponent implements OnInit {
         .editProduct(changes, this.product.id)
         .subscribe((res: any) => {
           if(res.message==="OK"){
-            this.manage.getShop();
+            this.manage.getShop(true);
             this.router.navigate(['/manage/view'])
           }
         });
