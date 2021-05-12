@@ -12,10 +12,40 @@ const axios = require("axios");
 // Import secrets
 const secrets = require("../secrets/secrets.json");
 
-// Node filesystem
-const fs = require("fs");
-const { throws } = require("assert");
-const { resolve } = require("path");
+async function GetProduct(id) {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`${secrets.firebaseDatabase}/products/${id}.json`, {
+                params: {
+                    auth: secrets.APP_SECRET,
+                },
+            })
+            .then((shop) => {
+                const item = shop.data;
+                let images = [];
+                if (item.images) {
+                    for (let image in item.images) {
+                        images.push(item.images[image]);
+                    }
+                }
+                const product = {
+                    id: +id,
+                    name: item.name,
+                    price: +item.price,
+                    quantity: +item.quantity,
+                    images: images,
+                    description: item.description,
+                    posted: item.posted,
+                    sold: item.sold
+                }
+                resolve(product);
+            })
+            .catch((err) => {
+                console.log(err);
+                throw new Error('Get Product function failed.')
+            });
+    })
+}
 
 /**
  * Upload images to google cloud storage
@@ -231,9 +261,8 @@ async function GetAvailable(token, visible) {
     });
 }
 
-
 /**
- * Update multiple children, from the /products/key 
+ * Update multiple children, from the /products/key
  * @param {number[]} productIds Array of product IDs
  * @param {string} key Name of the key
  * @param {any} value Value of the new key
@@ -253,7 +282,7 @@ async function UpdateMultiple(productIds, key, value) {
             return;
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error);
             return;
         });
 }
@@ -275,7 +304,7 @@ async function UpdateStatus(productIds, status) {
             return;
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error);
             return;
         });
 }
@@ -292,4 +321,5 @@ module.exports = {
     GetAvailable: GetAvailable,
     UpdateStatus: UpdateStatus,
     UpdateMultiple: UpdateMultiple,
+    GetProduct: GetProduct,
 };

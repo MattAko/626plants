@@ -88,35 +88,10 @@ router.route("/loadShop").get(jsonParser,  async (req, res) => {
     posted: Date
   } 
 */
-router.route("/getProduct").get((req, res) => {
-    axios
-        .get(`${secrets.firebaseDatabase}/products/${req.query.id}.json`, {
-            params: {
-                auth: secrets.APP_SECRET,
-            },
-        })
-        .then((shop) => {
-            const item = shop.data;
-            let images = [];
-            if (item.images) {
-                for (let image in item.images) {
-                    images.push(item.images[image]);
-                }
-            }
-            const product = {
-                id: +req.query.id,
-                name: item.name,
-                price: +item.price,
-                quantity: +item.quantity,
-                images: images,
-                description: item.description,
-                posted: item.posted,
-            };
-            res.send(product);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+router.route("/getProduct").get(async (req, res) => {
+    const { id } = req.query;
+    const product = await db_products.GetProduct(id); 
+    res.send(product);    
 });
 
 router.route("/getCart").post(jsonParser, (req, res) => {
