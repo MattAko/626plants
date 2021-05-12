@@ -30,7 +30,7 @@ router.route("/loadShop").get(jsonParser,  async (req, res) => {
     const { visible } = req.query;
     console.log("loading shop for customer...");
 
-    let shop = await db_products.GetAvailable(secrets.APP_SECRET, visible);
+    let shop = await db_products.GetVisible(visible);
     if(shop){
         let shopItems = [];
         for(let item of shop){

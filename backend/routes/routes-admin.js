@@ -135,14 +135,25 @@ router
  * @route "/api/admin/shop"
  */
 router.route("/admin/shop").get(jsonParser, async (req, res) => {
-    const token = req.query.auth;
-    const shopItems = await db_products.GetAvailable(token).catch((error) => {
+    const { visible } = req.query;
+    const shopItems = await db_products.GetVisible(visible).catch((error) => {
         res.status(400);
         res.send('Unable to load shop')
     })
     res.send(shopItems)
+});
 
-    
+/**
+ * Return client an array of shopItems
+ * @route "/api/admin/shop"
+ */
+router.route("/admin/orders").get(jsonParser, async (req, res) => {
+    const { visible } = req.query;
+    const shopItems = await db_products.GetOrders().catch((error) => {
+        res.status(400);
+        res.send('Unable to load shop')
+    })
+    res.send(shopItems)
 });
 
 router.route("/admin/delete").post(jsonParser, async (req, res) => {
