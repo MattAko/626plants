@@ -1,14 +1,40 @@
-<div class="flex flex-row flex-wrap justify-around  md:mx-5 my-8">
-  <img class="lg:w-72 lg:h-72 w-52 h-52 mb-5 rounded object-cover cursor-pointer" [src]="item.images[0]" />
-  <div class="text-left text-sm lg:w-72 w-52">
+<div class="grid grid-cols-1 lg:grid-cols-3 flex-wrap lg:gap-10 mt-10">
+  <img
+    class="lg:w-72 lg:h-72 w-52 h-52 mb-5 rounded object-cover cursor-pointer mx-auto"
+    [src]="item.images[0]"
+  />
+  <div class="text-left text-sm lg:w-72 w-52 mx-auto">
     <p class="text-lg font-semibold">{{ item.name }}</p>
-    <p class="px-5 text-center py-2 mb-5" [ngClass]="{'bg-gray-700 text-white': !item.visible, 'bg-lightgreen': item.visible}">{{ item.visible ? 'Public': 'Hidden'}}</p>
+    <p
+      class="px-5 text-center py-2 mb-2"
+      [ngClass]="{
+        'bg-gray-700 text-white': !item.visible,
+        'bg-lightgreen border-2 border-green': item.visible
+      }"
+    >
+      {{ item.visible ? "Public" : "Hidden" }}
+    </p>
+    <p
+      class="px-5 text-center py-2 mb-5 border-2"
+      [ngClass]="{
+        'bg-red-400 border-red-700': item.sold,
+        'bg-lightgreen border-green': !item.sold
+      }"
+    >
+      {{ item.sold ? "Sold" : "In stock" }}
+    </p>
     <p>ID#: {{ item.id }}</p>
-    <p>{{ item.price | currency}}</p>
+    <p class="my-2">{{ item.price | currency }}</p>
     <p>{{ item.description }}</p>
   </div>
-  <div class="text-left">
-    <button type="button" (click)="onEdit()" class="mx-auto bg-lightgreen px-7 py-4 rounded">Edit</button>
+  <div class="text-center">
+    <button
+      type="button"
+      (click)="onEdit()"
+      class="mx-auto bg-lightgreen px-5 py-3 rounded my-5"
+    >
+      Edit
+    </button>
   </div>
 </div>
-<hr/>
+<hr />

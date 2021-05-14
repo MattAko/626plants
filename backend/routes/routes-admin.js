@@ -21,6 +21,7 @@ const _API_KEY = secrets._API_KEY;
 
 // Import Database management systems
 const db_products = require("../firebase/products");
+const db_receipts = require("../firebase/receipts");
 const func = require("../firebase/functions");
 
 /**
@@ -138,9 +139,9 @@ router.route("/admin/shop").get(jsonParser, async (req, res) => {
     const { visible } = req.query;
     const shopItems = await db_products.GetVisible(visible).catch((error) => {
         res.status(400);
-        res.send('Unable to load shop')
-    })
-    res.send(shopItems)
+        res.send("Unable to load shop");
+    });
+    res.send(shopItems);
 });
 
 /**
@@ -149,23 +150,22 @@ router.route("/admin/shop").get(jsonParser, async (req, res) => {
  */
 router.route("/admin/orders").get(jsonParser, async (req, res) => {
     const { visible } = req.query;
-    const shopItems = await db_products.GetOrders().catch((error) => {
+    const orders = await db_receipts.GetOrders().catch((error) => {
         res.status(400);
-        res.send('Unable to load shop')
-    })
-    res.send(shopItems)
+        res.send("Unable to load shop");
+    });
+    res.send(orders);
 });
 
 router.route("/admin/delete").post(jsonParser, async (req, res) => {
-  const token = req.query.auth;
-  const { id } = req.body;
-  await db_products.Delete(id, token).catch((err) => {
-    res.status(400);
-    res.send(`There was an error trying to delete product ${id}`)
-  });
-  res.status(200);
-  res.send(`Product ${id} has been deleted`)
-
-})
+    const token = req.query.auth;
+    const { id } = req.body;
+    await db_products.Delete(id, token).catch((err) => {
+        res.status(400);
+        res.send(`There was an error trying to delete product ${id}`);
+    });
+    res.status(200);
+    res.send(`Product ${id} has been deleted`);
+});
 
 module.exports = router;

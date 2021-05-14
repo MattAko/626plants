@@ -111,6 +111,8 @@ export class EditComponent implements OnInit {
       )
     ) {
       this.manage.deleteProduct(this.product.id);
+      this.router.navigate(['/manage/view']);
+      this.manage.getShop(true);
     }
   }
 }

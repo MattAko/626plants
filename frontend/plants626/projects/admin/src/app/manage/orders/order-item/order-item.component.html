@@ -1,14 +1,14 @@
-<div class="flex flex-row flex-wrap justify-around  md:mx-5 my-8">
-  <img class="lg:w-72 lg:h-72 w-52 h-52 mb-5 rounded object-cover cursor-pointer" [src]="order.images[0]" />
-  <div class="text-left text-sm lg:w-72 w-52">
+<div class="grid grid-cols-1 lg:grid-cols-3 flex-wrap justify-start md:mx-5 my-8">
+  <img
+    class="lg:w-72 lg:h-72 w-52 h-52 mb-5 rounded object-cover cursor-pointer mx-auto"
+    [src]="order.images[0]"
+  />
+  <div class="text-left text-sm lg:w-72 w-52 mx-auto">
     <p class="text-lg font-semibold">{{ order.name }}</p>
-    <p class="px-5 text-center py-2 mb-5" [ngClass]="{'bg-gray-700 text-white': !order.visible, 'bg-lightgreen': order.visible}">{{ order.visible ? 'Public': 'Hidden'}}</p>
     <p>ID#: {{ order.id }}</p>
-    <p>{{ order.price | currency}}</p>
-    <p>{{ order.description }}</p>
+    <p>{{ order.price | currency }}</p>
+    <p>{{ order.status }}</p>
   </div>
-  <div class="text-left">
-    <button type="button" class="mx-auto bg-lightgreen px-7 py-4 rounded">Edit</button>
-  </div>
+  <app-order-form class="mx-auto" [order]="order"></app-order-form>
 </div>
-<hr/>
+<hr />

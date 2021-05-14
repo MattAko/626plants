@@ -1,0 +1,10 @@
+<form *ngIf="formEnabled" [formGroup]="form">
+  <select name="status">
+    <option value="processing">Processing</option>
+    <option value="shipped">Shipped</option>
+    <option value="completed">Completed</option>
+  </select>
+</form>
+<button *ngIf="!formEnabled" (click)="EnableForm()" type="button" class="text-sm bg-lightgreen px-5 py-3 rounded">
+  Update
+</button>

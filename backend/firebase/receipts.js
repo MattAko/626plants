@@ -31,6 +31,35 @@ function Add(orderID, productIDs, captureID, payer, status, shipping) {
     );
 }
 
+/**
+ * Get array of shop items, filtered based on visibility.
+ * @param {boolean} visible Filter items
+ * @returns {Promise} Promise object contains array of shopItems
+ */
+async function GetOrders() {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(
+                `${secrets.firebaseDatabase}/receipts.json`,
+                {
+                    params: {
+                        auth: secrets.APP_SECRET,
+                    },
+                }
+            )
+            .then((response) => {
+                const orders = response.data;
+                resolve(orders);
+            })
+            .catch((error) => {
+                console.error("There was an error getting products.");
+                console.error(error);
+                reject(error);
+            });
+    });
+}
+
 module.exports = {
     Add: Add,
+    GetOrders: GetOrders,
 }

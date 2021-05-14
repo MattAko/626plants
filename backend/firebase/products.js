@@ -261,48 +261,7 @@ async function GetVisible(visible) {
 }
 
 
-/**
- * Get array of shop items, filtered based on visibility.
- * @param {boolean} visible Filter items
- * @returns {Promise} Promise object contains array of shopItems
- */
-async function GetOrders() {
-    return new Promise((resolve, reject) => {
-        axios
-            .get(
-                `${secrets.firebaseDatabase}/products.json?orderBy="status"&equalTo="processing"`,
-                {
-                    params: {
-                        auth: secrets.APP_SECRET,
-                    },
-                }
-            )
-            .then((shop) => {
-                const shopItems = [];
-                for (let item in shop.data) {
-                    let { ...obj } = shop.data[item];
-                    let images = [];
-                    if (obj.images) {
-                        for (let image in obj.images) {
-                            images.push(obj.images[image]);
-                        }
-                    }
-                    shopItems.push({
-                        thumbnailUrl: obj.images["image0"],
-                        ...obj,
-                        images: images,
-                        id: item,
-                    });
-                }
-                resolve(shopItems);
-            })
-            .catch((error) => {
-                console.error("There was an error getting products.");
-                console.error(error);
-                reject(error);
-            });
-    });
-}
+
 
 /**
  * Update multiple children, from the /products/key
@@ -365,5 +324,4 @@ module.exports = {
     UpdateStatus: UpdateStatus,
     UpdateMultiple: UpdateMultiple,
     GetProduct: GetProduct,
-    GetOrders: GetOrders,
 };

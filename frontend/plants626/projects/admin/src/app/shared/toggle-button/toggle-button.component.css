@@ -9,7 +9,7 @@ label {
 	text-indent: -9999px;
 	width: 40px;
 	height: 20px;
-	background: lightgray;
+	background: #90ee90;
 	display: block;
 	border-radius: 100px;
 	position: relative;
@@ -28,7 +28,7 @@ label:after {
 }
 
 input:checked + label {
-	background: #da5555;
+	background: lightgray;
 }
 
 input:checked + label:after {
