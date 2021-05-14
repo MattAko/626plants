@@ -48,7 +48,12 @@ async function GetOrders() {
                 }
             )
             .then((response) => {
-                const orders = response.data;
+                const orders = [];
+                for(let orderId in response.data){
+                    const { captureID, ...data } = response.data[orderId];
+                    const newOrder = {...data, orderId}
+                    orders.push(newOrder);
+                }
                 resolve(orders);
             })
             .catch((error) => {

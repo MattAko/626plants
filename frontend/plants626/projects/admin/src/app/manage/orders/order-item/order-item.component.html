@@ -1,14 +1,10 @@
-<div class="grid grid-cols-1 lg:grid-cols-3 flex-wrap justify-start md:mx-5 my-8">
-  <img
-    class="lg:w-72 lg:h-72 w-52 h-52 mb-5 rounded object-cover cursor-pointer mx-auto"
-    [src]="order.images[0]"
-  />
+<div class="grid grid-cols-1 lg:grid-cols-3 flex-wrap justify-start md:mx-5 my-8 text-sm">
   <div class="text-left text-sm lg:w-72 w-52 mx-auto">
-    <p class="text-lg font-semibold">{{ order.name }}</p>
-    <p>ID#: {{ order.id }}</p>
-    <p>{{ order.price | currency }}</p>
-    <p>{{ order.status }}</p>
+    <p class="text-lg font-semibold">{{ order.shipping.name.full_name }}</p>
+    <p>ID#: {{ order.orderId }}</p>
   </div>
-  <app-order-form class="mx-auto" [order]="order"></app-order-form>
+  <div>
+    <app-order-form class="mx-auto" [order]="order"></app-order-form>
+  </div>
 </div>
 <hr />

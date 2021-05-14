@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Order } from 'src/app/shared/Order.model';
 import { AuthService } from '../auth/auth.service';
 import { AdminProduct } from '../shared/admin-product.model';
 import { UploadForm } from '../shared/upload-form.model';
@@ -46,8 +47,8 @@ export class ManagementService {
       });
   }
 
-  getOrders(): Observable<AdminProduct[]> | any{
-    return this.http.get<AdminProduct[]>('/api/admin/orders')
+  getOrders(): Observable<Order[]> | any{
+    return this.http.get<Order[]>('/api/admin/orders')
   }
 
   getProduct(id: number): AdminProduct {
@@ -91,5 +92,9 @@ export class ManagementService {
       .subscribe((res) => {
         console.log(res);
       });
+  }
+
+  updateStatus(status: string){
+    console.log(status);
   }
 }

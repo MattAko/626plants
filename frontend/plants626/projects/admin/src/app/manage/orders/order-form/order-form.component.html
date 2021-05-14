@@ -1,10 +1,17 @@
-<form *ngIf="formEnabled" [formGroup]="form">
-  <select name="status">
-    <option value="processing">Processing</option>
-    <option value="shipped">Shipped</option>
-    <option value="completed">Completed</option>
+<form class="text-sm" *ngIf="formEnabled" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <select class="text-sm" name="status">
+    <option *ngIf="order.status!=='processing'" value="processing">Processing</option>
+    <option *ngIf="!order.status!=='packaged'" value="packaged">Packaged</option>
+    <option *ngIf="!order.status!=='shipped'" value="shipped">Shipped</option>
+    <option *ngIf="!order.status!=='completed'" value="completed">Completed</option>
   </select>
+  <button type="submit" class="bg-lightgreen px-5 py-3 ml-5">Apply</button>
 </form>
-<button *ngIf="!formEnabled" (click)="EnableForm()" type="button" class="text-sm bg-lightgreen px-5 py-3 rounded">
-  Update
-</button>
+<div
+  *ngIf="!formEnabled"
+  (click)="EnableForm()"
+  class="text-sm bg-lightgreen px-5 py-3 rounded w-max"
+  [ngClass]="{'bg-gray-800': order.status==='processing', 'bg-yellow-800': order.status==='packaged', 'bg-yellow-200': order.status==='shipped', 'bg-lightgreen': order.status==='completed'}"
+>
+  {{ order.status }}
+</div>

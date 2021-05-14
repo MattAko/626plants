@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable} from 'rxjs';
+import { Order } from 'src/app/shared/Order.model';
 import { AdminProduct } from '../../shared/admin-product.model';
 import { ManagementService } from '../management.service';
 
@@ -9,8 +10,8 @@ import { ManagementService } from '../management.service';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit{
-  orders: AdminProduct[];
-  ordersObs: Observable<AdminProduct[]>
+  orders: Order[];
+  ordersObs: Observable<Order[]>
   constructor(private manage: ManagementService) { }
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Order } from 'src/app/shared/Order.model';
-import { AdminProduct } from '../../../shared/admin-product.model';
+import { ManagementService } from '../../management.service';
 
 @Component({
   selector: 'app-order-form',
@@ -13,10 +13,11 @@ export class OrderFormComponent implements OnInit {
   @Input('order') order: Order;
   form: FormGroup
 
-  constructor() { }
+  constructor(private manage: ManagementService) { }
 
   ngOnInit(): void {
     this.initForm();
+    console.log(this.order);
   }
   
   private initForm(){
@@ -27,6 +28,10 @@ export class OrderFormComponent implements OnInit {
 
   EnableForm(){
     this.formEnabled = true;
+  }
+
+  onSubmit(){
+    this.manage.updateStatus(this.form.value.status)
   }
 
 }
