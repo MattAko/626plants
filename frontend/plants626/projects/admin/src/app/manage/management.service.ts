@@ -94,7 +94,10 @@ export class ManagementService {
       });
   }
 
-  updateStatus(status: string){
-    console.log(status);
+  updateStatus(status: string, id: string){
+    return this.http.post('/api/admin/orders/update', {
+      id: id,
+      status: status,
+    })
   }
 }

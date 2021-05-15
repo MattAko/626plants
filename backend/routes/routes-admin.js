@@ -168,4 +168,13 @@ router.route("/admin/delete").post(jsonParser, async (req, res) => {
     res.send(`Product ${id} has been deleted`);
 });
 
+router.route("/admin/orders/update").post(jsonParser, async (req, res) => {
+    const { status, id } = req.body;
+    const token = req.query.auth;
+    console.log(status)
+    await db_receipts.UpdateOrderStatus(id, status, token);
+    res.status(200);
+    res.json({status: 'OK'})
+});
+
 module.exports = router;

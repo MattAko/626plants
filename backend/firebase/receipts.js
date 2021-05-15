@@ -64,7 +64,31 @@ async function GetOrders() {
     });
 }
 
+/**
+ * Update the status of an order. 
+ * @param {string} orderId Order ID.
+ * @param {string} status Status, must be one of the following: available, processing, packaged, shipped, completed.
+ * @param {string} token User auth token.
+ * @return {Promise} Promise object that resolves with a success or error.
+ */
+async function UpdateOrderStatus(orderId, status, token){
+    axios.patch(`${secrets.firebaseDatabase}/receipts/${orderId}.json`, {
+        status: status
+    }, {
+        params: {
+            auth: token
+        }
+    }).then((response) => {
+        console.log('Request complete')
+        return 'OK'
+    }).catch((error) => {
+        console.error(error)
+        throw new Error('Error updating firebase.')
+    })
+}
+
 module.exports = {
     Add: Add,
     GetOrders: GetOrders,
+    UpdateOrderStatus: UpdateOrderStatus,
 }

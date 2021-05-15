@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Order } from 'src/app/shared/Order.model';
+import { Order } from '../../../shared/order.model';
+
 import { ManagementService } from '../../management.service';
 
 @Component({
@@ -17,7 +18,6 @@ export class OrderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    console.log(this.order);
   }
   
   private initForm(){
@@ -31,7 +31,21 @@ export class OrderFormComponent implements OnInit {
   }
 
   onSubmit(){
-    this.manage.updateStatus(this.form.value.status)
+    interface httpResponse{
+      status: string
+    }
+    console.log(this.order.orderId);
+    console.log(this.form);
+    this.manage.updateStatus(this.form.value.status, this.order.orderId).subscribe((response: httpResponse) => {
+      if(response.status==='OK'){
+        this.order.status = this.form.controls.status.value;
+        this.formEnabled = false;
+        
+      }
+      else{
+        alert(`There was an error updating status for order ${this.order.orderId}.`)
+      }
+    });
   }
 
 }
