@@ -26,15 +26,14 @@ const db_receipts = require("../firebase/receipts");
     thumbnailUrl: string
   }
 */
-router.route("/loadShop").get(jsonParser,  async (req, res) => {
+router.route("/loadShop").get(jsonParser, async (req, res) => {
     const { visible } = req.query;
     console.log("loading shop for customer...");
 
     let shop = await db_products.GetVisible(visible);
-    if(shop){
+    if (shop) {
         let shopItems = [];
-        for(let item of shop){
-            console.log(item)
+        for (let item of shop) {
             shopItems.push({
                 id: +item.id,
                 name: item.name,
@@ -46,33 +45,8 @@ router.route("/loadShop").get(jsonParser,  async (req, res) => {
         res.send(shopItems);
     } else {
         res.status(400);
-        res.send('Error');
+        res.send("Error");
     }
-    // axios
-    //     .get(`${secrets.firebaseDatabase}/products.json?orderBy="visible"&equalTo=true`, {
-    //         params: {
-    //             auth: secrets.APP_SECRET,
-    //         },
-    //     })
-    //     .then((shop) => {
-    //         const shopItems = [];
-    //         for (let item in shop.data) {
-    //             let obj = shop.data[item];
-    //             if(!obj.visible){
-    //                 continue;
-    //             }
-    //             shopItems.push({
-    //                 id: +item,
-    //                 name: obj.name,
-    //                 price: obj.price,
-    //                 thumbnailUrl: obj.images["image0"],
-    //             });
-    //         }
-    //         res.send(shopItems);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //     });
 });
 
 /*
@@ -90,8 +64,8 @@ router.route("/loadShop").get(jsonParser,  async (req, res) => {
 */
 router.route("/getProduct").get(async (req, res) => {
     const { id } = req.query;
-    const product = await db_products.GetProduct(id); 
-    res.send(product);    
+    const product = await db_products.GetProduct(id);
+    res.send(product);
 });
 
 router.route("/getCart").post(jsonParser, (req, res) => {
@@ -139,9 +113,11 @@ router.route("/getCart").post(jsonParser, (req, res) => {
         });
 });
 
+const email = require("../email/email");
+
 router.route("/approve").post(jsonParser, async (req, res) => {
-    console.log('/apporve')
-    console.log(req.body.data)
+    console.log("/apporve");
+    console.log(req.body.data);
     const { products } = req.body;
     const { orderID, payerID } = req.body.data;
 
@@ -149,20 +125,35 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     const results = await paypal.captureOrder(orderID).catch((err) => {
         res.status(500);
         res.json({
-            message: "Error capturing the payment"
-        })
+            message: "Error capturing the payment",
+        });
         return;
-    })
-    const { id, payer } = results; 
+    });
+    const { id, payer } = results;
     const captureID = results.purchase_units[0].payments.captures[0].id;
-    await db_receipts.Add(id, products, captureID, payer, 'processing', results.purchase_units[0].shipping); 
-    await db_products.UpdateStatus(products, 'processing');
-    await db_products.UpdateMultiple(products, 'sold', true);
+    await db_receipts.Add(
+        id,
+        products,
+        captureID,
+        payer,
+        "processing",
+        results.purchase_units[0].shipping
+    );
+    await db_products.UpdateMultiple(products, "sold", true);
+    await db_products.UpdateMultiple(products, "orderId", id);
+    await email.SendReceipt("mattako66@gmail.com", results).catch((error) => {
+        console.log(error);
+    });
     res.status(200);
     res.json({
         status: "Success",
-        ...results
+        ...results,
     });
+});
+
+router.route("/test").get(async (req, res) => {
+    console.log("test endpoint");
+    await email.SendReceipt("mattako66@gmail.com");
 });
 
 /*

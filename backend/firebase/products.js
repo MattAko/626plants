@@ -170,7 +170,6 @@ async function Add(form, token) {
             quantity: +form.quantity,
             postedDate: form.date,
             visible: true,
-            status: "available",
             sold: false,
         };
         axios

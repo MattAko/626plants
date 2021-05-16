@@ -7,6 +7,7 @@ const paypalClient = require("./paypalClient");
 /**
  * Captures (secure the payment) the paypal order based on the ID
  * @param {number} orderId
+ * @return {Promise} Promise object that resolves with a receipt object. Documentation can be found here: https://developer.paypal.com/docs/api/orders/v2/#orders_capture
  */
 async function captureOrder(orderId) {
 
