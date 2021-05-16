@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { CartService } from '../CartService.service';
 
 @Component({
   selector: 'app-mobile-nav',
@@ -8,9 +9,21 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 export class MobileNavComponent {
   @ViewChild('hamburger') hamburgerMenuRef;
   dropdownVisible: boolean = false;
+  cartSize: number = 0;
+
+  constructor(private cartService: CartService) {
+    this.cartSize = this.cartService.productIds.length;
+    this.cartService.cartSizeChanged.subscribe((size) => {
+      this.cartSize = size;
+    });
+  }
 
   // Toggle dropdown menu based on whether the user clicks the hamburger menu.
   @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
-    this.dropdownVisible = this.hamburgerMenuRef.nativeElement.contains(event.target) ? !this.dropdownVisible : false;
+    this.dropdownVisible = this.hamburgerMenuRef.nativeElement.contains(
+      event.target
+    )
+      ? !this.dropdownVisible
+      : false;
   }
 }

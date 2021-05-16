@@ -18,14 +18,14 @@ export class CartService {
   private _productIds: number[] = [];
   private _cart = new Cart([], 0, 0, 0); // for visual purposes
   cartChanged = new Subject<Cart>();
+  cartSizeChanged = new Subject<number>();
   authorized = new BehaviorSubject<boolean>(false);
   paid = new BehaviorSubject<boolean>(false);
   confirmation: Order;
 
-  
   constructor(private http: HttpClient) {}
-  
-  get productIds(){
+
+  get productIds() {
     return this._productIds.slice();
   }
 
@@ -66,6 +66,7 @@ export class CartService {
    */
   add(id: number) {
     this._productIds.push(id);
+    this.cartSizeChanged.next(this._productIds.length);
     this.updateStorage();
     this.updateTotal();
   }
@@ -75,6 +76,7 @@ export class CartService {
    */
   remove(index: number) {
     this._cart.products.splice(index, 1);
+
     this.updateStorage();
     this.cartChanged.next(this._cart);
   }
@@ -97,6 +99,7 @@ export class CartService {
         this.updateStorage();
       }
     });
+    this.cartSizeChanged.next(this._productIds.length);
   }
 
   /*
@@ -129,6 +132,7 @@ export class CartService {
     const productIds = JSON.parse(localStorage.getItem('productIds'));
     if (productIds) {
       this._productIds = productIds;
+      this.cartSizeChanged.next(this._productIds.length);
     }
   }
 

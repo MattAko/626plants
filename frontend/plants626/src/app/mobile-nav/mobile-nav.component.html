@@ -1,10 +1,15 @@
 <nav class="w-full py-3 flex bg-green justify-end px-6">
-  <a class="self-center mx-4"[routerLink]="['/cart']" routerLinkActive="router-link-active">
+  <a
+    class="self-center mx-4 h-8"
+    [routerLink]="['/cart']"
+    routerLinkActive="router-link-active"
+  >
     <svg
       height="28"
       viewBox="0 0 48 48"
       width="28"
       xmlns="http://www.w3.org/2000/svg"
+      class="inline relative top-0.5"
     >
       <path
         fill="white"
@@ -12,6 +17,9 @@
       />
       <path d="M0 0h48v48H0z" fill="none" />
     </svg>
+    <div *ngIf="cartSize!==0" class="inline-block bg-red-500 h-6 w-6 flex relative text-center rounded-full items-center justify-center -top-3.5 -right-3.5">
+      {{cartSize}}
+    </div>
   </a>
   <ul #hamburger class="p-2 cursor-pointer">
     <li class="h-0.5 w-5 border-2 my-1 rounded"></li>

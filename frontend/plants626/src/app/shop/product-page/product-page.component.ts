@@ -17,15 +17,12 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   available: Boolean = true;
 
   added: boolean = false;
-  selectedImage: number = 0;
-  windowSubscription: Subscription;
   mobile: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private shopSerivce: ShopService,
-    private cartService: CartService,
-    private windowService: WindowService
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -34,22 +31,17 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       this.subscription = this.shopSerivce.productUpdated.subscribe(
         (product: Product) => {
           this.product = product;
-          console.log(this.product)
+          console.log(this.product);
           this.available = !this.cartService.check(this.product.id);
         }
       );
-    });
-
-    this.mobile = this.windowService.mobileEnabled;
-    this.windowSubscription = this.windowService.innerWidthChanged.subscribe((width) => {
-      this.mobile = this.windowService.mobileEnabled;
     });
   }
 
   // Adds product to the shopping cart
   addToCart() {
     // If the product is already in cart, do not add to cart, otherwise, add the product to the cart
-    console.log(this.cartService.check(this.product.id))
+    console.log(this.cartService.check(this.product.id));
     if (!this.cartService.check(this.product.id)) {
       this.cartService.add(this.product.id);
       console.log('Added to cart');
@@ -61,12 +53,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.windowSubscription.unsubscribe();
     this.subscription.unsubscribe();
-  }
-
-  onImageClick(index: number){
-    this.selectedImage = index;
-    console.log(this.selectedImage)
   }
 }

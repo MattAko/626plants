@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UploadForm } from '../../shared/upload-form.model';
 import { ManagementService } from '../management.service';
 
@@ -15,7 +16,7 @@ export class UploadComponent implements OnInit {
   fileUrls = null;
   ready: boolean = false;
 
-  constructor(private manage: ManagementService) {}
+  constructor(private manage: ManagementService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -48,6 +49,8 @@ export class UploadComponent implements OnInit {
       this.fileList,
       date
     );
-    this.manage.upload(uploadForm);
+    this.manage.upload(uploadForm).subscribe((repsonse) => {
+      this.router.navigate(['/manage/view']);
+    });
   }
 }

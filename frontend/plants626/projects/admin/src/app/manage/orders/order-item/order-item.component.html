@@ -6,5 +6,8 @@
   <div>
     <app-order-form class="mx-auto" [order]="order"></app-order-form>
   </div>
+  <div>
+    <p *ngFor="let prod of order.products">{{prod}}</p>
+  </div>
 </div>
 <hr />

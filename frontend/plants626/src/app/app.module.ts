@@ -20,6 +20,7 @@ import { CloseButtonComponent } from './shared/close-button/close-button.compone
 import { CheckoutComponent } from './checkout/checkout.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ProductImageComponent } from './shop/product-page/product-image/product-image.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     CheckoutComponent,
     LoadingSpinnerComponent,
     ConfirmationComponent,
+    ProductImageComponent,
   ],
   imports: [
     BrowserModule,

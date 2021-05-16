@@ -26,13 +26,11 @@ export class ManagementService {
     formData.append('description', form.description);
     formData.append('quantity', form.quantity.toString());
     formData.append('date', form.postedDate.toString());
-    this.http
+    return this.http
       .post<Text>('/api/admin/upload', formData, {
         headers: new HttpHeaders().set('Accept', 'application/json'),
       })
-      .subscribe((res) => {
-        console.log(res);
-      });
+      
   }
 
   getShop(visible: boolean) {
