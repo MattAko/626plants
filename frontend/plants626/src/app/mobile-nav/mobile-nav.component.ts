@@ -6,12 +6,14 @@ import { CartService } from '../CartService.service';
   templateUrl: './mobile-nav.component.html',
   styleUrls: ['./mobile-nav.component.css'],
 })
-export class MobileNavComponent {
+export class MobileNavComponent implements OnInit {
   @ViewChild('hamburger') hamburgerMenuRef;
   dropdownVisible: boolean = false;
   cartSize: number = 0;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService) {}
+
+  ngOnInit() {
     this.cartSize = this.cartService.productIds.length;
     this.cartService.cartSizeChanged.subscribe((size) => {
       this.cartSize = size;

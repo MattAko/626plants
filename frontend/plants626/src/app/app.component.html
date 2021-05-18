@@ -1,6 +1,6 @@
-<app-navbar class="font z-10 fixed top-0 w-full" *ngIf="!mobileNavEnabled"></app-navbar>
-<app-mobile-nav class="font z-10 fixed top-0 w-full" *ngIf="mobileNavEnabled"></app-mobile-nav>
-<div class="font max-w-5x1 mx-auto mb-20 mt-16 lg:mt-24">
+<app-navbar *ngIf="!mobileNavEnabled"></app-navbar>
+<app-mobile-nav *ngIf="mobileNavEnabled"></app-mobile-nav>
+<div class="font max-w-5x1 mx-auto mb-20">
   <router-outlet></router-outlet>
 </div>
 <app-footer class="font"></app-footer>
