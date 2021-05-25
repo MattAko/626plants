@@ -1,13 +1,31 @@
-<div class="grid grid-cols-1 lg:grid-cols-3 flex-wrap justify-start md:mx-5 my-8 text-sm">
-  <div class="text-left text-sm lg:w-72 w-52 mx-auto">
+<div
+  class="
+    grid grid-cols-1
+    md:grid-cols-4
+    flex-wrap
+    justify-start
+    md:mx-5
+    my-8
+    text-sm
+  "
+>
+  <div class="text-left text-sm md:w-72 w-52 mx-auto">
     <p class="text-lg font-semibold">{{ order.shipping.name.full_name }}</p>
     <p>ID#: {{ order.orderId }}</p>
   </div>
   <div>
-    <app-order-form class="mx-auto" [order]="order"></app-order-form>
+    <div>{{ order.shipping.name.full_name}}</div>
+    <div>{{ order.shipping.address.address_line_1 }}</div>
+    <div>{{ order.shipping.address.admin_area_2}}, {{ order.shipping.address.admin_area_1}} {{order.shipping.address.postal_code}}</div>
   </div>
-  <div>
-    <p *ngFor="let prod of order.products">{{prod}}</p>
+  <div class="md:mx-0 mx-auto">
+    <h2 *ngIf="mobile" class="font-semibold">Items</h2>
+    <ul class="list-decimal list-inside">
+      <li (click)="onRedirect(prod)" *ngFor="let prod of order.products">{{ prod }}</li>
+    </ul>
+  </div>
+  <div class="md:mx-0 mx-auto">
+    <app-order-form class="mx-auto" [order]="order"></app-order-form>
   </div>
 </div>
 <hr />

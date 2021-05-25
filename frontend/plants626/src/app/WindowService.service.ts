@@ -9,9 +9,9 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class WindowService {
-  public md = 768;
+  public mobileSize = 1024;
 
-  mobileEnabled: boolean = window.innerWidth <= this.md;
+  mobileEnabled: boolean = window.innerWidth <= this.mobileSize;
   private innerWidth: number;
   innerWidthChanged = new Subject<number>();
   displayChanged = new Subject<boolean>();
@@ -21,7 +21,7 @@ export class WindowService {
     console.log('resized event')
     this.innerWidth = window.innerWidth;
     this.innerWidthChanged.next(this.innerWidth);
-    this.mobileEnabled = this.innerWidth <= this.md;
+    this.mobileEnabled = this.innerWidth <= this.mobileSize;
     this.displayChanged.next(this.mobileEnabled);
   }
 }

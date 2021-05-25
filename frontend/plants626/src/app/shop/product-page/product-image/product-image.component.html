@@ -1,26 +1,60 @@
 <img
   [src]="images[this.selectedImage]"
   [ngClass]="{ hidden: !mobile }"
-  class="w-full h-96 object-cover mx-auto"
+  class="w-screen object-cover mx-auto"
   (window:resize)="onResize($event)"
 />
-<div class="grid grid-cols-4 lg:grid-cols-2">
+<div
+  class="
+    overflow-x-scroll overflow-y-hidden
+    whitespace-nowrap
+    lg:overflow-x-hidden
+    lg:grid lg:grid-cols-2
+    lg:gap-2
+  "
+>
   <img
     *ngFor="let image of images; let imgIndex = index"
     class="
       inline-block
-      w-full
-      h-16
-      lg:w-80
-      lg:h-80
+      w-40
+      lg:w-full
+      lg:h-auto
+      lg:max-h-60
       object-cover
       cursor-pointer
-      m-4
+      my-4
+      lg:m-0
     "
     [ngClass]="{
-      'border-2 border-black': imgIndex === selectedImage && mobile
+      'border-2 border-black': imgIndex === selectedImage && mobile,
+      clamp: mobile
     }"
     [src]="image"
     (click)="onImageClick(imgIndex)"
   />
+</div>
+<div *ngIf="this.enlargedImage !== null">
+  <div
+    class="
+      absolute
+      left-0
+      top-0
+      h-full
+      w-full
+      bg-black
+      z-30
+      bg-opacity-75
+      flex
+      items-center
+    "
+  >
+    <div>
+      <app-close-button
+        (click)="this.enlargedImage = null"
+        class="relative float-right right-4 top-16 z-40 bg-white rounded-full p-2.5"
+      ></app-close-button>
+      <img (click)="this.enlargedImage=null" class="w-full h-auto" [src]="images[this.enlargedImage]" />
+    </div>
+  </div>
 </div>

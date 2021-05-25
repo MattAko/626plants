@@ -7,7 +7,7 @@
         alt="product-image"
       />
       <div class="px-5">
-        <h2 class="font-bold">{{ product.name }}</h2>
+        <h2 [routerLink]="['/shop', product.id]" class="font-semibold cursor-pointer">{{ product.name }}</h2>
         <p class="font-thin">{{ product.price | currency }}</p>
         <p class="font-thin">Quantity x{{ product.quantity }}</p>
       </div>

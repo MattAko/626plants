@@ -21,6 +21,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { ProductImageComponent } from './shop/product-page/product-image/product-image.component';
+import { TooltipComponent } from './shared/tooltip/tooltip.component';
+import { ShippingFormComponent } from './cart/shipping-form/shipping-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,11 +45,15 @@ import { ProductImageComponent } from './shop/product-page/product-image/product
     LoadingSpinnerComponent,
     ConfirmationComponent,
     ProductImageComponent,
+    TooltipComponent,
+    ShippingFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,6 +16,7 @@ export class CartComponent implements OnInit, OnDestroy {
   errors: number[];
   errorProducts: Product[];
   loading: boolean = false;
+  selectShippingMode: boolean = false;
 
   constructor(private cartService: CartService, private router: Router ) {}
 

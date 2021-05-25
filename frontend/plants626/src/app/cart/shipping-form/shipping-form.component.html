@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <select name="carrier" formControlName="carrier">
+    <option value="usps">USPS</option>
+    <option value="ups">UPS</option>
+  </select>
+  <div class="block">
+    <input
+      type="radio"
+      id="overnight"
+      name="method"
+      formControlName="method"
+      value="overnight"
+    />
+    <label for="overnight">Overnight ($55)</label>
+  </div>
+  <div class="block">
+    <input
+      type="radio"
+      id="two-day"
+      name="method"
+      value="two-day"
+      formControlName="method"
+    />
+    <label for="two-day">Two-Day ($30)</label>
+  </div>
+
+  <button
+    type="submit"
+    class="rounded-xl w-50 px-5 py-4 text-center bg-lightgreen"
+  >
+    Confirm Shipping
+  </button>
+</form>

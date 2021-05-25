@@ -1,0 +1,3 @@
+.clamp{
+    height: clamp(4rem, 25vw, 8rem)
+}
