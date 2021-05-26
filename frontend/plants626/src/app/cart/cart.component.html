@@ -9,43 +9,49 @@
     <h1 class="text-2xl my-5">Summary</h1>
     <ul class="text-md">
       <li>Subtotal: {{ cart.subtotal | currency }}</li>
-      <li>Shipping: TBD <app-tooltip></app-tooltip></li>
+      <li>Shipping: {{ shippingComplete ? (cart.shipping | currency) : 'TBD'}} <app-tooltip></app-tooltip></li>
       <hr class="my-2" />
       <li>
         Total:
-        <span class="font-semibold">{{ cart.total | currency }} + Shipping</span>
+        <span class="font-semibold"
+          >{{ cart.total | currency }} {{shippingComplete ? '': '+ Shipping'}}</span
+        >
       </li>
       <hr class="my-2" />
     </ul>
-    <div>
-
-    </div>
+    <div></div>
     <div
       *ngIf="!loading && cart.products.length !== 0"
       class="text-center my-5"
     >
-      <!-- <button
-        type="button"
-        [disabled]="cart.products.length === 0"
-        (click)="authorizeCart()"
-        [ngClass]="{ 'bg-lightgreen': cart.products.length > 0 }"
-        class="rounded-xl w-50 px-5 py-4 text-center"
-      >
-        Select Shipping
-      </button> -->
       <button
-        *ngIf="!selectShippingMode"
+        *ngIf="!selectShippingMode && !shippingComplete"
         type="button"
         [disabled]="cart.products.length === 0"
-        (click)="selectShippingMode=true"
+        (click)="selectShippingMode = true"
         [ngClass]="{ 'bg-lightgreen': cart.products.length > 0 }"
         class="rounded-xl w-50 px-5 py-4 text-center"
       >
         Select Shipping
       </button>
     </div>
-    <app-shipping-form *ngIf="selectShippingMode"></app-shipping-form>
-    
+    <app-shipping-form
+      *ngIf="selectShippingMode"
+      (formComplete)="onShippingComplete()"
+    ></app-shipping-form>
+    <div class="flex justify-center">
+      <button
+        *ngIf="shippingComplete"
+        type="button"
+        [disabled]="cart.products.length === 0"
+        (click)="authorizeCart()"
+        [ngClass]="{ 'bg-lightgreen': cart.products.length > 0 }"
+        class="rounded-xl w-50 px-5 py-4 text-center"
+      >
+        Checkout
+      </button>
+    </div>
+
     <div *ngIf="loading" class="flex justify-center">
       <app-loading-spinner></app-loading-spinner>
     </div>

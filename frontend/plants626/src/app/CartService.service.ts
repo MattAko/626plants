@@ -37,12 +37,12 @@ export class CartService {
    * Update both subtotal and total for shopping cart
    */
   updateTotal() {
-    let total: number = 0;
+    let subtotal: number = 0;
     this._cart.products.map((cartItem) => {
-      total += cartItem.price;
+      subtotal += cartItem.price;
     });
-    this._cart.total = total;
-    this._cart.subtotal = total;
+    this._cart.total = subtotal + this._cart.shipping;
+    this._cart.subtotal = subtotal;
   }
 
   /*
@@ -194,4 +194,27 @@ export class CartService {
       return throwError('Error thrown');
     }
   }
+
+  /**
+   * Update shipping costs for cart.  
+   * @param carrier String value representing which shipping carrier user selected. Either 'ups' or 'usps'
+   * @param method String value representing which shipping method user selected. Either 'overnight' or 'two-day'  
+   * @param signature Boolean representing whether the user wanted the order to be delivered only if signature is received. 
+   */
+  AddShipping(carrier: string, method: string, signature: boolean){
+    let shippingMultiplier: number = 0;
+    let shippingTotalCost: number = 0;
+    if(method==="two-day"){
+      shippingMultiplier = 30;
+    }else if(method==="overnight"){
+      shippingMultiplier = 55;
+    }
+    if(carrier==="ups" && signature){
+      shippingTotalCost += 5;
+    }
+    shippingTotalCost += shippingMultiplier * this._cart.products.length;
+    this._cart.shipping = shippingTotalCost;
+    this.updateTotal();
+  }
+
 }

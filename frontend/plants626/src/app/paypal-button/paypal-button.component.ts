@@ -52,9 +52,13 @@ export class PaypalButtonComponent implements OnInit {
                 currency_code: 'USD',
                 value: this.cart.total,
                 breakdown: {
+                  shipping: {
+                    currency_code: 'USD',
+                    value: this.cart.shipping
+                  },
                   item_total: {
                     currency_code: 'USD',
-                    value: this.cart.total,
+                    value: this.cart.subtotal,
                   },
                 },
               },

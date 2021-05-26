@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { CartService } from '../CartService.service';
 import { Cart } from '../shared/Cart.model';
 
@@ -15,7 +14,6 @@ export class CheckoutComponent implements OnInit {
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cartService.fetchCart();
     this.cart = this.cartService.cart;
     this.cartService.cartChanged.subscribe(cart => {
       this.cart = cart;

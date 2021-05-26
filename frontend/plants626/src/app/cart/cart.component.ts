@@ -17,6 +17,7 @@ export class CartComponent implements OnInit, OnDestroy {
   errorProducts: Product[];
   loading: boolean = false;
   selectShippingMode: boolean = false;
+  shippingComplete: boolean = false;
 
   constructor(private cartService: CartService, private router: Router ) {}
 
@@ -59,6 +60,11 @@ export class CartComponent implements OnInit, OnDestroy {
         })
       }
     );
+  }
+
+  onShippingComplete(){
+    this.shippingComplete = true;
+    this.selectShippingMode = false;
   }
 
   ngOnDestroy() {
