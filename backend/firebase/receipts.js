@@ -12,8 +12,10 @@ const secrets = require("../secrets/secrets.json");
  * @param {Payer} payer Payer object for the person who paid for the order
  * @param {string} status The order status
  * @param {Shipping} shipping Shipping object that contains info about shipping address
+ * @param {string} date The full-date-time when the order was captured. The string follows the Internet date and time format. 
  */
-function Add(orderID, productIDs, captureID, payer, status, shipping) {
+function Add(orderID, productIDs, captureID, payer, status, shipping, date) {
+    // Create new receipt
     axios.put(
         `${secrets.firebaseDatabase}/receipts/${orderID}.json`,
         {
@@ -22,6 +24,7 @@ function Add(orderID, productIDs, captureID, payer, status, shipping) {
             payer: payer,
             status: status,
             shipping: shipping,
+            purchase_date: date,
         },
         {
             params: {
@@ -49,13 +52,15 @@ async function GetOrders() {
             )
             .then((response) => {
                 const orders = [];
+                // Restructure orders from JSON tree to an array
                 for(let orderId in response.data){
                     const { captureID, ...data } = response.data[orderId];
                     const newOrder = {...data, orderId}
                     orders.push(newOrder);
                 }
-                resolve(orders);
+                resolve(orders); // Return the orders
             })
+            // Catch errors
             .catch((error) => {
                 console.error("There was an error getting products.");
                 console.error(error);

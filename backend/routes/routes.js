@@ -17,6 +17,9 @@ const paypal = require("../payment/paypal");
 const db_products = require("../firebase/products");
 const db_receipts = require("../firebase/receipts");
 
+// Import email
+const email = require("../email/email");
+
 /*
   Returns JSON of all ShopItems
   @return: ShopItem: {
@@ -113,7 +116,6 @@ router.route("/getCart").post(jsonParser, (req, res) => {
         });
 });
 
-const email = require("../email/email");
 
 router.route("/approve").post(jsonParser, async (req, res) => {
     console.log("/apporve");
@@ -129,7 +131,9 @@ router.route("/approve").post(jsonParser, async (req, res) => {
         });
         return;
     });
-    const { id, payer } = results;
+    const date = results.purchase_units[0].payments.captures[0].update_time;
+    console.log(date);
+    const { id, payer} = results;
     const captureID = results.purchase_units[0].payments.captures[0].id;
     await db_receipts.Add(
         id,
@@ -137,7 +141,8 @@ router.route("/approve").post(jsonParser, async (req, res) => {
         captureID,
         payer,
         "processing",
-        results.purchase_units[0].shipping
+        results.purchase_units[0].shipping,
+        date
     );
     await db_products.UpdateMultiple(products, "sold", true);
     await db_products.UpdateMultiple(products, "orderId", id);

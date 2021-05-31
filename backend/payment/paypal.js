@@ -11,27 +11,21 @@ const paypalClient = require("./paypalClient");
  */
 async function captureOrder(orderId) {
 
-    // Call PayPal to capture the orde
+    // Call PayPal to capture the order request
     const request = new paypal.orders.OrdersCaptureRequest(orderId);
-    request.requestBody({});
+    request.requestBody({});    // Creates the request body.
 
-    try{
+    try {
         const capture = await paypalClient.client().execute(request);
         // Save the capture ID to database.
-        console.log('Here is the captured payment...')
-        console.log(capture.result);
-        console.log(capture.result.purchase_units[0])
-        console.log(capture.result.purchase_units[0].payments.captures[0].id);
-        //const captureID = capture.result.purchase_units[0].payments.captures[0].id;
         return capture.result;
-    }
-    catch(err){
+    } catch (err) {
         // Handle errors
-        console.log('There was an error capturing a payment.');
-        throw TypeError('Error capturing a payment');
+        console.log("There was an error capturing a payment.");
+        throw TypeError("Error capturing a payment");
     }
 }
 
 module.exports = {
-    captureOrder: captureOrder
-}
+    captureOrder: captureOrder,
+};
