@@ -13,7 +13,7 @@
         Shipping: {{ shippingComplete ? (cart.shipping | currency) : "TBD" }}
         <app-tooltip
           [msg]="
-            'Shipping costs are affected by the carrier and method of the delivery. Shipping costs are calculated with a base cost per item in cart.'
+            'Your shipping rate is calculated by the carrier and the delivery method. The final shipping cost is then calculated by rate × cart_size. If you are ordering multiple items, feel free to contact us to lower the shipping costs.'
           "
         ></app-tooltip>
       </li>

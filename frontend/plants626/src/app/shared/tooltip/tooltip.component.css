@@ -1,13 +1,21 @@
-.tooltip{
-  position: relative;
-  
-  margin-left: 25px;
-  top: -50%;
-  width: 200px;
+.tooltip {
+  position: absolute;
+
+  top: 0%;
+  right: 150%;
+  width: 15rem;
+  height: auto;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #000;
   color: white;
 }
 
-
+.arrow {
+  border: 8px solid #000;
+  border-color: transparent transparent transparent black;
+  margin-left: -10px;
+  position: absolute;
+  right: -15px;
+  top:5px;
+}
