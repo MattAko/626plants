@@ -9,12 +9,20 @@
     <h1 class="text-2xl my-5">Summary</h1>
     <ul class="text-md">
       <li>Subtotal: {{ cart.subtotal | currency }}</li>
-      <li>Shipping: {{ shippingComplete ? (cart.shipping | currency) : 'TBD'}} <app-tooltip></app-tooltip></li>
+      <li>
+        Shipping: {{ shippingComplete ? (cart.shipping | currency) : "TBD" }}
+        <app-tooltip
+          [msg]="
+            'Shipping costs are affected by the carrier and method of the delivery. Shipping costs are calculated with a base cost per item in cart.'
+          "
+        ></app-tooltip>
+      </li>
       <hr class="my-2" />
       <li>
         Total:
         <span class="font-semibold"
-          >{{ cart.total | currency }} {{shippingComplete ? '': '+ Shipping'}}</span
+          >{{ cart.total | currency }}
+          {{ shippingComplete ? "" : "+ Shipping" }}</span
         >
       </li>
       <hr class="my-2" />

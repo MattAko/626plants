@@ -1,0 +1,36 @@
+input {
+  border-width: 0.125rem;
+  border-color: #6b7280;
+  border-radius: 0.5rem;
+  color: #6b7280;
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+input:focus {
+    outline: none;
+    border-color: #6b7280;
+  --tw-ring-color: transparent;
+}
+
+textarea {
+  border-width: 0.125rem;
+  border-color: #6b7280;
+  border-radius: 0.5rem;
+  color: #6b7280;
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+textarea:focus {
+  --tw-ring-color: transparent;
+}
+
+.images{
+    background-color: #90ee90;
+    padding: 1rem 1.25rem 1rem 1.25rem;
+    border-radius: 0.5rem;
+    margin: 0.75rem 0 0.75rem 1.5rem;
+    }
+
+.imageHeader{
+    top: -2.125rem;
+}

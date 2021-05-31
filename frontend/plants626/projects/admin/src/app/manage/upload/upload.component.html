@@ -1,14 +1,14 @@
-<div class="lg:w-1/3 md:px-8 mx-auto">
+<div class="md:px-8 mx-auto">
   <h1 class="text-5xl text-center">Upload</h1>
   <form
-    class="flex flex-col items-center"
+    class="flex flex-col justify-start text-sm"
     #uploadForm="ngForm"
     (ngSubmit)="onSubmit()"
   >
     <div>
-      <label for="name">Name</label>
       <input
-        class="block md:w-96 w-52"
+        placeholder="Product Name"
+        class="block focus:outline-none focus:border-0"
         type="text"
         id="name"
         name="name"
@@ -17,9 +17,9 @@
       />
     </div>
     <div>
-      <label class="text-left" for="price">Price</label>
       <input
-        class="block md:w-96 w-52"
+        placeholder="Price"
+        class="block"
         type="number"
         id="price"
         name="price"
@@ -28,9 +28,9 @@
       />
     </div>
     <div>
-      <label for="quantity">Quantity</label>
       <input
-        class="block md:w-96 w-52"
+        placeholder="Quantity"
+        class="block"
         type="number"
         id="quantity"
         name="quantity"
@@ -39,9 +39,9 @@
       />
     </div>
     <div>
-      <label for="description">Description</label>
       <textarea
-        class="block md:w-96 w-52"
+        placeholder="Add a description"
+        class="block"
         type="text"
         name="description"
         required
@@ -49,9 +49,20 @@
       ></textarea>
     </div>
     <div>
-      <label for="images">Images</label>
+      <div class="border-2 border-gray-500 rounded py-5">
+        <h2 class="relative imageHeader left-5 bg-white z-20 w-max px-1 text-base">Images</h2>
+        <div *ngIf="fileUrls" class="flex flex-wrap gap-1 max-w-full mb-5">
+          <img
+            class="w-40 h-40 inline-block object-cover"
+            *ngFor="let file of fileUrls"
+            [src]="file"
+          />
+        </div>
+        <label class="images" for="images">Add Images</label>
+      </div>
       <input
-        class="block"
+        placeholder="Hello"
+        class="block hidden"
         (change)="onLoad($event.target.files)"
         id="images"
         accept="image/jpeg image/png"
@@ -61,16 +72,9 @@
         required
         ngModel
       />
-      <div *ngIf="fileUrls" class="overflow-x-scroll whitespace-nowrap">
-        <img
-          class="mx-5 w-40 h-40 inline-block object-cover"
-          *ngFor="let file of fileUrls"
-          [src]="file"
-        />
-      </div>
     </div>
-    <button type="submit" class="mt-5 bg-lightgreen px-5 py-4 rounded">
-      Upload
+    <button *ngIf="ready" type="submit" class="mt-5 bg-lightgreen px-5 py-4 rounded">
+      Upload Product
     </button>
   </form>
 </div>
