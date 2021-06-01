@@ -10,8 +10,13 @@ nav {
   align-items: center;
 }
 
+.nav-bg{
+  z-index: 19;
+}
+
 .nav-buttons li a:hover {
-  color: #29524A;
+  color: #90ee90;
+  /* color: #29524A; */
 }
 
 ul li {
@@ -26,15 +31,6 @@ svg {
 }
 
 .active {
-  border-top: 2px solid #29524A;
-  color: #29524A;
-}
-
-.grow {
-    cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-.grow:hover {
-    cursor: pointer;
-  transform: scale(1.2);
+  border-top: 2px solid #90ee90;
+  color: #90ee90;
 }

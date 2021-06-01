@@ -1,12 +1,13 @@
 <img
   [src]="images[this.selectedImage]"
   [ngClass]="{ hidden: !mobile }"
-  class="w-screen object-cover mx-auto"
+  (click)="onImageClick(selectedImage)"
+  class="w-screen h-96 object-cover mx-auto"
   (window:resize)="onResize($event)"
 />
 <div
   class="
-    overflow-x-scroll overflow-y-hidden
+    overflow-x-auto
     whitespace-nowrap
     lg:overflow-x-hidden
     lg:grid lg:grid-cols-2
@@ -27,7 +28,7 @@
       lg:m-0
     "
     [ngClass]="{
-      'border-2 border-black': imgIndex === selectedImage && mobile,
+      'selected': imgIndex === selectedImage && mobile,
       clamp: mobile
     }"
     [src]="image"

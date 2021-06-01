@@ -20,17 +20,27 @@ export class ProductImageComponent implements OnInit{
     console.log(this.windowService.mobileEnabled);
   }
 
+  /**
+   * Enlarge the image that the user clicks on. 
+   * @param {number} index The index of the image element. 
+   */
   onImageClick(index: number) {
-    console.log(index)
     if(this.mobile){
-      this.selectedImage = index;
+      if(this.selectedImage===index){
+        this.enlargedImage = index;
+      }else{
+        this.selectedImage = index;
+      }
     }
     else{
       this.enlargedImage = index;
-      console.log(this.enlargedImage)
     }
   }
 
+  /**
+   * Toggles between mobile view and desktop view based on window size.
+   * @param {Event} event Window event
+   */ 
   onResize(event: Event){
     this.mobile = window.innerWidth <= this.windowService.mobileSize;
     if(this.mobile){

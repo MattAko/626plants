@@ -1,4 +1,11 @@
-<nav class="font h-24 sticky bg-white border-b-2 border-green top-0 z-20">
+<div class="font w-full h-24 fixed bg-white border-b-2 border-green top-0 nav-bg"
+[style.opacity]="bgOpacity">
+
+</div>
+<nav
+  class="font h-24 fixed top-0 z-20"
+  [style.color]="getTextColor()"
+>
   <div>626Plants</div>
   <ul class="nav-buttons">
     <li>
@@ -50,8 +57,7 @@
         flex
         text-sm
         relative
-        text-white
-        text-center
+        text-white text-center
         rounded-full
         items-center
         justify-center

@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
   cartSize: number = 0;
   onHomePage: boolean;
   prevYOffset: number;
-
+  bgOpacity: number = 0;
   constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
@@ -19,14 +19,33 @@ export class NavbarComponent implements OnInit {
     this.cartService.cartSizeChanged.subscribe((size) => {
       this.cartSize = size;
     });
+    this.bgOpacity = this.router.url === 'cart' ? 1: 0;
   }
 
   openLink(url: string) {
     window.open(url);
   }
 
+  getTextColor(){
+    const textColor = `rgb(${255-this.bgOpacity*255}, ${255-this.bgOpacity*255}, ${255-this.bgOpacity*255})`
+
+    if(this.router.url==='/cart'){
+      return 'rgb(0,0,0)'
+    }
+    return textColor;
+  }
+
   @HostListener('window:scroll', ['$event'])
   onScroll(event){
+    // Change opacity
+    if(this.router.url!=='/cart'){
+      this.bgOpacity = window.pageYOffset/100;
+      if(window.pageYOffset > 100){
+        this.bgOpacity = 1;
+      }
+    }
+    
+
     if(this.router.url==="/"){
       if(window.pageYOffset>this.prevYOffset){
 

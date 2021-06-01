@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;900&display=swap");
 
-nav {
-  font-family: "Montserrat", sans-serif;
-}
 
-.mobile-nav {
-  transition: top 0.3s;
-}
+/* .mobile-nav {
+  top: -200px;
+  transition: top 1s;
+} */
