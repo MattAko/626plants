@@ -29,16 +29,18 @@ export class NavbarComponent implements OnInit {
   getTextColor(){
     const textColor = `rgb(${255-this.bgOpacity*255}, ${255-this.bgOpacity*255}, ${255-this.bgOpacity*255})`
 
-    if(this.router.url==='/cart'){
-      return 'rgb(0,0,0)'
+    if(this.router.url === '/' || this.router.url=== '/faq' || this.router.url==='/shop' || this.router.url==='/contact'){
+      console.log(this.router.url)
+      return textColor;
     }
-    return textColor;
+    return 'rgb(0,0,0)'
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event){
     // Change opacity
-    if(this.router.url!=='/cart'){
+    console.log(this.router.url)
+    if(this.router.url==='/' || 'faq' || 'shop' || 'contact'){
       this.bgOpacity = window.pageYOffset/100;
       if(window.pageYOffset > 100){
         this.bgOpacity = 1;
