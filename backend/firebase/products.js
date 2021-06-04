@@ -168,7 +168,7 @@ async function Add(form, token) {
             description: form.description,
             price: +form.price,
             quantity: +form.quantity,
-            postedDate: form.date,
+            posted: form.date,
             visible: true,
             sold: false,
         };
