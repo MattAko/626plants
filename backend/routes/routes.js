@@ -14,6 +14,8 @@ const secrets = require("../secrets/secrets.json");
 
 // Import paypal
 const paypal = require("../payment/paypal");
+
+// Import firebase API
 const db_products = require("../firebase/products");
 const db_receipts = require("../firebase/receipts");
 
@@ -42,6 +44,7 @@ router.route("/loadShop").get(jsonParser, async (req, res) => {
                 name: item.name,
                 price: +item.price,
                 thumbnailUrl: item.images[0],
+                posted: item.posted,
                 sold: item.sold,
             });
         }
@@ -52,23 +55,34 @@ router.route("/loadShop").get(jsonParser, async (req, res) => {
     }
 });
 
-/*
-  Retrive Product information from database based on the product id passed from query 
-  @route: '/api/getProduct'
-  @return: Product: {
-    id: number,
-    name: string,
-    price: number,
-    quantity: number,
-    images: string[],
-    description: string,
-    posted: Date
-  } 
-*/
-router.route("/getProduct").get(async (req, res) => {
+/**
+ * Get product information for a single product.
+ * @param {string} ID Product ID
+ * @returns {Product} Contains the product information
+ */
+router.route("/shop").get(async (req, res) => {    
+    // Check for ID query param
+    if(!req.query.id){
+        res.status(400).send({
+            message: 'ID was not included in request. Please add an ID to your request params.'
+        })
+        return;
+    }
+    // Check for multiple
+    if(Array.isArray(req.query.id)){
+        res.status(400).send({
+            message: 'Multiple ID query parameters were received. Please send only one ID at a time.'
+        })
+        return;
+    }
+
+    // Extract ID from request
     const { id } = req.query;
+    
+    // Get Product information
     const product = await db_products.GetProduct(id);
-    res.send(product);
+
+    res.json(product);
 });
 
 router.route("/getCart").post(jsonParser, (req, res) => {
@@ -116,7 +130,6 @@ router.route("/getCart").post(jsonParser, (req, res) => {
         });
 });
 
-
 router.route("/approve").post(jsonParser, async (req, res) => {
     console.log("/apporve");
     console.log(req.body.data);
@@ -133,7 +146,7 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     });
     const date = results.purchase_units[0].payments.captures[0].update_time;
     console.log(date);
-    const { id, payer} = results;
+    const { id, payer } = results;
     const captureID = results.purchase_units[0].payments.captures[0].id;
     await db_receipts.Add(
         id,
