@@ -10,7 +10,7 @@
     <ul class="text-md">
       <li>Subtotal: {{ cart.subtotal | currency }}</li>
       <li>
-        Shipping: {{ shippingComplete ? (cart.shipping | currency) : "TBD" }}
+        Shipping: {{ shippingComplete ? (cart.shipping | currency) : "$--.--" }}
         <app-tooltip
           [msg]="
             'Your shipping rate is calculated by the carrier and the delivery method. The final shipping cost is then calculated by rate × cart_size. If you are ordering multiple items, feel free to contact us to lower the shipping costs.'

@@ -28,9 +28,11 @@ svg {
   height: 30px;
   width: 30px;
   display: inline;
+  fill: orange;
 }
 
 .active {
   border-top: 2px solid #90ee90;
   color: #90ee90;
 }
+

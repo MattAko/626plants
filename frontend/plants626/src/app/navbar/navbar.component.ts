@@ -10,7 +10,6 @@ import { CartService } from '../CartService.service';
 export class NavbarComponent implements OnInit {
   cartSize: number = 0;
   onHomePage: boolean;
-  prevYOffset: number;
   bgOpacity: number = 0;
   constructor(private cartService: CartService, private router: Router) {}
 
@@ -19,40 +18,44 @@ export class NavbarComponent implements OnInit {
     this.cartService.cartSizeChanged.subscribe((size) => {
       this.cartSize = size;
     });
-    this.bgOpacity = this.router.url === 'cart' ? 1: 0;
+    this.bgOpacity = this.router.url === 'cart' ? 1 : 0;
   }
 
   openLink(url: string) {
     window.open(url);
   }
 
-  getTextColor(){
-    const textColor = `rgb(${255-this.bgOpacity*255}, ${255-this.bgOpacity*255}, ${255-this.bgOpacity*255})`
+/**
+ * Calculates the color based on the vertical scroll.  
+ * @returns {string} CSS color string. 'rgb(x,x,x)
+ */
+    getColor() {
+    // Get the text color based on vertical scroll, which is determined by bgOpacity. 
+    const textColor = `rgb(${255 - this.bgOpacity * 255}, ${
+      255 - this.bgOpacity * 255
+    }, ${255 - this.bgOpacity * 255})`;
 
-    if(this.router.url === '/' || this.router.url=== '/faq' || this.router.url==='/shop' || this.router.url==='/contact'){
-      console.log(this.router.url)
+    // Only apply this color based on these routes.
+    // Otherwise, return black.
+    if (
+      this.router.url === '/' ||
+      this.router.url === '/faq' ||
+      this.router.url === '/shop' ||
+      this.router.url === '/contact'
+    ) {
       return textColor;
     }
-    return 'rgb(0,0,0)'
-  }
+    return 'rgb(0,0,0)';
+  } 
 
   @HostListener('window:scroll', ['$event'])
-  onScroll(event){
-    // Change opacity
-    console.log(this.router.url)
-    if(this.router.url==='/' || 'faq' || 'shop' || 'contact'){
-      this.bgOpacity = window.pageYOffset/100;
-      if(window.pageYOffset > 100){
+  onScroll(event) {
+    // Only change navbar bg opacity if you are in these routes.
+    if (this.router.url === '/' || 'faq' || 'shop' || 'contact') {
+      this.bgOpacity = window.pageYOffset / 100;
+      if (window.pageYOffset > 100) {
         this.bgOpacity = 1;
       }
     }
-    
-
-    if(this.router.url==="/"){
-      if(window.pageYOffset>this.prevYOffset){
-
-      }
-      this.prevYOffset = window.pageYOffset;
-    }
-  } 
+  }
 }
