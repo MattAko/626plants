@@ -1,7 +1,7 @@
 <div class="flex flex-col my-8">
   <img
     class="w-80 h-80 object-cover cursor-pointer"
-    [src]="shopItem.thumbnailUrl"
+    [src]="shopItem.images[0]"
     [routerLink]="['/shop', shopItem.id]"
   />
   <div class="p-3">

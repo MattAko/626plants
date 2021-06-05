@@ -31,12 +31,12 @@ section {
   margin-right: auto;
 
   padding-bottom: 2rem;
-  border-bottom: 2px solid rgba(0,0,0,0.2);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 h2 {
   margin: 3rem auto 1.5rem auto;
-  
+
   text-transform: uppercase;
   font-size: 2.5rem;
   line-height: 2rem;
@@ -52,7 +52,16 @@ h3 {
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
+@media only screen and (max-width: 768px) {
+  h3 {
+    text-indent: 0rem;
+  }
+}
+
+
 
 p {
+
+  text-indent: 2rem;
   font-size: 1rem;
 }

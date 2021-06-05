@@ -2,13 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Product } from '../shared/Product.model';
-import { ShopItem } from '../shared/ShopItem.model';
 @Injectable({
   providedIn: 'root',
 })
 export class ShopService {
-  ShopItems: ShopItem[]; 
-  shopChanged = new Subject<ShopItem[]>();
+  ShopItems: Product[]; 
+  shopChanged = new Subject<Product[]>();
   productUpdated = new Subject<Product>();
 
   constructor(private http: HttpClient) {
@@ -20,20 +19,23 @@ export class ShopService {
     */
   fetchShop() {
     console.log('Fetching shop...');
-    let params = new HttpParams().set('visible', 'true');
+  
+    let params = new HttpParams().set('all', 'true');
     this.http
-      .get<ShopItem[]>('/api/loadShop', {
+      .get<Product[]>('/api/shop', {
         params: params
       })
-      .subscribe((response: ShopItem[]) => {
+      .subscribe((response: Product[]) => {
         this.setShop(response);
       });
+
+
   }
 
   /*
     Update shop, mainly used for fetchShop()
     */
-  setShop(products: ShopItem[]) {
+  setShop(products: Product[]) {
     this.ShopItems = products;
     this.shopChanged.next(this.ShopItems.slice());
     
@@ -53,7 +55,7 @@ export class ShopService {
   fetchProduct(id: string) {
     let params = new HttpParams().set('id', id);
     return this.http
-      .get<Product>('/api/getProduct', {
+      .get<Product>('/api/shop', {
         params: params,
       })
       .subscribe((response: Product) => {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ShopItem } from 'src/app/shared/ShopItem.model';
+import { Product } from 'src/app/shared/Product.model';
 
 @Component({
   selector: 'app-shop-item',
@@ -7,7 +7,7 @@ import { ShopItem } from 'src/app/shared/ShopItem.model';
   styleUrls: ['./shop-item.component.css']
 })
 export class ShopItemComponent implements OnInit {
-  @Input('itemDetails') shopItem: ShopItem;
+  @Input('itemDetails') shopItem: Product;
 
   constructor() { }
 
