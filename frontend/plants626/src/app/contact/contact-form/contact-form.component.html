@@ -1,0 +1,53 @@
+<div class="container bg-gray-50 p-10 rounded-xl">
+  <form
+    (ngSubmit)="onSubmit()"
+    #f="ngForm"
+    class="grid grid-cols-1 lg:grid-cols-2 justify-center gap-6"
+  >
+    <div>
+      <label for="name">Name<span class="text-red-600">*</span></label>
+      <input class="w-full" type="text" ngModel required name="name" />
+    </div>
+
+    <div>
+      <label for="phone">Phone Number</label>
+      <input class="w-full" type="text" ngModel name="phone" />
+    </div>
+
+    <div>
+      <label for="email">Email<span class="text-red-600">*</span></label>
+      <input class="w-full" type="text" ngModel required email name="email" />
+    </div>
+
+    <div>
+      <label for="company">Company Name</label>
+      <input class="w-full" type="text" ngModel name="company" />
+    </div>
+
+    <div class="col-span-2">
+      <label for="message">Message<span class="text-red-600">*</span></label>
+      <textarea
+        class="w-full resize-y"
+        ngModel
+        required
+        name="message"
+      ></textarea>
+    </div>
+
+    <button
+      class="
+        col-span-2
+        bg-blue-600
+        px-4
+        py-3
+        rounded
+        w-60
+        justify-self-center
+        text-white
+      "
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>

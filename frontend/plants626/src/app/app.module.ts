@@ -24,6 +24,7 @@ import { ProductImageComponent } from './shop/product-page/product-image/product
 import { TooltipComponent } from './shared/tooltip/tooltip.component';
 import { ShippingFormComponent } from './cart/shipping-form/shipping-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductImageComponent,
     TooltipComponent,
     ShippingFormComponent,
+    ContactFormComponent,
   ],
   imports: [
     BrowserModule,
