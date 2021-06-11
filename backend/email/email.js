@@ -102,6 +102,35 @@ function SendReceipt(email, receipt) {
     })
 }
 
+async function SendContact(contactForm){
+    console.log(contactForm)
+    let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user: EMAIL_USER,
+            pass: EMAIL_SECRET,
+        }
+    })
+
+        let html = `
+        <body>
+            <h2>${contactForm.name}</h2>
+            <h2>${contactForm.email}</h2>
+            <p>${contactForm.message}</p>
+        </body>`;
+        let into = await transporter.sendMail({
+            from: `${contactForm.name} ${contactForm.email}`,
+            to: "mattako66@gmail.com",
+            subject: "New Contact",
+            text: "HI new contact",
+            html: html,
+        })
+}
+
+
 module.exports = {
     SendReceipt: SendReceipt,
+    SendContact: SendContact,
 };

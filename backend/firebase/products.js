@@ -12,6 +12,24 @@ const axios = require("axios");
 // Import secrets
 const secrets = require("../secrets/secrets.json");
 
+async function GetProducts(id){
+    // Check for multiple ID's
+    if(Array.isArray(id)){
+        const size = id.length;
+        for(let i of id){
+           axios.get(`${secrets.firebaseDatabase}/products${i}`, {
+                params: {
+                    auth: secrets.APP_SECRET,
+                }
+            }).then((response) =>{
+
+            })
+
+        }
+         
+    }
+}
+
 async function GetProduct(id) {
     return new Promise((resolve, reject) => {
         axios
@@ -221,7 +239,7 @@ async function Delete(id, token) {
  * @param {boolean} visible Filter items
  * @returns {Promise} Promise object contains array of shopItems
  */
-async function GetVisible(visible) {
+async function GetVisible(visible, admin) {
     return new Promise((resolve, reject) => {
         axios
             .get(
@@ -242,14 +260,30 @@ async function GetVisible(visible) {
                             images.push(obj.images[image]);
                         }
                     }
-                    shopItems.push({
-                        thumbnailUrl: obj.images["image0"],
-                        ...obj,
-                        images: images,
-                        id: item,
-                    });
+
+                    // Return all product details for admin
+                    if(admin){
+                        shopItems.push({
+                            thumbnailUrl: obj.images["image0"],
+                            ...obj,
+                            images: images,
+                            id: item,
+                        });
+                    }
+                    // Users get filtered response
+                    else{
+                        shopItems.push({
+                            id: item,
+                            images: images,
+                            posted: obj.posted,
+                            sold: obj.sold,
+                            price: +obj.price,
+                            name: obj.name,
+                        })
+                    }
                 }
                 resolve(shopItems);
+                
             })
             .catch((error) => {
                 console.error("There was an error getting products.");

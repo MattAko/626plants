@@ -137,7 +137,7 @@ router
  */
 router.route("/admin/shop").get(jsonParser, async (req, res) => {
     const { visible } = req.query;
-    const shopItems = await db_products.GetVisible(visible).catch((error) => {
+    const shopItems = await db_products.GetVisible(visible, true).catch((error) => {
         res.status(400);
         res.send("Unable to load shop");
     });

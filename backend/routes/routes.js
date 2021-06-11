@@ -21,6 +21,7 @@ const db_receipts = require("../firebase/receipts");
 
 // Import email
 const email = require("../email/email");
+const products = require("../firebase/products");
 
 /*
   Returns JSON of all ShopItems
@@ -56,34 +57,116 @@ router.route("/loadShop").get(jsonParser, async (req, res) => {
 });
 
 /**
- * Get product information for a single product.
- * @param {string} ID Product ID
+ * Get product information for products. Currently only supports requests for a single product.
+ * @url /api/products
+ * @required ID,
+ * @optional
+ * @param {string|string[]} ID Product ID
  * @returns {Product} Contains the product information
  */
-router.route("/shop").get(async (req, res) => {    
+router.route("/products").get(async (req, res) => {
     // Check for ID query param
-    if(!req.query.id){
+    if (!req.query.id) {
         res.status(400).send({
-            message: 'ID was not included in request. Please add an ID to your request params.'
-        })
+            message:
+                "ID was not included in request. Please add an ID to your request params.",
+        });
         return;
     }
     // Check for multiple
-    if(Array.isArray(req.query.id)){
+    if (Array.isArray(req.query.id)) {
         res.status(400).send({
-            message: 'Multiple ID query parameters were received. Please send only one ID at a time.'
-        })
+            message:
+                "Multiple ID query parameters were received. Please send only one ID at a time.",
+        });
         return;
     }
 
     // Extract ID from request
     const { id } = req.query;
-    
+
     // Get Product information
     const product = await db_products.GetProduct(id);
 
     res.json(product);
 });
+
+/**
+ * Get product(s) details from the shop.
+ * @param {string} ID REQUIRED. The product ID
+ * @param {boolean} All REQUIRED (if ID was not included). Return all items listed on the shop.
+ */
+router.route("/shop").get(async (req, res) => {
+    const { id, all } = req.query;
+
+    // Check for either ID or all query param
+    if (id==undefined && all===undefined) {
+        res.status(400).send({
+            message:
+                "Neither ID nor all were included in the request. Please add an ID or all to your request params.",
+        });
+        return;
+    } 
+    // Check if both id and all were included
+    else if (id && all) {
+        res.status(400).send({
+            message:
+                "Both 'ID' and 'all' were included in the request. Please only include one.",
+        });
+        return;
+    }
+
+    // Get Product details
+    if(id){
+        // Ensure that only one ID was passed
+        if (Array.isArray(req.query.id)) {
+            res.status(400).send({
+                message:
+                    "Multiple ID query parameters were received. Please send only one ID at a time.",
+            });
+            return;
+
+        }
+        // Extract ID from request
+        const { id } = req.query;
+    
+        // Get Product information
+        const product = await db_products.GetProduct(id);
+        res.json(product);
+    }
+
+    // Get all items listed in the shop.
+    if(all){
+        const shop = await products.GetVisible(true, false)
+        res.json(shop);
+    }
+
+});
+
+/**
+ * Grab cart details, such as product details and subtotal.
+ * @required ID/ID[],
+ * @param {string|string[]} ID Product ID/s for the cart
+ * @url /api/cart
+ */
+router.route("/cart").get(async (req, res) => {
+    // Check for products
+    if (!req.query.id) {
+        res.status(400).send({
+            message:
+                "Invalid Request. Request did not include any product ID. Please include these as query parameters.",
+        });
+    }
+});
+
+router.route("/contact").post(jsonParser, async (req, res) => {
+    const { body } = req; 
+    if(body.name && body.message && body.email){
+        await email.SendContact(body)
+    }
+    res.status(200)
+    res.send({message: 'Success'})
+})
 
 router.route("/getCart").post(jsonParser, (req, res) => {
     const { body } = req;
