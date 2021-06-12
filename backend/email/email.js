@@ -116,15 +116,18 @@ async function SendContact(contactForm){
 
         let html = `
         <body>
-            <h2>${contactForm.name}</h2>
-            <h2>${contactForm.email}</h2>
+            <h3>Name: ${contactForm.name}</h3>
+            <h3>Email: ${contactForm.email}</h3>
+            <h3>Phone #: ${contactForm.phone}</h3>
+            <h3>Company: ${contactForm.company}</h3>
+            <p>Message:</p>
             <p>${contactForm.message}</p>
         </body>`;
-        let into = await transporter.sendMail({
+        let info = await transporter.sendMail({
             from: `${contactForm.name} ${contactForm.email}`,
-            to: "mattako66@gmail.com",
+            to: "matthew@626plants.com",
             subject: "New Contact",
-            text: "HI new contact",
+            text: "New Contact Received",
             html: html,
         })
 }
