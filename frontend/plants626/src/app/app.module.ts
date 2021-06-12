@@ -25,6 +25,7 @@ import { TooltipComponent } from './shared/tooltip/tooltip.component';
 import { ShippingFormComponent } from './cart/shipping-form/shipping-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
+import { PhonePipe } from 'projects/admin/src/app/shared/phone.pipe';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ContactFormComponent } from './contact/contact-form/contact-form.compon
     TooltipComponent,
     ShippingFormComponent,
     ContactFormComponent,
+    PhonePipe,
   ],
   imports: [
     BrowserModule,

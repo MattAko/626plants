@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ContactService } from '../contact.service';
 import { contactFormModel } from '../contactForm.model';
 
@@ -8,12 +9,24 @@ import { contactFormModel } from '../contactForm.model';
   templateUrl: './contact-form.component.html',
   styleUrls: ['./contact-form.component.css'],
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent implements OnInit, OnDestroy {
+
+  // For loading spinner;
+  loading: boolean;
+  loadingSub: Subscription;
+  
   @ViewChild('f') form: NgForm;
 
   constructor(private contactService: ContactService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    // Set up loading subscription
+    this.loading = this.contactService.loading;
+    this.loadingSub = this.contactService.loadingChanged.subscribe(val => {
+      this.loading = val;
+    })
+  }
 
   /**
    *
@@ -32,11 +45,19 @@ export class ContactFormComponent implements OnInit {
 
       // Post form
       this.contactService.postForm(formData).subscribe((response) => {
+
+        // Disable loading spinner
+        this.contactService.loadingChanged.next(false);
+
         // Reset form on success
         if (response.status === 200) {
           this.form.reset();
         }
       });
     }
+  }
+
+  ngOnDestroy(){
+    this.loadingSub.unsubscribe();
   }
 }

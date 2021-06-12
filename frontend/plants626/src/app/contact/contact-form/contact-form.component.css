@@ -1,13 +1,13 @@
-input, textarea{
+input,
+textarea {
   border-radius: 0.25rem;
   --tw-border-opacity: 1;
-  border-color: rgba(156, 163, 175, var(--tw-border-opacity)); 
   color: rgba(156, 163, 175, var(--tw-border-opacity));
 }
 
-label{
-    padding: 1rem 0 1rem 0;
-    display: block;
+label {
+  padding: 1rem 0 1rem 0;
+  display: block;
 }
 
 .container {
