@@ -100,13 +100,13 @@ router.route("/shop").get(async (req, res) => {
     const { id, all } = req.query;
 
     // Check for either ID or all query param
-    if (id==undefined && all===undefined) {
+    if (id == undefined && all === undefined) {
         res.status(400).send({
             message:
                 "Neither ID nor all were included in the request. Please add an ID or all to your request params.",
         });
         return;
-    } 
+    }
     // Check if both id and all were included
     else if (id && all) {
         res.status(400).send({
@@ -117,7 +117,7 @@ router.route("/shop").get(async (req, res) => {
     }
 
     // Get Product details
-    if(id){
+    if (id) {
         // Ensure that only one ID was passed
         if (Array.isArray(req.query.id)) {
             res.status(400).send({
@@ -125,22 +125,20 @@ router.route("/shop").get(async (req, res) => {
                     "Multiple ID query parameters were received. Please send only one ID at a time.",
             });
             return;
-
         }
         // Extract ID from request
         const { id } = req.query;
-    
+
         // Get Product information
         const product = await db_products.GetProduct(id);
         res.json(product);
     }
 
     // Get all items listed in the shop.
-    if(all){
-        const shop = await products.GetVisible(true, false)
+    if (all) {
+        const shop = await products.GetVisible(true, false);
         res.json(shop);
     }
-
 });
 
 /**
@@ -160,13 +158,13 @@ router.route("/cart").get(async (req, res) => {
 });
 
 router.route("/contact").post(jsonParser, async (req, res) => {
-    const { body } = req; 
-    if(body.name && body.message && body.email){
-        await email.SendContact(body)
+    const { body } = req;
+    if (body.name && body.message && body.email) {
+        await email.SendContact(body);
     }
-    res.status(200)
-    res.send({message: 'Success'})
-})
+    res.status(200);
+    res.send({ message: "Success" });
+});
 
 router.route("/getCart").post(jsonParser, (req, res) => {
     const { body } = req;
@@ -207,7 +205,12 @@ router.route("/getCart").post(jsonParser, (req, res) => {
                 products: products,
                 subtotal: subtotal,
                 total: subtotal,
-                shipping: 0,
+                shipping: {
+                    cost: 0,
+                    carrier: "",
+                    method: "",
+                    signature: false,
+                },
             };
             res.send(cart);
         });
@@ -215,7 +218,7 @@ router.route("/getCart").post(jsonParser, (req, res) => {
 
 router.route("/approve").post(jsonParser, async (req, res) => {
     console.log("/apporve");
-    console.log(req.body.data);
+    console.log(req.body);
     const { products } = req.body;
     const { orderID, payerID } = req.body.data;
 
@@ -228,7 +231,6 @@ router.route("/approve").post(jsonParser, async (req, res) => {
         return;
     });
     const date = results.purchase_units[0].payments.captures[0].update_time;
-    console.log(date);
     const { id, payer } = results;
     const captureID = results.purchase_units[0].payments.captures[0].id;
     await db_receipts.Add(

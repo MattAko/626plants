@@ -1,10 +1,17 @@
-import { Product } from './Product.model'
+import { Product } from './Product.model';
 
-export class Cart{
-    constructor(
-        public products: Product[],
-        public subtotal: number,
-        public shipping: number,
-        public total: number
-    ){ }
+interface Shipping {
+  cost: number;
+  carrier: string;
+  method: string;
+  signature: boolean;
+}
+
+export class Cart {
+  constructor(
+    public products: Product[],
+    public subtotal: number,
+    public shipping: Shipping,
+    public total: number
+  ) {}
 }
