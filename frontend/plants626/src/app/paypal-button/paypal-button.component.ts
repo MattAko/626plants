@@ -54,7 +54,7 @@ export class PaypalButtonComponent implements OnInit {
                 breakdown: {
                   shipping: {
                     currency_code: 'USD',
-                    value: this.cart.shipping
+                    value: this.cart.shipping.cost
                   },
                   item_total: {
                     currency_code: 'USD',

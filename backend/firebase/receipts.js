@@ -14,11 +14,13 @@ const secrets = require("../secrets/secrets.json");
  * @param {Shipping} shipping Shipping object that contains info about shipping address
  * @param {string} date The full-date-time when the order was captured. The string follows the Internet date and time format. 
  */
-function Add(orderID, productIDs, captureID, payer, status, shipping, date) {
+function Add(total, subtotal, orderID, productIDs, captureID, payer, status, shipping, date) {
     // Create new receipt
     axios.put(
         `${secrets.firebaseDatabase}/receipts/${orderID}.json`,
         {
+            total: total,
+            subtotal: subtotal, 
             products: productIDs,
             captureID: captureID,
             payer: payer,

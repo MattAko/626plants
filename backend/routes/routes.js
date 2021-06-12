@@ -219,7 +219,7 @@ router.route("/getCart").post(jsonParser, (req, res) => {
 router.route("/approve").post(jsonParser, async (req, res) => {
     console.log("/apporve");
     console.log(req.body);
-    const { products } = req.body;
+    const { products, cart } = req.body;
     const { orderID, payerID } = req.body.data;
 
     // Capture the order, then return order information to client
@@ -233,7 +233,13 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     const date = results.purchase_units[0].payments.captures[0].update_time;
     const { id, payer } = results;
     const captureID = results.purchase_units[0].payments.captures[0].id;
+    results.purchase_units[0].shipping['carrier'] = cart.shipping.carrier;
+    results.purchase_units[0].shipping['method'] = cart.shipping.method;
+    results.purchase_units[0].shipping['cost'] = cart.shipping.cost;
+    results.purchase_units[0].shipping['signature'] = cart.shipping.signature;
     await db_receipts.Add(
+        cart.total,
+        cart.subtotal,
         id,
         products,
         captureID,
