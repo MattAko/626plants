@@ -50,12 +50,12 @@
       items-center
     "
   >
-    <div>
+    <div class="relative">
       <app-close-button
         (click)="this.enlargedImage = null"
-        class="relative float-right right-4 top-16 z-40 bg-white rounded-full p-2.5"
+        class="relative float-right right-4 top-16 z-40 bg-white rounded-full p-2.5 cursor-pointer"
       ></app-close-button>
-      <img (click)="this.enlargedImage=null" class="w-full h-auto" [src]="images[this.enlargedImage]" />
+      <img (click)="this.enlargedImage=null" class="desktop-selected mx-auto" [src]="images[this.enlargedImage]" />
     </div>
   </div>
 </div>
