@@ -262,10 +262,7 @@ router.route("/approve").post(jsonParser, async (req, res) => {
         console.log(error);
     });
     res.status(200);
-    res.json({
-        status: "Success",
-        ...results,
-    });
+    res.json(receipt);
 });
 
 /*
