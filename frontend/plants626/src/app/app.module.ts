@@ -26,6 +26,7 @@ import { ShippingFormComponent } from './cart/shipping-form/shipping-form.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { PhonePipe } from 'projects/admin/src/app/shared/phone.pipe';
+import { DateTimePipe } from './shared/DateTime.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { PhonePipe } from 'projects/admin/src/app/shared/phone.pipe';
     ShippingFormComponent,
     ContactFormComponent,
     PhonePipe,
+    DateTimePipe,
   ],
   imports: [
     BrowserModule,
