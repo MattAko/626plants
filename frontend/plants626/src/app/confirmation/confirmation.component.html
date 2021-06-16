@@ -1,15 +1,63 @@
 <div class="banner">
   <div class="flex text-center mx-auto h-full justify-center">
-    <h1 class="absolute top-60 text-5xl lg:text-7xl font-extrabold z-10">CONTACT US</h1>
+    <h1 class="absolute top-60 text-5xl lg:text-7xl font-extrabold z-10">
+      THANK YOU
+    </h1>
   </div>
 </div>
 
-<div class="flex flex-col text-center">
-  <h1>Thank you for your purchase, {{ payer }}!</h1>
-  <p>Here is your order ID: {{ id }}</p>
-  <p>We will send you a receipt shortly to the following email address:</p>
-  <p>{{ email_address }}</p>
-  <p>We will send you the tracking number for your order within the next few days
-  </p>
-  <p>Have a question? Feel free to send us an email at [email address] or message us on either Instagram or Facebook!</p>
+<!-- Center -->
+<div class="flex justify-center">
+  <!-- Card Wrapper -->
+  <div class="card bg-gray-200 p-6 rounded-lg mt-10">
+    <div class="text-center py-2">
+      Hello
+      {{ receipt.payer.name.given_name + " " + receipt.payer.name.surname }},
+    </div>
+
+    <div class="text-center">Thank you for you purchase!</div>
+
+    <div class="flex justify-between my-4">
+      <p>Order: {{ receipt.receiptId }}</p>
+      <p>{{ receipt.purchase_date | datetime }}</p>
+    </div>
+
+    <hr/>
+
+    <div class="flex flex-col my-4 text-center justify-center mx-auto">
+      <p class="font-semibold py-4">Shipping Information</p>
+      <p>{{receipt.shipping.name.full_name}}</p>
+      <p>{{receipt.shipping.address.address_line_1}}</p>
+      <p>{{receipt.shipping.address.admin_area_2}}, {{receipt.shipping.address.admin_area_1}} {{receipt.shipping.address.postal_code}}</p>
+
+      <p class="mt-2">Carrier: {{receipt.shipping.carrier}} </p>
+      <p>Method: {{receipt.shipping.method}} </p>
+      <p>Signature: {{receipt.shipping.signature ? 'Required' : 'Not Required'}}</p>
+    </div>
+
+    
+    <hr/>
+
+    <div class="flex flex-col text-right my-4">
+      <p>Subtotal: {{ receipt.subtotal | currency }}</p>
+      <p>Shipping: {{ receipt.shipping.cost | currency }}</p>
+    </div>
+
+    <hr />
+    <p class="text-right">Total: {{ receipt.total | currency }}</p>
+
+    <p class="text-center">
+      A receipt will be sent to the following email: <br />
+      <span class="font-semibold"> {{ receipt.payer.email_address }} </span>
+    </p>
+    <p class="text-center py-1">
+      We will send you the tracking number for your order within the next few
+      days.
+    </p>
+
+    <p class="text-center py-1">
+      Have a question? Feel free to send us an email at matthew@626plants.com or
+      message us on either Instagram or Facebook!
+    </p>
+  </div>
 </div>

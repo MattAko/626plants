@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../CartService.service';
+import { Order } from '../shared/Order.model';
 
 @Component({
   selector: 'app-confirmation',
@@ -8,21 +9,15 @@ import { CartService } from '../CartService.service';
   styleUrls: ['./confirmation.component.css']
 })
 export class ConfirmationComponent implements OnInit {
-  payer: string;
-  email_address: string;
-  id: string;
-
+  receipt: Order;
+  
   constructor(private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     if(!this.cartService.confirmation){
       this.router.navigate(['/']);
     }
-    const { name, email_address } = this.cartService.confirmation.payer;
-    this.payer = name.given_name + ' ' + name.surname;
-    // this.payer = given_name + ' ' + surname;
-    this.email_address = email_address;
-    this.id = this.cartService.confirmation.id;
+    this.receipt = this.cartService.confirmation;
   }
 
 }

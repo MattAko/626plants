@@ -22,6 +22,6 @@ export class OrderItemComponent implements OnInit {
   }
 
   onRedirect(prod: number){
-    window.open(`http://localhost:4200/shop/${prod}`);
+    window.open(`http://626plants.com/shop/${prod}`);
   }
 }

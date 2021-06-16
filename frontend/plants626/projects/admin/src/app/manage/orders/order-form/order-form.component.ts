@@ -34,16 +34,16 @@ export class OrderFormComponent implements OnInit {
     interface httpResponse{
       status: string
     }
-    console.log(this.order.orderId);
+    console.log(this.order.receiptId);
     console.log(this.form);
-    this.manage.updateStatus(this.form.value.status, this.order.orderId).subscribe((response: httpResponse) => {
+    this.manage.updateStatus(this.form.value.status, this.order.receiptId).subscribe((response: httpResponse) => {
       if(response.status==='OK'){
         this.order.status = this.form.controls.status.value;
         this.formEnabled = false;
         
       }
       else{
-        alert(`There was an error updating status for order ${this.order.orderId}.`)
+        alert(`There was an error updating status for order ${this.order.receiptId}.`)
       }
     });
   }
