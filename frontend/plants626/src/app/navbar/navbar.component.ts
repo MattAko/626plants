@@ -41,6 +41,7 @@ export class NavbarComponent implements OnInit {
       this.router.url === '/' ||
       this.router.url === '/faq' ||
       this.router.url === '/shop' ||
+      this.router.url === '/confirmation' ||
       this.router.url === '/contact'
     ) {
       return textColor;

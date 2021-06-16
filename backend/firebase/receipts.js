@@ -94,8 +94,25 @@ async function UpdateOrderStatus(orderId, status, token){
     })
 }
 
+
+function GetReceipt(receiptId){
+    return new Promise((resolve, reject) => {
+        axios.get(`${secrets.firebaseDatabase}/receipts/${receiptId}.json`,{
+            params: {
+                auth: secrets.APP_SECRET
+            }
+        }).then((response) => {
+            let receipt = response.data;
+            receipt['receiptId'] = receiptId;
+            resolve(receipt)
+        })
+    })
+}
+
+
 module.exports = {
     Add: Add,
     GetOrders: GetOrders,
     UpdateOrderStatus: UpdateOrderStatus,
+    GetReceipt: GetReceipt,
 }

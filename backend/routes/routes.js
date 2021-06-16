@@ -218,7 +218,6 @@ router.route("/getCart").post(jsonParser, (req, res) => {
 
 router.route("/approve").post(jsonParser, async (req, res) => {
     console.log("/apporve");
-    console.log(req.body);
     const { products, cart } = req.body;
     const { orderID, payerID } = req.body.data;
 
@@ -233,10 +232,14 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     const date = results.purchase_units[0].payments.captures[0].update_time;
     const { id, payer } = results;
     const captureID = results.purchase_units[0].payments.captures[0].id;
-    results.purchase_units[0].shipping['carrier'] = cart.shipping.carrier;
-    results.purchase_units[0].shipping['method'] = cart.shipping.method;
-    results.purchase_units[0].shipping['cost'] = cart.shipping.cost;
-    results.purchase_units[0].shipping['signature'] = cart.shipping.signature;
+    results.purchase_units[0].shipping["carrier"] = cart.shipping.carrier;
+    results.purchase_units[0].shipping["method"] = cart.shipping.method;
+    results.purchase_units[0].shipping["cost"] = cart.shipping.cost;
+    results.purchase_units[0].shipping["signature"] = cart.shipping.signature;
+
+
+    // Construct receipt
+
     await db_receipts.Add(
         cart.total,
         cart.subtotal,
@@ -250,7 +253,12 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     );
     await db_products.UpdateMultiple(products, "sold", true);
     await db_products.UpdateMultiple(products, "orderId", id);
-    await email.SendReceipt("mattako66@gmail.com", results).catch((error) => {
+
+    // Get receipt information
+    const receipt = await db_receipts.GetReceipt(id);
+
+    // Send receipt to user, pass receipt information
+    await email.SendReceipt("mattako66@gmail.com", receipt).catch((error) => {
         console.log(error);
     });
     res.status(200);
@@ -260,9 +268,41 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     });
 });
 
+/*
+    Receipt{
+        id: string,
+        status: string,
+        purchase_units: {
+            reference_id: string,
+            shipping: Object,
+            payments: Object,
+        }
+        links: [Object]
+    }
+*/
 router.route("/test").get(async (req, res) => {
     console.log("test endpoint");
-    await email.SendReceipt("mattako66@gmail.com");
+    const receipt = {
+        id: "asdf",
+        status: "processing",
+        shipping: {
+            address:{
+                address_line_1: "1 Main St",
+                admin_area_1: "CA",
+                admin_area_2: "San Jose",
+                postal_code: "95131",
+            },
+            name: {
+                full_name: "Matthew Roberts"
+            },
+            cost: "10"
+        },
+        subtotal: "20",
+        total: "30",
+        receiptId: "8YA3DJD9DMAD92",
+        purchase_date:"08-09-21"
+    };
+    await email.SendReceipt("mattako66@gmail.com", receipt);
 });
 
 /*
