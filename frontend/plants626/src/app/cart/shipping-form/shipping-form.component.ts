@@ -24,6 +24,9 @@ export class ShippingFormComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form);
+    
+  
+    // Add shipping information
     const { carrier, method, signature } = this.form.value;
     const signatureBool = signature === 'true' ? true : false;
     this.cartService.AddShipping(carrier, method, signatureBool);

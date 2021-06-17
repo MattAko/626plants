@@ -1,10 +1,10 @@
 import { Product } from './Product.model';
 
 interface Shipping {
-  cost: number;
-  carrier: string;
-  method: string;
-  signature: boolean;
+  cost: number,
+  carrier: string,
+  method: string,
+  signature: boolean,
 }
 
 export class Cart {

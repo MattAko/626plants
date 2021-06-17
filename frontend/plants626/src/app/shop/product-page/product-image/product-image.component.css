@@ -20,7 +20,8 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.desktop-selected{
-    height: 90%;
-    width: 90%;
+
+
+.overlay{
+    width: 100vw;
 }

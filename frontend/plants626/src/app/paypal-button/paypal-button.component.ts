@@ -61,7 +61,7 @@ export class PaypalButtonComponent implements OnInit {
                     value: this.cart.subtotal,
                   },
                 },
-              },
+              }, 
               items: items,
             },
           ],

@@ -18,7 +18,7 @@ export class CartService {
   
   private _productIds: number[] = [];
   // private _cart = new Cart([], 0, {cost, carrier, method, signature }, 0); // for visual purposes
-  private _cart: Cart = {products: [], subtotal: 0, shipping: {cost:0, carrier:'', method:'', signature:false}, total: 0}
+  private _cart: Cart = {products: [], subtotal: 0, shipping: {cost:0, carrier:'', method:'',  signature:false}, total: 0}
   cartChanged = new Subject<Cart>();
   cartSizeChanged = new Subject<number>();
   authorized = new BehaviorSubject<boolean>(false);

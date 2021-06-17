@@ -53,7 +53,7 @@
         type="button"
         [disabled]="cart.products.length === 0"
         (click)="authorizeCart()"
-        [ngClass]="{ 'bg-lightgreen': cart.products.length > 0 }"
+        [ngClass]="{ 'bg-lightgreen': cart.products.length > 0 , 'bg-gray-400': cart.products.length <= 0}"
         class="rounded-xl w-50 px-5 py-4 text-center"
       >
         Checkout

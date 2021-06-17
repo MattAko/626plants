@@ -50,12 +50,12 @@
       items-center
     "
   >
-    <div class="relative">
+    <div class="relative overlay">
       <app-close-button
         (click)="this.enlargedImage = null"
-        class="relative float-right right-4 top-16 z-40 bg-white rounded-full p-2.5 cursor-pointer"
+        class="absolute float-right right-2 top-2 z-40 bg-white rounded-full p-2.5 cursor-pointer"
       ></app-close-button>
-      <img (click)="this.enlargedImage=null" class="desktop-selected mx-auto" [src]="images[this.enlargedImage]" />
+      <img (click)="this.enlargedImage=null" [src]="images[this.enlargedImage]" />
     </div>
   </div>
 </div>
