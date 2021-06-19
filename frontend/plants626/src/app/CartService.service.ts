@@ -146,6 +146,7 @@ export class CartService {
   empty() {
     this._productIds = [];
     this._cart = {products: [], subtotal: 0, shipping: {cost: 0, carrier: '', method: '', signature: false}, total: 0};
+    this.cartSizeChanged.next(0);
     localStorage.removeItem('productIds');
     localStorage.removeItem('cart-date');
   }
