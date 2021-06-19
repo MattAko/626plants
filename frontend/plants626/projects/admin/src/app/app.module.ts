@@ -21,6 +21,7 @@ import { OrdersComponent } from './manage/orders/orders.component';
 import { ToggleButton } from './shared/toggle-button/toggle-button.component';
 import { OrderItemComponent } from './manage/orders/order-item/order-item.component';
 import { OrderFormComponent } from './manage/orders/order-form/order-form.component';
+import { DateTimeAdminPipe } from './shared/DateTime.pipe';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { OrderFormComponent } from './manage/orders/order-form/order-form.compon
     ToggleButton,
     OrderItemComponent,
     OrderFormComponent,
+    DateTimeAdminPipe,
   ],
   imports: [
     BrowserModule,
