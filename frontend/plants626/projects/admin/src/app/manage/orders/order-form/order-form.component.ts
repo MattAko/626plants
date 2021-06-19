@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Order } from '../../../shared/order.model';
-
 import { ManagementService } from '../../management.service';
+
+interface httpResponse{
+  status: string
+}
 
 @Component({
   selector: 'app-order-form',
@@ -10,14 +13,15 @@ import { ManagementService } from '../../management.service';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit {
-  formEnabled: boolean = false;
   @Input('order') order: Order;
+  formEnabled: boolean = false;
   form: FormGroup
 
   constructor(private manage: ManagementService) { }
 
   ngOnInit(): void {
     this.initForm();
+    console.log(this.order)
   }
   
   private initForm(){
@@ -26,14 +30,12 @@ export class OrderFormComponent implements OnInit {
     })
   }
 
-  EnableForm(){
-    this.formEnabled = true;
+  ToggleForm(){
+    this.formEnabled = !this.formEnabled;
   }
 
   onSubmit(){
-    interface httpResponse{
-      status: string
-    }
+    
     console.log(this.order.receiptId);
     console.log(this.form);
     this.manage.updateStatus(this.form.value.status, this.order.receiptId).subscribe((response: httpResponse) => {

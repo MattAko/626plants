@@ -1,9 +1,7 @@
-<p>orders works!</p>
-<div *ngIf="!mobile" class="grid grid-cols-1 md:grid-cols-4 flex-wrap justify-start md:mx-5 my-8">
-    <p class="lg:w-72 w-52 mx-auto" >Order ID</p>
-    <div>Shipping Address</div>
-    <div>Products</div>
-    <p>Status</p>
+<h1 class="text-3xl font-bold text-center my-4">Orders</h1>
+<div class="flex justify-center">
+
+    <div class="flex flex-wrap justify-center md:justify-start max-w-screen-sm md:max-w-screen-md lg_max-w-screen-lg">
+            <app-order-item class="mx-8 max-w-min my-4" *ngFor="let order of orders" [item]="order"></app-order-item>
+    </div>
 </div>
-<hr/>
-<app-order-item *ngFor="let order of orders" [item]="order"></app-order-item>

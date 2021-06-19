@@ -11,16 +11,17 @@
     <option value="completed">Completed</option>
   </select>
   <button type="submit" class="bg-lightgreen px-5 py-3 ml-5">Apply</button>
+  <button type="button" class="bg-gray-300 px-5 py-3 ml-5" (click)="ToggleForm()">CANCEL</button>
 </form>
 <div
   *ngIf="!formEnabled"
-  (click)="EnableForm()"
-  class="text-sm bg-lightgreen px-5 py-3 rounded w-max cursor-pointer"
+  (click)="ToggleForm()"
+  class="text-sm bg-lightgreen px-5 py-3 rounded w-max cursor-pointer uppercase"
   [ngClass]="{
-    'bg-gray-800 text-white': order.status === 'processing',
-    'bg-yellow-800': order.status === 'packaged',
-    'bg-yellow-200': order.status === 'shipped',
-    'bg-lightgreen': order.status === 'completed'
+    'bg-red-600': order.status === 'processing',
+    'bg-yellow-300': order.status === 'packaged',
+    'bg-lightgreen': order.status === 'shipped',
+    'bg-blue-600': order.status === 'completed'
   }"
 >
   {{ order.status }}

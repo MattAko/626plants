@@ -1,31 +1,62 @@
-<div
-  class="
-    grid grid-cols-1
-    md:grid-cols-4
-    flex-wrap
-    justify-start
-    md:mx-5
-    my-8
-    text-sm
-  "
->
-  <div class="text-left text-sm md:w-72 w-52 mx-auto">
-    <p class="text-lg font-semibold">{{ order.shipping.name.full_name }}</p>
-    <p>ID#: {{ order.receiptId }}</p>
+<div class="border-gray-800 border rounded-md flex flex-wrap p-4 font-semibold w-80">
+  <div class="w-full">
+    <div class="flex my-2">
+      <img src="assets/svg/user-solid.svg" />
+      <p>{{ order.shipping.name.full_name }}</p>
+    </div>
+    <div class="flex my-2">
+      <img src="assets/svg/location.svg" />
+      <div>
+        <p>
+          {{ order.shipping.address.address_line_1 }},
+          {{ order.shipping.address.admin_area_2 }},
+          {{ order.shipping.address.admin_area_1 }}
+          {{ order.shipping.address.postal_code }}
+        </p>
+      </div>
+    </div>
   </div>
-  <div>
-    <div>{{ order.shipping.name.full_name}}</div>
-    <div>{{ order.shipping.address.address_line_1 }}</div>
-    <div>{{ order.shipping.address.admin_area_2}}, {{ order.shipping.address.admin_area_1}} {{order.shipping.address.postal_code}}</div>
+  <div class="my-4 mr-8">
+    <h3>Carrier</h3>
+    <p class="uppercase">{{ order.shipping.carrier }}</p>
   </div>
-  <div class="md:mx-0 mx-auto">
-    <h2 *ngIf="mobile" class="font-semibold">Items</h2>
-    <ul class="list-decimal list-inside">
-      <li (click)="onRedirect(prod)" *ngFor="let prod of order.products">{{ prod }}</li>
-    </ul>
+  <div class="my-4 mr-8">
+    <h3>Delivery Option</h3>
+    <p>{{ order.shipping.method }}</p>
   </div>
-  <div class="md:mx-0 mx-auto">
-    <app-order-form class="mx-auto" [order]="order"></app-order-form>
+  <div class="my-4 mr-8">
+    <h3>Signature</h3>
+    <p>{{ order.shipping.signature ? "Required" : "Not Required" }}</p>
+  </div>
+  <div class="my-4 mr-8">
+    <h3>Products</h3>
+    <p class="cursor-pointer" (click)="openShop(product)" *ngFor="let product of order.products">{{ product }}</p>
+  </div>
+  <app-order-form class="w-full my-4" [order]="order"></app-order-form>
+  <!-- Advanced Information -->
+  <div class="w-full flex flex-wrap" *ngIf="isVisible">
+    <hr />
+    <h2>ADDITIONAL INFORMATION</h2>
+    <div class="my-2 mr-8">
+      <h3>Total</h3>
+      <p>{{ order.total | currency }}</p>
+    </div>
+    <div class="my-2 mr-8">
+      <h3>Subtotal</h3>
+      <p>{{ order.subtotal | currency }}</p>
+    </div>
+    <div class="my-2 mr-8">
+      <h3>Shipping Cost</h3>
+      <p>{{ order.shipping.cost | currency }}</p>
+    </div>
+    <div class="my-2 mr-8">
+      <h3>Purchase Date</h3>
+      <p>{{ order.purchase_date | datetime }}</p>
+    </div>
+  </div>
+  <div class="w-full">
+    <button (click)="toggleAdvancedInfo()">
+      {{ isVisible ? "SHOW LESS" : "SHOW MORE" }}
+    </button>
   </div>
 </div>
-<hr />

@@ -1,6 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Order } from '../../../shared/order.model';
 
+
 @Component({
   selector: 'app-order-item',
   templateUrl: './order-item.component.html',
@@ -9,6 +10,8 @@ import { Order } from '../../../shared/order.model';
 export class OrderItemComponent implements OnInit {
   @Input('item') order: Order;
   mobile: boolean;
+  // Advanced Information toggle
+  isVisible: boolean = false; 
 
   constructor() {}
 
@@ -23,5 +26,13 @@ export class OrderItemComponent implements OnInit {
 
   onRedirect(prod: number){
     window.open(`http://626plants.com/shop/${prod}`);
+  }
+
+  toggleAdvancedInfo(){
+    this.isVisible = !this.isVisible;
+  }
+
+  openShop(id:number){
+    window.open(`https://626plants.com/shop/${id}`, "_blank")
   }
 }
