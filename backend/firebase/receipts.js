@@ -55,9 +55,9 @@ async function GetOrders() {
             .then((response) => {
                 const orders = [];
                 // Restructure orders from JSON tree to an array
-                for(let orderId in response.data){
-                    const { captureID, ...data } = response.data[orderId];
-                    const newOrder = {...data, orderId}
+                for(let receiptId in response.data){
+                    const { captureID, ...data } = response.data[receiptId];
+                    const newOrder = {...data, receiptId}
                     orders.push(newOrder);
                 }
                 resolve(orders); // Return the orders
