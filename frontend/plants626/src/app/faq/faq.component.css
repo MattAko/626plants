@@ -46,10 +46,9 @@ h2 {
 }
 
 h3 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 600;
-  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
 p {
@@ -63,3 +62,6 @@ p {
   }
 }
 
+.question{
+  margin: 2rem 0;
+}
