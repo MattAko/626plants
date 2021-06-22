@@ -25,15 +25,6 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-section {
-  width: clamp(20rem, 75vw, 70rem);
-  margin-left: auto;
-  margin-right: auto;
-
-  padding-bottom: 2rem;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-}
-
 h2 {
   margin: 3rem auto 1.5rem auto;
 
@@ -46,22 +37,69 @@ h2 {
 }
 
 h3 {
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
 }
+
 p {
-  text-indent: 2rem;
+  margin-top: 1rem;
   font-size: 1rem;
+}
+
+.background{
+  background-color: #f9f9f9;
+}
+
+section {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));;
+  
+  justify-items: center;
+
+  gap: 1rem;
+  max-width: 1000px;
+
+  margin: 0 auto;
+}
+
+.card{
+  border-radius: 0.2rem;
+  border-color: #A3A3A3;
+  border-width: 1px;
+
+  word-wrap: break-word;
+  padding: 2rem;
+  background-color: #ffffff;
+
+  width: 100%;
+  min-height: 500px;
+}
+
+@media only screen and (max-width: 1024px){
+  section{
+    max-width: 750px;
+  }
+
+  .card{
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 768px) {
   p {
     text-indent: 0rem;
   }
+
+  section{
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 3rem;
+
+    max-width: 640px;
+  }
+
+  .card{
+    width: 400px;
+  }
 }
 
-.question{
-  margin: 2rem 0;
-}
+
