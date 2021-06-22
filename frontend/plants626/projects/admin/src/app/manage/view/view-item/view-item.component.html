@@ -2,6 +2,7 @@
   <img
     class="lg:w-72 lg:h-72 w-full h-80 mb-5 rounded object-cover cursor-pointer mx-auto"
     [src]="item.images[0]"
+    (click)="openLink()"
   />
   <div class="text-left text-sm lg:w-72 mx-10">
     <p class="text-lg font-semibold">{{ item.name }}</p>

@@ -19,4 +19,8 @@ export class ViewItemComponent implements OnInit {
     window.scroll(0,0)
     this.router.navigate(['/manage/view', this.item.id, 'edit'])
   }
+
+  openLink(){
+    window.open(`https://626plants.com/shop/${this.item.id}`);
+  }
 }
