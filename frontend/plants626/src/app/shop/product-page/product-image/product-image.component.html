@@ -20,6 +20,8 @@
       inline-block
       w-40
       h-40
+      mx-2
+      lg:mx-0
       lg:w-60
       lg:h-60
       object-cover
@@ -36,6 +38,30 @@
   />
 </div>
 <div *ngIf="this.enlargedImage !== null">
+  <div
+    class="
+      fixed
+      left-0
+      top-0
+      h-screen
+      w-full
+      bg-black
+      z-30
+      bg-opacity-75
+      grid 
+      place-items-center
+    "
+  >
+    <div class="relative overlay">
+      <app-close-button
+        (click)="this.enlargedImage = null"
+        class="absolute float-right right-5 top-2 z-40 bg-white rounded-full p-2.5 cursor-pointer"
+      ></app-close-button>
+      <img class="mx-auto max-h-full" (click)="this.enlargedImage=null" [src]="images[this.enlargedImage]" />
+    </div>
+  </div>
+</div>
+<!-- <div *ngIf="this.enlargedImage !== null">
   <div
     class="
       absolute
@@ -58,4 +84,4 @@
       <img (click)="this.enlargedImage=null" [src]="images[this.enlargedImage]" />
     </div>
   </div>
-</div>
+</div> -->
