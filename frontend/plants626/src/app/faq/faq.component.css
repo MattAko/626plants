@@ -46,14 +46,14 @@ p {
   font-size: 1rem;
 }
 
-.background{
+.background {
   background-color: #f9f9f9;
 }
 
 section {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));;
-  
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
   justify-items: center;
 
   gap: 1rem;
@@ -62,9 +62,9 @@ section {
   margin: 0 auto;
 }
 
-.card{
+.card {
   border-radius: 0.2rem;
-  border-color: #A3A3A3;
+  border-color: #a3a3a3;
   border-width: 1px;
 
   word-wrap: break-word;
@@ -75,12 +75,12 @@ section {
   min-height: 500px;
 }
 
-@media only screen and (max-width: 1024px){
-  section{
+@media only screen and (max-width: 1024px) {
+  section {
     max-width: 750px;
   }
 
-  .card{
+  .card {
     width: 100%;
   }
 }
@@ -90,16 +90,15 @@ section {
     text-indent: 0rem;
   }
 
-  section{
+  section {
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: 3rem;
 
     max-width: 640px;
   }
 
-  .card{
-    width: 400px;
+  .card {
+    max-width: 90vw;
+    min-height: 400px;
   }
 }
-
-
