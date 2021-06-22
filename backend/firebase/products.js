@@ -254,6 +254,7 @@ async function GetVisible(visible, admin) {
                 const shopItems = [];
                 for (let item in shop.data) {
                     let { ...obj } = shop.data[item];
+                    // console.log(obj)
                     let images = [];
                     if (obj.images) {
                         for (let image in obj.images) {
@@ -261,10 +262,10 @@ async function GetVisible(visible, admin) {
                         }
                     }
 
+                    console.log(images)
                     // Return all product details for admin
                     if(admin){
                         shopItems.push({
-                            thumbnailUrl: obj.images["image0"],
                             ...obj,
                             images: images,
                             id: item,
@@ -287,7 +288,7 @@ async function GetVisible(visible, admin) {
             })
             .catch((error) => {
                 console.error("There was an error getting products.");
-                console.error(error);
+                console.log(error);
                 reject(error);
             });
     });
