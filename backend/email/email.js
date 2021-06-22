@@ -199,16 +199,16 @@ async function SendContact(contactForm){
         let html = `
         <body>
             <h3>Name: ${contactForm.name}</h3>
+            <h3>Company: ${contactForm.company}</h3>
+            <h3>Message </h3>
+            <p>${contactForm.message}</p>
             <h3>Email: ${contactForm.email}</h3>
             <h3>Phone #: ${contactForm.phone}</h3>
-            <h3>Company: ${contactForm.company}</h3>
-            <p>Message:</p>
-            <p>${contactForm.message}</p>
         </body>`;
         let info = await transporter.sendMail({
             from: `${contactForm.name} ${contactForm.email}`,
             to: "matthew@626plants.com",
-            subject: "New Contact",
+            subject: `${contactForm.name}, New Contact`,
             text: "New Contact Received",
             html: html,
         })
