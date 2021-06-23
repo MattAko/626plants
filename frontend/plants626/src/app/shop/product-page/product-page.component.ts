@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/CartService.service';
 import { Product } from 'src/app/shared/Product.model';
-import { WindowService } from 'src/app/WindowService.service';
 import { ShopService } from '../ShopService.service';
 
 @Component({
@@ -14,10 +13,12 @@ import { ShopService } from '../ShopService.service';
 export class ProductPageComponent implements OnInit, OnDestroy {
   product: Product;
   subscription: Subscription;
-  available: Boolean = true;
+  isAvailable: Boolean = true;
 
+  selectedImageUrl: string;   // Used for large image preview for mobile devices 
+  enlargedImageUrl: string;
+  hasScrolled: boolean = false;
   added: boolean = false;
-  mobile: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,14 +26,37 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private cartService: CartService
   ) {}
 
+  /**
+   * 1. Load id from route parameter
+   * 2. Check shopService if shop information has already been loaded.
+   * 3. Get product information from shopService
+   * 4. Check if product is already in cart via cartService
+   */
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.shopSerivce.fetchProduct(params['id']);
-      this.subscription = this.shopSerivce.productUpdated.subscribe(
-        (product: Product) => {
-          this.product = product;
-          console.log(this.product);
-          this.available = !this.cartService.check(this.product.id);
+      const productId: number = +params['id'];
+
+      // Check if shop has been loaded
+      if (!this.shopSerivce.ShopItems) {
+        this.shopSerivce.fetchShop(); // Fetch shop if not already done.
+      } else {
+        this.product = this.shopSerivce.getProduct(productId);
+        this.selectedImageUrl = this.product.images[0];
+
+        this.isAvailable = !this.cartService.check(productId);
+      }
+
+      this.subscription = this.shopSerivce.shopChanged.subscribe(
+        (shop: Product[]) => {
+          console.log('Hey dummy');
+          // Get product information
+          this.product = this.shopSerivce.getProduct(productId);
+
+          // Set selected image
+          this.selectedImageUrl = this.product.images[0];
+
+          // Check if product is in cart
+          this.isAvailable = !this.cartService.check(this.product.id);
         }
       );
     });
@@ -48,8 +72,21 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       this.added = true;
     } else {
       this.added = false;
-      this.available = false;
+      this.isAvailable = false;
     }
+  }
+
+  onImageClick(imageUrl: string){
+    if(this.selectedImageUrl === imageUrl || window.innerWidth>768){
+      this.enlargedImageUrl = imageUrl;
+    }
+    this.selectedImageUrl = imageUrl; 
+    
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event){
+    this.hasScrolled = true;
   }
 
   ngOnDestroy() {

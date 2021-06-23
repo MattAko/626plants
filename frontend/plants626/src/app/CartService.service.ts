@@ -104,7 +104,7 @@ export class CartService {
     this.cartSizeChanged.next(this._productIds.length);
   }
 
-  /*
+  /** 
    *  Check if item is already in user's cart
    *  @param id: number
    *  @return: boolean; true if item is in cart

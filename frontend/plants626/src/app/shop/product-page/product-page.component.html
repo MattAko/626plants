@@ -1,4 +1,63 @@
-<div
+<header></header>
+<div [ngClass]="{ overlay: enlargedImageUrl, hidden: !enlargedImageUrl }">
+  <div class="enlarged" [ngStyle]="{'background-image': 'url(' + enlargedImageUrl + ')'}">
+    <img style="visibility: hidden;" [src]="enlargedImageUrl"/>
+    <app-close-button
+      (click)="enlargedImageUrl=null"
+      class="
+        absolute
+        float-right
+        right-7
+        top-7
+        z-40
+        bg-white
+        rounded-full
+        p-2.5
+        cursor-pointer
+      "
+    ></app-close-button>
+  </div>
+</div>
+<div *ngIf="product; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+  <div class="wrapper">
+    <div *ngIf="!hasScrolled" id="mobileTitle">
+      <h1>{{ product.name }}</h1>
+      <h3>{{ product.price | currency }}</h3>
+    </div>
+    <img (click)="enlargedImageUrl=selectedImageUrl" class="preview" [src]="selectedImageUrl" />
+    <div class="gallery">
+      <img
+        *ngFor="let image of product.images"
+        [ngClass]="{ selected: image === selectedImageUrl }"
+        [src]="image"
+        (click)="onImageClick(image)"
+      />
+    </div>
+    <div class="infoColumn">
+      <div class="nameBlock">
+        <h1>{{ product.name }}</h1>
+        <h3>{{ product.price | currency }}</h3>
+      </div>
+      <button
+        [disabled]="product.sold"
+        [ngClass]="{
+          disabled: product.sold,
+          'bg-pink': !product.sold
+        }"
+        class="bg-pink rounded-full w-full mt-8 py-3"
+        (click)="addToCart()"
+      >
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #elseBlock>
+  <h2 class="text-center">The product you searched for could not be found.</h2>
+</ng-template>
+
+<!-- <div
   *ngIf="product"
   class="
     grid grid-cols-1
@@ -59,4 +118,4 @@
     </p>
   </div>
 </div>
-
+ -->
