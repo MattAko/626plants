@@ -1,4 +1,11 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/CartService.service';
@@ -9,16 +16,46 @@ import { ShopService } from '../ShopService.service';
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css'],
+  animations: [
+    trigger('popupState', [
+      state(
+        'offscreen',
+        style({
+          transform: 'translateY(100px)',
+        })
+      ),
+      state(
+        'valid',
+        style({
+          transform: 'translateY(0)',
+          backgroundColor: '#90EE90',
+          border: '2px solid #29524A',
+        })
+      ),
+      state(
+        'invalid',
+        style({
+          transform: 'translateY(0)',
+          backgroundColor: '#EF4444',
+          border: '2px solid #991B1B',
+        })
+      ),
+      transition('offscreen <=> *', [animate('0.5s')]),
+    ]),
+  ],
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
   product: Product;
   subscription: Subscription;
   isAvailable: Boolean = true;
 
-  selectedImageUrl: string;   // Used for large image preview for mobile devices 
+  selectedImageUrl: string; // Used for large image preview for mobile devices
   enlargedImageUrl: string;
   hasScrolled: boolean = false;
   added: boolean = false;
+
+  state: string = 'offscreen'; // Popup state, can be either 'onscreen' or 'offscreen'
+  popupMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -62,30 +99,44 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Adds product to the shopping cart
+  /**
+   * Adds product to cart.
+   *  1. Check if product is already in the cart.
+   */
   addToCart() {
-    // If the product is already in cart, do not add to cart, otherwise, add the product to the cart
-    console.log(this.cartService.check(this.product.id));
+    // Check cart
     if (!this.cartService.check(this.product.id)) {
       this.cartService.add(this.product.id);
-      console.log('Added to cart');
+      this.state = 'valid';
+      this.popupMessage = `${this.product.name} was added to your cart!`;
+
       this.added = true;
     } else {
       this.added = false;
       this.isAvailable = false;
+
+      //
+      this.state = 'invalid';
+      this.popupMessage = `${this.product.name} is already in your cart!`;
     }
+
+    // Hide popup after 3 seconds;
+    setTimeout(() => {
+      console.log(this.state);
+      this.state = 'offscreen';
+      console.log(this.state);
+    }, 3000);
   }
 
-  onImageClick(imageUrl: string){
-    if(this.selectedImageUrl === imageUrl || window.innerWidth>768){
+  onImageClick(imageUrl: string) {
+    if (this.selectedImageUrl === imageUrl || window.innerWidth > 768) {
       this.enlargedImageUrl = imageUrl;
     }
-    this.selectedImageUrl = imageUrl; 
-    
+    this.selectedImageUrl = imageUrl;
   }
 
   @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event){
+  onScroll(event: Event) {
     this.hasScrolled = true;
   }
 
