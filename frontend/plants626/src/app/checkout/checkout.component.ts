@@ -9,7 +9,6 @@ import { Cart } from '../shared/Cart.model';
 })
 export class CheckoutComponent implements OnInit {
   cart: Cart;
-  paid: boolean;
 
   constructor(private cartService: CartService) { }
 
@@ -19,9 +18,6 @@ export class CheckoutComponent implements OnInit {
       this.cart = cart;
     })
 
-    this.cartService.paid.subscribe(status => {
-      this.paid = status;
-    })
   }
 
 }

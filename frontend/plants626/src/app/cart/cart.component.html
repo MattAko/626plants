@@ -43,13 +43,17 @@
         Select Shipping
       </button>
     </div>
+    <div *ngIf="selectShippingMode">
+      <button class="my-1 w-full border border-gray-600 rounded py-2" [ngClass]="{'bg-red-600': shippingMethod ==='pickup'}" (click)="onChooseShippingType('pickup')" type="button">PICKUP</button>
+      <button class="my-1 w-full border border-gray-600 rounded py-2" [ngClass]="{'bg-red-600': shippingMethod ==='shipping'}" (click)="onChooseShippingType('shipping')" type="button">SHIPPING</button>
+    </div>
     <app-shipping-form
-      *ngIf="selectShippingMode"
+      *ngIf="selectShippingMode && shippingMethod==='shipping'"
       (formComplete)="onShippingComplete()"
     ></app-shipping-form>
     <div class="flex justify-center">
       <button
-        *ngIf="shippingComplete"
+        *ngIf="shippingComplete || shippingMethod=='pickup'"
         type="button"
         [disabled]="cart.products.length === 0"
         (click)="authorizeCart()"

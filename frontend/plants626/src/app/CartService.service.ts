@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -15,10 +11,15 @@ export class CartService {
    * Customer adds the ID's of the products they want to checkout to cart
    * CartService retrieves the cart details from the server
    */
-  
+
   private _productIds: number[] = [];
   // private _cart = new Cart([], 0, {cost, carrier, method, signature }, 0); // for visual purposes
-  private _cart: Cart = {products: [], subtotal: 0, shipping: {cost:0, carrier:'', method:'',  signature:false}, total: 0}
+  private _cart: Cart = {
+    products: [],
+    subtotal: 0,
+    shipping: { cost: 0, carrier: '', method: '', signature: false },
+    total: 0,
+  };
   cartChanged = new Subject<Cart>();
   cartSizeChanged = new Subject<number>();
   authorized = new BehaviorSubject<boolean>(false);
@@ -104,7 +105,7 @@ export class CartService {
     this.cartSizeChanged.next(this._productIds.length);
   }
 
-  /** 
+  /**
    *  Check if item is already in user's cart
    *  @param id: number
    *  @return: boolean; true if item is in cart
@@ -145,7 +146,12 @@ export class CartService {
    */
   empty() {
     this._productIds = [];
-    this._cart = {products: [], subtotal: 0, shipping: {cost: 0, carrier: '', method: '', signature: false}, total: 0};
+    this._cart = {
+      products: [],
+      subtotal: 0,
+      shipping: { cost: 0, carrier: '', method: '', signature: false },
+      total: 0,
+    };
     this.cartSizeChanged.next(0);
     localStorage.removeItem('productIds');
     localStorage.removeItem('cart-date');
@@ -184,7 +190,6 @@ export class CartService {
     }
   }
 
-
   /*
    *  Throw errors on authorize cart failures
    *  @param errorResponse: HttpErrorResponse
@@ -200,24 +205,24 @@ export class CartService {
   }
 
   /**
-   * Update shipping costs for cart.  
+   * Update shipping costs for cart.
    * @param carrier String value representing which shipping carrier user selected. Either 'ups' or 'usps'
-   * @param method String value representing which shipping method user selected. Either 'overnight' or 'two-day'  
-   * @param signature Boolean representing whether the user wanted the order to be delivered only if signature is received. 
+   * @param method String value representing which shipping method user selected. Either 'overnight' or 'two-day'
+   * @param signature Boolean representing whether the user wanted the order to be delivered only if signature is received.
    */
-  AddShipping(carrier: string, method: string, signature: boolean){
+  AddShipping(carrier: string, method: string, signature: boolean) {
     let shippingMultiplier: number = 0;
     let shippingTotalCost: number = 0;
-    if(method==="two-day"){
+    if (method === 'two-day') {
       shippingMultiplier = 30;
-    }else if(method==="overnight"){
+    } else if (method === 'overnight') {
       shippingMultiplier = 55;
     }
-    if(carrier==="ups" && signature){
+    if (carrier === 'ups' && signature) {
       shippingTotalCost += 5;
     }
     shippingTotalCost += shippingMultiplier * this._cart.products.length;
-    console.log(this._cart)
+    console.log(this._cart);
     this._cart.shipping.cost = shippingTotalCost;
     this._cart.shipping.carrier = carrier;
     this._cart.shipping.method = method;
@@ -225,4 +230,17 @@ export class CartService {
     this.updateTotal();
   }
 
+  postReservation(name: string, email: string, phone: string, dates: string) {
+    interface reservationResponse {
+      valid: boolean;
+    }
+    const reservation = {
+      name,
+      email,
+      phone,
+      dates
+    }
+    return this.http
+      .post<reservationResponse>('/api/pickup', reservation)
+  }
 }

@@ -19,6 +19,8 @@ export class CartComponent implements OnInit, OnDestroy {
   selectShippingMode: boolean = false;
   shippingComplete: boolean = false;
 
+  shippingMethod: string = 'shipping';
+
   constructor(private cartService: CartService, private router: Router ) {}
 
   ngOnInit(): void {
@@ -45,7 +47,16 @@ export class CartComponent implements OnInit, OnDestroy {
       (response: authorizedCart) => {
         if (response.valid) {
           this.cartService.authorized.next(true);
-          this.router.navigate(['/checkout']);
+
+          // Go to checkout for shipping orders
+          if(this.shippingMethod==="shipping"){
+            this.router.navigate(['/checkout']);
+          }
+
+          // Go to pickup form for pickup orders
+          if(this.shippingMethod==="pickup"){
+            this.router.navigate(['/pickup']);
+          }
         }
       },
       (errors: any) => {
@@ -65,6 +76,10 @@ export class CartComponent implements OnInit, OnDestroy {
   onShippingComplete(){
     this.shippingComplete = true;
     this.selectShippingMode = false;
+  }
+
+  onChooseShippingType(method: string){
+    this.shippingMethod = method;
   }
 
   ngOnDestroy() {
