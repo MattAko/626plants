@@ -28,6 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { PhonePipe } from 'projects/admin/src/app/shared/phone.pipe';
 import { DateTimePipe } from './shared/DateTime.pipe';
+import { PickupComponent } from './pickup/pickup.component';
+import { PickupFormComponent } from './pickup/pickup-form/pickup-form.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { DateTimePipe } from './shared/DateTime.pipe';
     ContactFormComponent,
     PhonePipe,
     DateTimePipe,
+    PickupComponent,
+    PickupFormComponent,
   ],
   imports: [
     BrowserModule,

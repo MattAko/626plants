@@ -1,0 +1,41 @@
+<div *ngIf="cart" class="lg:mx-auto flex flex-wrap w-full justify-evenly mt-24">
+  <div class="w-5/6 lg:w-2/3 lg:px-8 mt-10 lg:mt-0">
+    <h1 class="text-2xl my-5">Your Items</h1>
+    <div class="w-full flex justify-evenly m-auto flex-wrap">
+      <div class="w-full" *ngFor="let product of cart.products">
+        <div class="flex flex-row justify-between my-5">
+          <div class="flex flex-row">
+            <img
+              [src]="product.images[0]"
+              class="w-24 h-24 object-cover"
+              alt="product-image"
+            />
+            <div class="px-5">
+              <h2 class="font-semibold">{{ product.name }}</h2>
+              <p class="font-thin">{{ product.price | currency }}</p>
+              <p class="font-thin">Quantity x{{ product.quantity }}</p>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </div>
+  </div>
+  <div class="w-5/6 lg:w-1/3 lg:px-7">
+    <h1 class="text-2xl my-5">Summary</h1>
+    <ul class="text-md">
+      <li>Subtotal: {{ cart.subtotal | currency }}</li>
+      <li>Shipping: {{ cart.shipping.cost | currency }}</li>
+      <hr class="my-2" />
+      <li>
+        Total: <span class="font-semibold">{{ cart.total | currency }}</span>
+      </li>
+      <hr class="my-2" />
+    </ul> 
+    <h1 class="text-gray-400 italic">Please fill out the form to reserve your order.</h1>
+    <app-pickup-form></app-pickup-form>
+  </div>
+
+  
+</div>
+<div *ngIf="!cart">Cart is loading...</div>
