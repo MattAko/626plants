@@ -12,12 +12,10 @@ export class TooltipComponent{
     constructor(){ }
 
     mouseEnter(){
-        console.log('Hello')
         this.visible = true;
     }
 
     mouseLeave(){
-        console.log('Bye')
         this.visible = false;
     }
 }
