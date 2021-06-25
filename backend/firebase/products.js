@@ -262,7 +262,6 @@ async function GetVisible(visible, admin) {
                         }
                     }
 
-                    console.log(images)
                     // Return all product details for admin
                     if(admin){
                         shopItems.push({
@@ -323,11 +322,10 @@ async function UpdateMultiple(productIds, key, value) {
         });
 }
 
-async function UpdateStatus(productIds, status) {
+async function UpdateStatus(products, status) {
     let changes = {};
-    for (let id of productIds) {
-        changes[`${id}/status`] = status;
-        //changes[id] = { status: status }
+    for (let product of products) {
+        changes[`${product.id}/status`]= status
     }
     console.log(changes);
     await axios
@@ -344,6 +342,9 @@ async function UpdateStatus(productIds, status) {
             return;
         });
 }
+
+
+
 
 // TODO: Make an update function that allows for more dynamic queries
 async function UpdateNew() {}
