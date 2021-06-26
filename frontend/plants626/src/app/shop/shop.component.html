@@ -3,9 +3,14 @@
     <h1 class="self-center text-7xl font-extrabold z-10">SHOP</h1>
   </div>
 </div>
+
 <div class="container">
   <app-shop-item
-    *ngFor="let item of shopItems"
-    [itemDetails]="item"
+  *ngFor="let item of shopItems"
+  [itemDetails]="item"
   ></app-shop-item>
+</div>
+
+<div class="my-2 font-xs px-4">
+  <p class="italic text-gray-400">Note: *Reserved is for products that have been requested for pickup but haven't been paid for. There is a chance that if the person fails to pickup their order, that the reserved item will go back up for sale.</p>
 </div>

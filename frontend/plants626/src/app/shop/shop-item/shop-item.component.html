@@ -4,7 +4,8 @@
     <h1 class="font-semibold">{{ shopItem.name }}</h1>
     <div>
       <h2 *ngIf="shopItem.sold" class="italic">Sold</h2>
-      <h2 *ngIf="!shopItem.sold">{{ shopItem.price | currency }}</h2>
+      <h2 *ngIf="!shopItem.sold && shopItem.status!=='reserved'">{{ shopItem.price | currency }}</h2>
+      <h2 *ngIf="shopItem.status==='reserved'" class="italic">Reserved</h2>
     </div>
   </div>
 </div>

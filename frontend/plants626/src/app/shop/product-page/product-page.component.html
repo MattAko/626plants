@@ -45,13 +45,18 @@
     <div class="infoColumn">
       <div class="nameBlock">
         <h1>{{ product.name }}</h1>
-        <h3 *ngIf="!product.sold">{{ product.price | currency }}</h3>
-        <h3 *ngIf="product.sold" style="font-style: italic">Sold</h3>
+        <h3 *ngIf="product.status==='reserved'" class="italic">Reserved</h3>
+        <h3 *ngIf="!product.sold && !product.status==='reserved'">{{ product.price | currency }}</h3>
+        <h3 *ngIf="product.sold" class="italic">Sold</h3>
+      </div>
+      <div>
+        <p style="font-weight: 600; font-size: 1.25rem">Description</p>
+        <p>{{ product.description }}</p> 
       </div>
       <button
-        [disabled]="product.sold"
+        [disabled]="product.sold || product.status==='reserved'"
         [ngClass]="{
-          disabled: product.sold,
+          disabled: product.sold || product.status==='reserved',
           'bg-pink': !product.sold
         }"
         class="bg-lightgreen rounded-full w-full mt-8 py-3"

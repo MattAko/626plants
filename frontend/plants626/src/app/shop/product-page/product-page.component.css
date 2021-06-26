@@ -148,3 +148,7 @@ button{
   align-items: center;
   text-align: center;
 }
+
+.nameBlock{
+  margin-bottom: 2rem;
+}
