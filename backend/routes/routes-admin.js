@@ -22,6 +22,7 @@ const _API_KEY = secrets._API_KEY;
 // Import Database management systems
 const db_products = require("../firebase/products");
 const db_receipts = require("../firebase/receipts");
+const db_reservations = require("../firebase/reservations");
 const func = require("../firebase/functions");
 
 /**
@@ -165,7 +166,7 @@ router.route("/admin/delete").post(jsonParser, async (req, res) => {
         res.send(`There was an error trying to delete product ${id}`);
     });
     res.status(200);
-    res.send(`Product ${id} has been deleted`);
+    res.json({message: `Product ${id} has been deleted.`})
 });
 
 router.route("/admin/orders/update").post(jsonParser, async (req, res) => {
@@ -176,5 +177,12 @@ router.route("/admin/orders/update").post(jsonParser, async (req, res) => {
     res.status(200);
     res.json({status: 'OK'})
 });
+
+router.route("/admin/pickups").get(async (req, res) => {
+    const reservations = await db_reservations.GetReservations();
+
+    res.status(200);
+    res.send(reservations);
+})
 
 module.exports = router;

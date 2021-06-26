@@ -18,10 +18,12 @@ const paypal = require("../payment/paypal");
 // Import firebase API
 const db_products = require("../firebase/products");
 const db_receipts = require("../firebase/receipts");
+const db_reservations = require("../firebase/reservations");
 
 // Import email
 const email = require("../email/email");
 const products = require("../firebase/products");
+
 
 /*
   Returns JSON of all ShopItems
@@ -301,6 +303,21 @@ router.route("/test").get(async (req, res) => {
     };
     await email.SendReceipt("mattako66@gmail.com", receipt);
 });
+
+router.route("/pickup").post(jsonParser, async (req, res) => {
+    const { name, dates, phone, email, products, total} = req.body;
+    if(name && dates && phone && email && products, total){
+       await db_reservations.AddReservation(name, dates, phone, email, products, total);  
+       await db_products.UpdateStatus(products, 'reserved');
+       res.status(200);
+       res.json({valid: true})
+    }
+    // R
+    else{
+        res.status(400);
+        res.json({valid: false})
+    }
+})
 
 /*
   Retrieve user cart, authorize
