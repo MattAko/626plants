@@ -189,6 +189,7 @@ async function Add(form, token) {
             posted: form.date,
             visible: true,
             sold: false,
+            status: 'available',
         };
         axios
             .put(
@@ -279,6 +280,8 @@ async function GetVisible(visible, admin) {
                             sold: obj.sold,
                             price: +obj.price,
                             name: obj.name,
+                            description: obj.description, 
+                            status: obj.status,
                         })
                     }
                 }
