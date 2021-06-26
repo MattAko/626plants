@@ -4,12 +4,15 @@ import { Observable, Subject } from 'rxjs';
 import { Order } from 'src/app/shared/Order.model';
 import { AuthService } from '../auth/auth.service';
 import { AdminProduct } from '../shared/admin-product.model';
+import { Reservation } from '../shared/reservation.model';
 import { UploadForm } from '../shared/upload-form.model';
 
 @Injectable({ providedIn: 'root' })
 export class ManagementService {
   shopChanged = new Subject<AdminProduct[]>();
   shop: AdminProduct[] = [];
+  reservations: Reservation[];
+  reservationsChanged = new Subject<Reservation[]>();
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -26,11 +29,9 @@ export class ManagementService {
     formData.append('description', form.description);
     formData.append('quantity', form.quantity.toString());
     formData.append('date', form.postedDate.toString());
-    return this.http
-      .post<Text>('/api/admin/upload', formData, {
-        headers: new HttpHeaders().set('Accept', 'application/json'),
-      })
-      
+    return this.http.post<Text>('/api/admin/upload', formData, {
+      headers: new HttpHeaders().set('Accept', 'application/json'),
+    });
   }
 
   getShop(visible: boolean) {
@@ -45,8 +46,8 @@ export class ManagementService {
       });
   }
 
-  getOrders(): Observable<Order[]> | any{
-    return this.http.get<Order[]>('/api/admin/orders')
+  getOrders(): Observable<Order[]> | any {
+    return this.http.get<Order[]>('/api/admin/orders');
   }
 
   getProduct(id: number): AdminProduct {
@@ -92,10 +93,19 @@ export class ManagementService {
       });
   }
 
-  updateStatus(status: string, id: string){
+  updateStatus(status: string, id: string) {
     return this.http.post('/api/admin/orders/update', {
       id: id,
       status: status,
-    })
+    });
+  }
+
+  fetchReservations() {
+    return this.http
+      .get<Reservation[]>('/api/admin/pickups')
+      .subscribe((reservations) => {
+        this.reservations = reservations;
+        this.reservationsChanged.next(reservations);
+      });
   }
 }

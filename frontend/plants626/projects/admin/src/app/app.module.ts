@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './manage/upload/upload.component';
-import { ReceiptsComponent } from './manage/receipts/receipts.component';
+import { ReservationsComponent } from './manage/reservations/reservations.component';
 import { ViewComponent } from './manage/view/view.component';
 import { EditComponent } from './manage/edit/edit.component';
 import { EditStartComponent } from './manage/edit/edit-start/edit-start.component';
@@ -22,6 +22,8 @@ import { ToggleButton } from './shared/toggle-button/toggle-button.component';
 import { OrderItemComponent } from './manage/orders/order-item/order-item.component';
 import { OrderFormComponent } from './manage/orders/order-form/order-form.component';
 import { DateTimeAdminPipe } from './shared/DateTime.pipe';
+import { ReservationItemComponent } from './manage/reservations/reservation-item/reservation-item.component';
+import { StatusFormComponent } from './manage/reservations/status-form/status-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,7 @@ import { DateTimeAdminPipe } from './shared/DateTime.pipe';
     NavbarComponent,
     ManageComponent,
     UploadComponent,
-    ReceiptsComponent,
+    ReservationsComponent,
     ViewComponent,
     EditComponent,
     EditStartComponent,
@@ -42,6 +44,8 @@ import { DateTimeAdminPipe } from './shared/DateTime.pipe';
     OrderItemComponent,
     OrderFormComponent,
     DateTimeAdminPipe,
+    ReservationItemComponent,
+    StatusFormComponent,
   ],
   imports: [
     BrowserModule,

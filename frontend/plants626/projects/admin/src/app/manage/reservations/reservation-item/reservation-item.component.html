@@ -1,0 +1,45 @@
+<div class="border-gray-800 border rounded-md flex flex-wrap p-4 font-semibold w-72">
+  <div class="w-full">
+    <div class="flex my-2">
+      <img src="assets/svg/user-solid.svg" />
+      <p>{{ reservation.name }}</p>
+    </div>
+    
+    <div class="flex my-2">
+      <img src="assets/svg/at-logo.svg">
+      <p class="break-all">{{ reservation.email }}</p>
+    </div>
+
+  </div>
+
+  <div class="my-4 mr-8">
+    <h3>Status</h3>
+    <app-status-form [status]="reservation.status"></app-status-form>
+  </div>
+  
+  <div class="my-4 mr-8">
+    <h3>Phone Number</h3>
+    <p class="uppercase">{{ reservation.phone }}</p>
+  </div>
+
+  <div class="w-full">
+    <h3>Message</h3>
+    <p>{{ reservation.dates }}</p>
+  </div>
+
+  <div class="my-4 mr-8">
+    <h3>Products</h3>
+    <p *ngFor="let product of reservation.products">{{product.id}}</p>
+  </div>
+
+  <div class="my-4 mr-8">
+    <h3>Reservation Date</h3>
+    <p>{{ reservation.reservation_date | datetime }}</p>
+  </div>
+
+  <div class="my-4 mr-8">
+    <h3>Reservation ID</h3>
+    <p>{{ reservation.reservationId }}</p>
+  </div>
+  
+</div>

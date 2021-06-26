@@ -1,0 +1,20 @@
+<div class="flex justify-center items-center">
+
+    <div
+      class="
+        flex flex-wrap
+        justify-center
+        items-center
+        md:justify-start
+        max-w-screen-sm
+        md:max-w-screen-md
+        lg:max-w-screen-xl
+      "
+    >
+      <app-reservation-item
+        *ngFor="let res of reservations"
+        [res]="res"
+        class="mx-4 max-w-min my-4"
+      ></app-reservation-item>
+    </div>
+</div>

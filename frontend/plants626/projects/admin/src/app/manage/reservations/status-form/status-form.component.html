@@ -1,0 +1,25 @@
+<button
+  *ngIf="!isFormEnabled"
+  type="button"
+  class="py-2 px-4 rounded"
+  [ngClass]="{
+    'bg-red-600': statusCode === 0,
+    'bg-yellow-300': statusCode === 1,
+    'bg-lightgreen': statusCode === 2,
+    'bg-blue-600': statusCode === 3
+  }"
+  (click)="isFormEnabled = true"
+>
+  {{ status }}
+</button>
+
+<form formGroup="form" *ngIf="isFormEnabled" (ngSubmit)="onSubmit()">
+    <select name="status" id="status" formControlName="statusControl" required>
+        <option value="0">Response Needed</option>
+        <option value="1">Replied</option>
+        <option value="2">Confirmed Pickup</option>
+        <option value="3">Complete</option>
+    </select>
+    <button type="submit" class="py-2 px-4 rounded bg-lightgreen">Apply</button>
+    <button type="submit" class="py-2 px-4 rounded bg-gray-400">Cancel</button>
+</form>

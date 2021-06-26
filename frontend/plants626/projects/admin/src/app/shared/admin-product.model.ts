@@ -8,6 +8,7 @@ export class AdminProduct{
         public quantity: number,
         public posted: Date,
         public visible: boolean,
+        public status: string,
         public sold: boolean,
     ){}
 }
