@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ManagementService } from '../../management.service';
 
 @Component({
   selector: 'app-status-form',
@@ -7,13 +8,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./status-form.component.css']
 })
 export class StatusFormComponent implements OnInit {
+  @Input('id') reservationId: string;
   @Input('status') statusCode: number;
   status: string;
   isFormEnabled: boolean = false;
 
   form: FormGroup;
 
-  constructor() { }
+  constructor(private manage: ManagementService) { }
 
   ngOnInit(): void {
 
@@ -49,6 +51,10 @@ export class StatusFormComponent implements OnInit {
   onSubmit(){
 
     console.log(this.form.status);
+  }
+
+  cancelReservation(){
+    this.manage.cancelReservation(this.reservationId)
   }
 
 }

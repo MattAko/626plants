@@ -35,7 +35,7 @@ const appRoutes: Routes = [
         component: OrdersComponent
       },
       {
-        path: 'receipts',
+        path: 'pickups',
         component: ReservationsComponent
       },
       {

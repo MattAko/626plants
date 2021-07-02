@@ -13,13 +13,14 @@
   {{ status }}
 </button>
 
-<form formGroup="form" *ngIf="isFormEnabled" (ngSubmit)="onSubmit()">
-    <select name="status" id="status" formControlName="statusControl" required>
+<form [formGroup]="form" *ngIf="isFormEnabled" (ngSubmit)="onSubmit()">
+    <select class="mb-2" name="status" id="status" formControlName="statusControl" required>
         <option value="0">Response Needed</option>
         <option value="1">Replied</option>
         <option value="2">Confirmed Pickup</option>
         <option value="3">Complete</option>
     </select>
-    <button type="submit" class="py-2 px-4 rounded bg-lightgreen">Apply</button>
-    <button type="submit" class="py-2 px-4 rounded bg-gray-400">Cancel</button>
+    <button type="submit" class="py-2 px-4 mr-2 rounded bg-lightgreen">Apply</button>
+    <button type="button" (click)="cancelReservation()" class="py-2 px-4 mr-2 rounded bg-red-600">Cancel</button> 
+    <button type="button" (click)="isFormEnabled=false" class="py-2 px-4 rounded bg-gray-400">Close</button>
 </form>
