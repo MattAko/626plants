@@ -108,4 +108,13 @@ export class ManagementService {
         this.reservationsChanged.next(reservations);
       });
   }
+
+  cancelReservation(reservationId: string) {
+    interface patchResponse {
+      message: string;
+    }
+    return this.http
+      .patch<patchResponse>('/api/admin/pickups', {reservationId: reservationId})
+      .subscribe((response) => {});
+  }
 }
