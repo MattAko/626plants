@@ -185,4 +185,19 @@ router.route("/admin/pickups").get(async (req, res) => {
     res.send(reservations);
 })
 
+router.route("/admin/pickups").patch(jsonParser, async (req, res) => {
+    const { reservationId } = req.body;
+    const newStatus = {
+        status: 10,
+    }
+    console.log(newStatus)
+
+    const test = await db_reservations.UpdateReservation(reservationId, newStatus)
+
+    res.status(200);
+    res.json({message: 'Hello'})
+})
+
+
+
 module.exports = router;
