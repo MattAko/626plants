@@ -255,6 +255,7 @@ router.route("/approve").post(jsonParser, async (req, res) => {
     );
     await db_products.UpdateMultiple(products, "sold", true);
     await db_products.UpdateMultiple(products, "orderId", id);
+    await db_products.UpdateMultiple(products, "status", 'oos');
 
     // Get receipt information
     const receipt = await db_receipts.GetReceipt(id);
