@@ -186,14 +186,25 @@ router.route("/admin/pickups").get(async (req, res) => {
 })
 
 router.route("/admin/pickups").patch(jsonParser, async (req, res) => {
-    const { reservationId } = req.body;
+    const { reservationId, status } = req.body;
     const newStatus = {
-        status: 10,
+        status: +status,
     }
-    console.log(newStatus)
 
-    const test = await db_reservations.UpdateReservation(reservationId, newStatus)
+    // Update the status for reservation
+    await db_reservations.UpdateReservation(reservationId, newStatus);
+    
+    // If cancelled, update the product status attached to the reservation
+    if(+status===10){
+        
+        // Get the products attached to the reservation
+        const { products } = await db_reservations.GetReservation(reservationId);
+        
+        // Update the status for products
+        await db_products.UpdateMultiple(products, 'status', 'available')
+    }    
 
+    
     res.status(200);
     res.json({message: 'Hello'})
 })
