@@ -15,7 +15,7 @@ app.listen(port, () => {
 const myRoutes = require('./routes/routes');
 app.use('/api', myRoutes)
 
-const adminRoutes = require('./routes/routes-admin');
+const adminRoutes = require('./routes/admin.routes');
 const { get } = require("./routes/routes");
 app.use('/api', adminRoutes);
 
@@ -32,5 +32,5 @@ app.use('/admin', express.static('admin'))
 app.use('/public', express.static('public'))
 
 app.get('*', (req, res) => {
-  res.sendFile(__dirname + './')
+  res.sendFile(__dirname + '/public/index.html')
 })
