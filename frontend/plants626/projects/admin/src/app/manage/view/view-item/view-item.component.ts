@@ -9,10 +9,20 @@ import { AdminProduct } from '../../../shared/admin-product.model';
 })
 export class ViewItemComponent implements OnInit {
   @Input('item') item: AdminProduct;
+  status: string;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    if(this.item.status==='oos' || this.item.sold){
+      this.status = 'Out of Stock';
+    }
+    else if(this.item.status==='reserved'){
+      this.status = 'Reserved';
+    }
+    else{
+      this.status = 'In Stock';
+    }
   }
 
   onEdit(){

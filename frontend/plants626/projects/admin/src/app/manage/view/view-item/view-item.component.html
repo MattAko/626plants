@@ -18,11 +18,12 @@
     <p
       class="px-5 text-center py-2 mb-5 border-2"
       [ngClass]="{
-        'bg-red-400 border-red-700': item.sold,
-        'bg-lightgreen border-green': !item.sold
+        'bg-red-400 border-red-700': status==='Out of Stock',
+        'bg-lightgreen border-green': status ==='In Stock',
+        'bg-yellow-400 border-yellow-700': status ==='Reserved'
       }"
     >
-      {{ item.sold ? "Sold" : "In stock" }}
+      {{ status }}
     </p>
     <p>ID#: {{ item.id }}</p>
     <p class="my-2">{{ item.price | currency }}</p>
