@@ -20,17 +20,44 @@ const { get } = require("./routes/routes");
 app.use('/api', adminRoutes);
 
 
-// Admin files
-app.get('/admin/*', (req, res) => {
-  res.sendFile(__dirname + './admin')
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+// ░░░░█████░░░░█░██░██░█████░█░░█░░░░
+// ░░░░█░░░█░████░█░█░█░░░█░░░██░█░░░░
+// ░░░░█████░█░░█░█░░░█░░░█░░░█░██░░░░
+// ░░░░█░░░█░████░█░░░█░█████░█░░█░░░░
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+// Send index.html for admin portal on /admin
+app.get('/admin', (req, res) => {
+  res.sendFile(__dirname + '/admin/index.html')
 })
 
-// Server admin static files
+// Static files for /admin
 app.use('/admin', express.static('admin'))
 
-// Serve public files
-app.use('/public', express.static('public'))
+// SVG's for admin
+app.use('/assets/svg', express.static('admin/svg'))
 
+
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+// ░░░░████░█░░█░█░░░█░░░███░███░░░░░░
+// ░░░░█░░█░█░░█░███░█░░░░█░░█░░░░░░░░
+// ░░░░████░█░░█░█░█░█░░░░█░░█░░░░░░░░
+// ░░░░█░░░░████░███░███░███░███░░░░░░
+// ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+// Static files for /
+app.use(express.static('public'))
+
+// Assets used by public page
+app.use('/assets', express.static('public/assets'))
+
+// Send public index.html for any other route
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html')
 })
+
+
+
+
+//ASCII pages made from fsymbols.com/draw
