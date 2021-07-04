@@ -21,7 +21,6 @@ import { CloseButtonComponent } from './shared/close-button/close-button.compone
 import { CheckoutComponent } from './checkout/checkout.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
-import { ProductImageComponent } from './shop/product-page/product-image/product-image.component';
 import { TooltipComponent } from './shared/tooltip/tooltip.component';
 import { ShippingFormComponent } from './cart/shipping-form/shipping-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -50,7 +49,6 @@ import { PickupFormComponent } from './pickup/pickup-form/pickup-form.component'
     CheckoutComponent,
     LoadingSpinnerComponent,
     ConfirmationComponent,
-    ProductImageComponent,
     TooltipComponent,
     ShippingFormComponent,
     ContactFormComponent,
