@@ -109,12 +109,12 @@ export class ManagementService {
       });
   }
 
-  cancelReservation(reservationId: string) {
+  updateReservation(reservationId: string, status: number) {
     interface patchResponse {
       message: string;
     }
     return this.http
-      .patch<patchResponse>('/api/admin/pickups', {reservationId: reservationId})
+      .patch<patchResponse>('/api/admin/pickups', {reservationId: reservationId, status: status})
       .subscribe((response) => {});
-  }
+  } 
 }

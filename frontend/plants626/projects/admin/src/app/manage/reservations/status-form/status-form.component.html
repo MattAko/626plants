@@ -6,7 +6,8 @@
     'bg-red-600': statusCode === 0,
     'bg-yellow-300': statusCode === 1,
     'bg-lightgreen': statusCode === 2,
-    'bg-blue-600': statusCode === 3
+    'bg-blue-600': statusCode === 3,
+    'bg-black text-white': statusCode === 10
   }"
   (click)="isFormEnabled = true"
 >
@@ -20,7 +21,7 @@
         <option value="2">Confirmed Pickup</option>
         <option value="3">Complete</option>
     </select>
-    <button type="submit" class="py-2 px-4 mr-2 rounded bg-lightgreen">Apply</button>
-    <button type="button" (click)="cancelReservation()" class="py-2 px-4 mr-2 rounded bg-red-600">Cancel</button> 
-    <button type="button" (click)="isFormEnabled=false" class="py-2 px-4 rounded bg-gray-400">Close</button>
+    <button type="submit" class="py-2 px-4 mr-2 my-2 rounded bg-lightgreen">Apply</button>
+    <button type="button" (click)="cancelReservation()" class="py-2 px-4 m-2 rounded bg-red-600">Cancel</button> 
+    <button type="button" (click)="isFormEnabled=false" class="py-2 px-4 mr-2 my-2 rounded bg-gray-400">Close</button>
 </form>

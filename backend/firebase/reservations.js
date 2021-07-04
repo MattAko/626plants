@@ -23,6 +23,11 @@ const { Update } = require("./products");
  * @param {string} email Email following the format: a@a.com
  */
 async function AddReservation(name, dates, phone, email, products, total) {
+    let productIds = [];
+    // Get all product ids
+    for (let prod of products) {
+        productIds.push(+prod.id);
+    }
     const date = new Date();
     const reservation = {
         name,
@@ -30,7 +35,7 @@ async function AddReservation(name, dates, phone, email, products, total) {
         phone,
         email,
         reservation_date: date,
-        products,
+        products: productIds,
         total,
         status: 0,
     };
@@ -66,8 +71,26 @@ function GetReservations() {
                     };
                     reservations.push(temp);
                 }
-                console.log(reservations);
                 resolve(reservations);
+            })
+            .catch((error) => {
+                console.error(error);
+                reject(error);
+            });
+    });
+}
+
+function GetReservation(id) {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`${secrets.firebaseDatabase}/reservations/${id}.json`, {
+                params: {
+                    auth: secrets.APP_SECRET,
+                },
+            })
+            .then((response) => {
+                // Data here represents the JSON of the product object.
+                resolve(response.data);
             })
             .catch((error) => {
                 console.error(error);
@@ -82,7 +105,7 @@ function UpdateReservation(id, updatedInfo) {
             .patch(
                 `${secrets.firebaseDatabase}/reservations/${id}.json`,
                 {
-                    ...updatedInfo
+                    ...updatedInfo,
                 },
                 {
                     params: {
@@ -91,6 +114,7 @@ function UpdateReservation(id, updatedInfo) {
                 }
             )
             .then((response) => {
+                console.log(response);
                 resolve(response);
             })
             .catch((error) => {
@@ -102,5 +126,6 @@ function UpdateReservation(id, updatedInfo) {
 module.exports = {
     AddReservation: AddReservation,
     GetReservations: GetReservations,
+    GetReservation: GetReservation,
     UpdateReservation: UpdateReservation,
 };

@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="my-4 mr-8">
+  <div class="my-4 mr-8 w-full">
     <h3>Status</h3>
     <app-status-form
       [id]="reservation.reservationId"
@@ -40,7 +40,7 @@
 
   <div class="my-4 mr-8">
     <h3>Products</h3>
-    <p *ngFor="let product of reservation.products">{{ product.id }}</p>
+    <p *ngFor="let product of reservation.products">{{ product }}</p>
   </div>
 
   <div class="my-4 mr-8">
