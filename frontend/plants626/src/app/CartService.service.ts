@@ -238,7 +238,9 @@ export class CartService {
       name,
       email,
       phone,
-      dates
+      dates,
+      products: this.cart.products,
+      total: this.cart.total, 
     }
     return this.http
       .post<reservationResponse>('/api/pickup', reservation)
