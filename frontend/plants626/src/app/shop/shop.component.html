@@ -11,6 +11,11 @@
   ></app-shop-item>
 </div>
 
+<div class="my-20 flex flex-col items-center">
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+  <h1 *ngIf="isShopEmpty" class="w-4/5 font-semibold text-center">Sorry, but it appears that the shop is currently empty!</h1>
+</div>
+
 <div class="my-2 font-xs px-4">
   <p class="italic text-gray-400">Note: *Reserved is for products that have been requested for pickup but haven't been paid for. There is a chance that if the person fails to pickup their order, that the reserved item will go back up for sale.</p>
 </div>

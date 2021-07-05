@@ -12,14 +12,20 @@ import { ShopService } from './ShopService.service';
 export class ShopComponent implements OnInit, OnDestroy {
   shopItems: Product[];
   shopChanged: Subscription;
+  loading: boolean = false;
+  isShopEmpty: boolean = false;
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
     this.shopService.fetchShop()
+    this.loading = true;
     this.shopChanged = this.shopService.shopChanged.subscribe((items: Product[]) => {
-      console.log('Shop has been changed')
-      console.log(items);
+      this.loading = false;
       this.shopItems = items;
+
+      if(this.shopItems.length === 0){
+        this.isShopEmpty = true;
+      }
     });
   }
 
