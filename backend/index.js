@@ -36,7 +36,7 @@ app.get('/admin', (req, res) => {
 app.use('/admin', express.static('admin'))
 
 // SVG's for admin
-app.use('/assets/svg', express.static('admin/svg'))
+app.use('/assets/svg', express.static('admin/assets/svg'))
 
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
