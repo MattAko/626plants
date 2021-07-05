@@ -228,6 +228,132 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
 
 /***/ }),
 
+/***/ "6ffH":
+/*!*****************************************************************************************!*\
+  !*** ./projects/admin/src/app/manage/reservations/status-form/status-form.component.ts ***!
+  \*****************************************************************************************/
+/*! exports provided: StatusFormComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StatusFormComponent", function() { return StatusFormComponent; });
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _management_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../management.service */ "9Av2");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "ofXK");
+
+
+
+
+
+const _c0 = function (a0, a1, a2, a3, a4) { return { "bg-red-600": a0, "bg-yellow-300": a1, "bg-lightgreen": a2, "bg-blue-600": a3, "bg-black text-white": a4 }; };
+function StatusFormComponent_button_0_Template(rf, ctx) { if (rf & 1) {
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "button", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function StatusFormComponent_button_0_Template_button_click_0_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r3); const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r2.isFormEnabled = true; });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction5"](2, _c0, ctx_r0.statusCode === 0, ctx_r0.statusCode === 1, ctx_r0.statusCode === 2, ctx_r0.statusCode === 3, ctx_r0.statusCode === 10));
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", ctx_r0.status, "\n");
+} }
+function StatusFormComponent_form_1_Template(rf, ctx) { if (rf & 1) {
+    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "form", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("ngSubmit", function StatusFormComponent_form_1_Template_form_ngSubmit_0_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r5); const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r4.onSubmit(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "select", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "option", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](3, "Response Needed");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "option", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](5, "Replied");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](6, "option", 7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](7, "Confirmed Pickup");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](8, "option", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](9, "Complete");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](10, "button", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](11, "Apply");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](12, "button", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function StatusFormComponent_form_1_Template_button_click_12_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r5); const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r6.cancelReservation(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](13, "Cancel");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](14, "button", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function StatusFormComponent_form_1_Template_button_click_14_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r5); const ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r7.isFormEnabled = false; });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](15, "Close");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx_r1.form);
+} }
+class StatusFormComponent {
+    constructor(manage) {
+        this.manage = manage;
+        this.isFormEnabled = false;
+    }
+    ngOnInit() {
+        // Convert Status Code to readable string
+        switch (this.statusCode) {
+            case 0:
+                this.status = 'Response Needed';
+                break;
+            case 1:
+                this.status = 'Replied';
+                break;
+            case 2:
+                this.status = 'Confirmed Pickup';
+                break;
+            case 3:
+                this.status = 'Complete';
+                break;
+            case 10:
+                this.status = 'Cancelled';
+                break;
+            default:
+                this.status = 'Error';
+                break;
+        }
+        // Initialize FormGroup
+        this.initForm();
+    }
+    initForm() {
+        this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroup"]({
+            statusControl: new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](this.statusCode, [_angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required])
+        });
+    }
+    // If form is valid, update reservation status
+    onSubmit() {
+        if (this.form.valid) {
+            this.manage.updateReservation(this.reservationId, this.form.value.statusControl);
+        }
+    }
+    // Update reservation status to 10 (Status code for cancelled)
+    cancelReservation() {
+        this;
+        this.manage.updateReservation(this.reservationId, 10);
+    }
+}
+StatusFormComponent.ɵfac = function StatusFormComponent_Factory(t) { return new (t || StatusFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_management_service__WEBPACK_IMPORTED_MODULE_2__["ManagementService"])); };
+StatusFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: StatusFormComponent, selectors: [["app-status-form"]], inputs: { reservationId: ["id", "reservationId"], statusCode: ["status", "statusCode"] }, decls: 2, vars: 2, consts: [["type", "button", "class", "py-2 px-4 rounded", 3, "ngClass", "click", 4, "ngIf"], [3, "formGroup", "ngSubmit", 4, "ngIf"], ["type", "button", 1, "py-2", "px-4", "rounded", 3, "ngClass", "click"], [3, "formGroup", "ngSubmit"], ["name", "status", "id", "status", "formControlName", "statusControl", "required", "", 1, "mb-2"], ["value", "0"], ["value", "1"], ["value", "2"], ["value", "3"], ["type", "submit", 1, "py-2", "px-4", "mr-2", "my-2", "rounded", "bg-lightgreen"], ["type", "button", 1, "py-2", "px-4", "m-2", "rounded", "bg-red-600", 3, "click"], ["type", "button", 1, "py-2", "px-4", "mr-2", "my-2", "rounded", "bg-gray-400", 3, "click"]], template: function StatusFormComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, StatusFormComponent_button_0_Template, 2, 8, "button", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, StatusFormComponent_form_1_Template, 16, 1, "form", 1);
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", !ctx.isFormEnabled);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.isFormEnabled);
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgClass"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵangular_packages_forms_forms_z"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdGF0dXMtZm9ybS5jb21wb25lbnQuY3NzIn0= */"] });
+
+
+/***/ }),
+
 /***/ "9Av2":
 /*!*************************************************************!*\
   !*** ./projects/admin/src/app/manage/management.service.ts ***!
@@ -253,6 +379,7 @@ class ManagementService {
         this.authService = authService;
         this.shopChanged = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.shop = [];
+        this.reservationsChanged = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
     }
     upload(form) {
         console.log(form);
@@ -266,8 +393,7 @@ class ManagementService {
         formData.append('description', form.description);
         formData.append('quantity', form.quantity.toString());
         formData.append('date', form.postedDate.toString());
-        return this.http
-            .post('/api/admin/upload', formData, {
+        return this.http.post('/api/admin/upload', formData, {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]().set('Accept', 'application/json'),
         });
     }
@@ -330,6 +456,19 @@ class ManagementService {
             id: id,
             status: status,
         });
+    }
+    fetchReservations() {
+        return this.http
+            .get('/api/admin/pickups')
+            .subscribe((reservations) => {
+            this.reservations = reservations;
+            this.reservationsChanged.next(reservations);
+        });
+    }
+    updateReservation(reservationId, status) {
+        return this.http
+            .patch('/api/admin/pickups', { reservationId: reservationId, status: status })
+            .subscribe((response) => { });
     }
 }
 ManagementService.ɵfac = function ManagementService_Factory(t) { return new (t || ManagementService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"])); };
@@ -510,7 +649,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _manage_edit_edit_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./manage/edit/edit.component */ "cpF7");
 /* harmony import */ var _manage_manage_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./manage/manage.component */ "Xd0K");
 /* harmony import */ var _manage_orders_orders_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./manage/orders/orders.component */ "gH/j");
-/* harmony import */ var _manage_receipts_receipts_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./manage/receipts/receipts.component */ "R7Kw");
+/* harmony import */ var _manage_reservations_reservations_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./manage/reservations/reservations.component */ "O8o2");
 /* harmony import */ var _manage_upload_upload_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./manage/upload/upload.component */ "0ezW");
 /* harmony import */ var _manage_view_view_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./manage/view/view.component */ "DSib");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ "fXoL");
@@ -551,8 +690,8 @@ const appRoutes = [
                 component: _manage_orders_orders_component__WEBPACK_IMPORTED_MODULE_6__["OrdersComponent"]
             },
             {
-                path: 'receipts',
-                component: _manage_receipts_receipts_component__WEBPACK_IMPORTED_MODULE_7__["ReceiptsComponent"]
+                path: 'pickups',
+                component: _manage_reservations_reservations_component__WEBPACK_IMPORTED_MODULE_7__["ReservationsComponent"]
             },
             {
                 path: 'view',
@@ -603,22 +742,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _c0 = function (a0, a1) { return { "bg-gray-700 text-white": a0, "bg-lightgreen border-2 border-green": a1 }; };
-const _c1 = function (a0, a1) { return { "bg-red-400 border-red-700": a0, "bg-lightgreen border-green": a1 }; };
+const _c1 = function (a0, a1, a2) { return { "bg-red-400 border-red-700": a0, "bg-lightgreen border-green": a1, "bg-yellow-400 border-yellow-700": a2 }; };
 class ViewItemComponent {
     constructor(router) {
         this.router = router;
     }
     ngOnInit() {
+        if (this.item.status === 'oos' || this.item.sold) {
+            this.status = 'Out of Stock';
+        }
+        else if (this.item.status === 'reserved') {
+            this.status = 'Reserved';
+        }
+        else {
+            this.status = 'In Stock';
+        }
     }
     onEdit() {
         window.scroll(0, 0);
         this.router.navigate(['/manage/view', this.item.id, 'edit']);
     }
+    openLink() {
+        window.open(`https://626plants.com/shop/${this.item.id}`);
+    }
 }
 ViewItemComponent.ɵfac = function ViewItemComponent_Factory(t) { return new (t || ViewItemComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"])); };
-ViewItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ViewItemComponent, selectors: [["app-view-item"]], inputs: { item: "item" }, decls: 20, vars: 17, consts: [[1, "grid", "grid-cols-1", "lg:grid-cols-3", "flex-wrap", "lg:gap-10", "mt-10"], [1, "lg:w-72", "lg:h-72", "w-full", "h-80", "mb-5", "rounded", "object-cover", "cursor-pointer", "mx-auto", 3, "src"], [1, "text-left", "text-sm", "lg:w-72", "mx-10"], [1, "text-lg", "font-semibold"], [1, "px-5", "text-center", "py-2", "mb-2", 3, "ngClass"], [1, "px-5", "text-center", "py-2", "mb-5", "border-2", 3, "ngClass"], [1, "my-2"], [1, "text-center"], ["type", "button", 1, "mx-auto", "bg-lightgreen", "px-5", "py-3", "rounded", "my-5", 3, "click"]], template: function ViewItemComponent_Template(rf, ctx) { if (rf & 1) {
+ViewItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ViewItemComponent, selectors: [["app-view-item"]], inputs: { item: "item" }, decls: 20, vars: 18, consts: [[1, "grid", "grid-cols-1", "lg:grid-cols-3", "flex-wrap", "lg:gap-10", "mt-10"], [1, "lg:w-72", "lg:h-72", "w-full", "h-80", "mb-5", "rounded", "object-cover", "cursor-pointer", "mx-auto", 3, "src", "click"], [1, "text-left", "text-sm", "lg:w-72", "mx-10"], [1, "text-lg", "font-semibold"], [1, "px-5", "text-center", "py-2", "mb-2", 3, "ngClass"], [1, "px-5", "text-center", "py-2", "mb-5", "border-2", 3, "ngClass"], [1, "my-2"], [1, "text-center"], ["type", "button", 1, "mx-auto", "bg-lightgreen", "px-5", "py-3", "rounded", "my-5", 3, "click"]], template: function ViewItemComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "img", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "img", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ViewItemComponent_Template_img_click_1_listener() { return ctx.openLink(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "p", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
@@ -658,9 +811,9 @@ ViewItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.item.visible ? "Public" : "Hidden", " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction2"](14, _c1, ctx.item.sold, !ctx.item.sold));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction3"](14, _c1, ctx.status === "Out of Stock", ctx.status === "In Stock", ctx.status === "Reserved"));
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.item.sold ? "Sold" : "In stock", " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.status, " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("ID#: ", ctx.item.id, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
@@ -1085,6 +1238,60 @@ OrderItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefin
 
 /***/ }),
 
+/***/ "O8o2":
+/*!******************************************************************************!*\
+  !*** ./projects/admin/src/app/manage/reservations/reservations.component.ts ***!
+  \******************************************************************************/
+/*! exports provided: ReservationsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReservationsComponent", function() { return ReservationsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _management_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../management.service */ "9Av2");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _reservation_item_reservation_item_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reservation-item/reservation-item.component */ "zhMH");
+
+
+
+
+function ReservationsComponent_app_reservation_item_2_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-reservation-item", 3);
+} if (rf & 2) {
+    const res_r1 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("res", res_r1);
+} }
+class ReservationsComponent {
+    constructor(manage) {
+        this.manage = manage;
+    }
+    ngOnInit() {
+        this.manage.fetchReservations();
+        this.reservationSubscription = this.manage.reservationsChanged.subscribe((reservations => {
+            this.reservations = reservations;
+            console.log(this.reservations);
+        }));
+    }
+    ngOnDestroy() {
+        this.reservationSubscription.unsubscribe();
+    }
+}
+ReservationsComponent.ɵfac = function ReservationsComponent_Factory(t) { return new (t || ReservationsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_management_service__WEBPACK_IMPORTED_MODULE_1__["ManagementService"])); };
+ReservationsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ReservationsComponent, selectors: [["app-reservations"]], decls: 3, vars: 1, consts: [[1, "flex", "justify-center", "items-center"], [1, "flex", "flex-wrap", "md:justify-start", "max-w-screen-sm", "md:max-w-screen-md", "lg:max-w-screen-xl"], ["class", "mx-4 max-w-min my-4", 3, "res", 4, "ngFor", "ngForOf"], [1, "mx-4", "max-w-min", "my-4", 3, "res"]], template: function ReservationsComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, ReservationsComponent_app_reservation_item_2_Template, 1, 1, "app-reservation-item", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.reservations);
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], _reservation_item_reservation_item_component__WEBPACK_IMPORTED_MODULE_3__["ReservationItemComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZXNlcnZhdGlvbnMuY29tcG9uZW50LmNzcyJ9 */"] });
+
+
+/***/ }),
+
 /***/ "OW5t":
 /*!************************************!*\
   !*** ./projects/admin/src/main.ts ***!
@@ -1130,7 +1337,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./navbar/navbar.component */ "lVLu");
 /* harmony import */ var _manage_manage_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./manage/manage.component */ "Xd0K");
 /* harmony import */ var _manage_upload_upload_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./manage/upload/upload.component */ "0ezW");
-/* harmony import */ var _manage_receipts_receipts_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./manage/receipts/receipts.component */ "R7Kw");
+/* harmony import */ var _manage_reservations_reservations_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./manage/reservations/reservations.component */ "O8o2");
 /* harmony import */ var _manage_view_view_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./manage/view/view.component */ "DSib");
 /* harmony import */ var _manage_edit_edit_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./manage/edit/edit.component */ "cpF7");
 /* harmony import */ var _manage_edit_edit_start_edit_start_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./manage/edit/edit-start/edit-start.component */ "SRP3");
@@ -1143,7 +1350,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _manage_orders_order_item_order_item_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./manage/orders/order-item/order-item.component */ "O6je");
 /* harmony import */ var _manage_orders_order_form_order_form_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./manage/orders/order-form/order-form.component */ "KrAE");
 /* harmony import */ var _shared_DateTime_pipe__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./shared/DateTime.pipe */ "IaTx");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _manage_reservations_reservation_item_reservation_item_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./manage/reservations/reservation-item/reservation-item.component */ "zhMH");
+/* harmony import */ var _manage_reservations_status_form_status_form_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./manage/reservations/status-form/status-form.component */ "6ffH");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
 
 
 
@@ -1170,20 +1381,20 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_22__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]] });
-AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_22__["ɵɵdefineInjector"]({ providers: [{ provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HTTP_INTERCEPTORS"], useClass: _auth_auth_interceptor_service__WEBPACK_IMPORTED_MODULE_13__["AuthInterceptorService"], multi: true }], imports: [[
+AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_24__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]] });
+AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_24__["ɵɵdefineInjector"]({ providers: [{ provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HTTP_INTERCEPTORS"], useClass: _auth_auth_interceptor_service__WEBPACK_IMPORTED_MODULE_13__["AuthInterceptorService"], multi: true }], imports: [[
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClientModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"],
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_22__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_24__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
         _login_login_component__WEBPACK_IMPORTED_MODULE_5__["LoginComponent"],
         _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_6__["NavbarComponent"],
         _manage_manage_component__WEBPACK_IMPORTED_MODULE_7__["ManageComponent"],
         _manage_upload_upload_component__WEBPACK_IMPORTED_MODULE_8__["UploadComponent"],
-        _manage_receipts_receipts_component__WEBPACK_IMPORTED_MODULE_9__["ReceiptsComponent"],
+        _manage_reservations_reservations_component__WEBPACK_IMPORTED_MODULE_9__["ReservationsComponent"],
         _manage_view_view_component__WEBPACK_IMPORTED_MODULE_10__["ViewComponent"],
         _manage_edit_edit_component__WEBPACK_IMPORTED_MODULE_11__["EditComponent"],
         _manage_edit_edit_start_edit_start_component__WEBPACK_IMPORTED_MODULE_12__["EditStartComponent"],
@@ -1194,38 +1405,13 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_22__["ɵɵdefineInjecto
         _shared_toggle_button_toggle_button_component__WEBPACK_IMPORTED_MODULE_18__["ToggleButton"],
         _manage_orders_order_item_order_item_component__WEBPACK_IMPORTED_MODULE_19__["OrderItemComponent"],
         _manage_orders_order_form_order_form_component__WEBPACK_IMPORTED_MODULE_20__["OrderFormComponent"],
-        _shared_DateTime_pipe__WEBPACK_IMPORTED_MODULE_21__["DateTimeAdminPipe"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
+        _shared_DateTime_pipe__WEBPACK_IMPORTED_MODULE_21__["DateTimeAdminPipe"],
+        _manage_reservations_reservation_item_reservation_item_component__WEBPACK_IMPORTED_MODULE_22__["ReservationItemComponent"],
+        _manage_reservations_status_form_status_form_component__WEBPACK_IMPORTED_MODULE_23__["StatusFormComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"],
         _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClientModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"]] }); })();
-
-
-/***/ }),
-
-/***/ "R7Kw":
-/*!**********************************************************************!*\
-  !*** ./projects/admin/src/app/manage/receipts/receipts.component.ts ***!
-  \**********************************************************************/
-/*! exports provided: ReceiptsComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReceiptsComponent", function() { return ReceiptsComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-
-class ReceiptsComponent {
-    constructor() { }
-    ngOnInit() {
-    }
-}
-ReceiptsComponent.ɵfac = function ReceiptsComponent_Factory(t) { return new (t || ReceiptsComponent)(); };
-ReceiptsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ReceiptsComponent, selectors: [["app-receipts"]], decls: 2, vars: 0, template: function ReceiptsComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "receipts works!");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJyZWNlaXB0cy5jb21wb25lbnQuY3NzIn0= */"] });
 
 
 /***/ }),
@@ -1733,7 +1919,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _c0 = function () { return ["/manage/view"]; };
-const _c1 = function () { return ["/manage/receipts"]; };
+const _c1 = function () { return ["/manage/pickups"]; };
 const _c2 = function () { return ["/manage/upload"]; };
 const _c3 = function () { return ["/manage/orders"]; };
 class NavbarComponent {
@@ -1756,7 +1942,7 @@ NavbarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, " View ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "li", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, " Receipts ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, " Pickups ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "li", 3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, " Upload ");
@@ -1982,6 +2168,123 @@ CloseButtonComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } }, styles: ["#mdiv[_ngcontent-%COMP%] {\n  width: 30px;\n  height: 30px;\n  margin-left: 1px;\n  cursor: pointer;\n}\n\n.mdiv[_ngcontent-%COMP%] {\n  height: 30px;\n  width: 2px;\n  margin-left: 12px;\n  background-color: black;\n  transform: rotate(45deg);\n  Z-index: 1;\n}\n\n.md[_ngcontent-%COMP%] {\n  height: 30px;\n  width: 2px;\n  background-color: black;\n  transform: rotate(90deg);\n  Z-index: 2;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNsb3NlLWJ1dHRvbi5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsV0FBVztFQUNYLFlBQVk7RUFDWixnQkFBZ0I7RUFDaEIsZUFBZTtBQUNqQjs7QUFFQTtFQUNFLFlBQVk7RUFDWixVQUFVO0VBQ1YsaUJBQWlCO0VBQ2pCLHVCQUF1QjtFQUN2Qix3QkFBd0I7RUFDeEIsVUFBVTtBQUNaOztBQUVBO0VBQ0UsWUFBWTtFQUNaLFVBQVU7RUFDVix1QkFBdUI7RUFDdkIsd0JBQXdCO0VBQ3hCLFVBQVU7QUFDWiIsImZpbGUiOiJjbG9zZS1idXR0b24uY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIiNtZGl2IHtcclxuICB3aWR0aDogMzBweDtcclxuICBoZWlnaHQ6IDMwcHg7XHJcbiAgbWFyZ2luLWxlZnQ6IDFweDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbi5tZGl2IHtcclxuICBoZWlnaHQ6IDMwcHg7XHJcbiAgd2lkdGg6IDJweDtcclxuICBtYXJnaW4tbGVmdDogMTJweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiBibGFjaztcclxuICB0cmFuc2Zvcm06IHJvdGF0ZSg0NWRlZyk7XHJcbiAgWi1pbmRleDogMTtcclxufVxyXG5cclxuLm1kIHtcclxuICBoZWlnaHQ6IDMwcHg7XHJcbiAgd2lkdGg6IDJweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiBibGFjaztcclxuICB0cmFuc2Zvcm06IHJvdGF0ZSg5MGRlZyk7XHJcbiAgWi1pbmRleDogMjtcclxufVxyXG4iXX0= */"] });
+
+
+/***/ }),
+
+/***/ "zhMH":
+/*!***************************************************************************************************!*\
+  !*** ./projects/admin/src/app/manage/reservations/reservation-item/reservation-item.component.ts ***!
+  \***************************************************************************************************/
+/*! exports provided: ReservationItemComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReservationItemComponent", function() { return ReservationItemComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _status_form_status_form_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../status-form/status-form.component */ "6ffH");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _shared_DateTime_pipe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../shared/DateTime.pipe */ "IaTx");
+
+
+
+
+function ReservationItemComponent_p_27_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const product_r1 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](product_r1);
+} }
+class ReservationItemComponent {
+    constructor() { }
+    ngOnInit() {
+    }
+}
+ReservationItemComponent.ɵfac = function ReservationItemComponent_Factory(t) { return new (t || ReservationItemComponent)(); };
+ReservationItemComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ReservationItemComponent, selectors: [["app-reservation-item"]], inputs: { reservation: ["res", "reservation"] }, decls: 39, vars: 11, consts: [[1, "border-gray-800", "border", "rounded-md", "flex", "flex-wrap", "p-4", "font-semibold", "w-72"], [1, "w-full"], [1, "flex", "my-2"], ["src", "assets/svg/user-solid.svg"], ["src", "assets/svg/at-logo.svg"], [1, "break-all"], [1, "my-4", "mr-8", "w-full"], [3, "id", "status"], [1, "my-4", "mr-8"], [1, "uppercase"], [4, "ngFor", "ngForOf"]], template: function ReservationItemComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "img", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "img", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "p", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](12, "Status");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](13, "app-status-form", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16, "Phone Number");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "p", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](21, "Message");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](23);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](26, "Products");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](27, ReservationItemComponent_p_27_Template, 2, 1, "p", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](30, "Reservation Date");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](31, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](32);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](33, "datetime");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](36, "Reservation ID");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.reservation.name);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.reservation.email);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("id", ctx.reservation.reservationId)("status", ctx.reservation.status);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.reservation.phone);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.reservation.dates);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.reservation.products);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](33, 9, ctx.reservation.reservation_date));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.reservation.reservationId);
+    } }, directives: [_status_form_status_form_component__WEBPACK_IMPORTED_MODULE_1__["StatusFormComponent"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"]], pipes: [_shared_DateTime_pipe__WEBPACK_IMPORTED_MODULE_3__["DateTimeAdminPipe"]], styles: ["img[_ngcontent-%COMP%]{\n  height:20px;\n  width: 20px;\n  margin-right: 0.5rem;\n  margin-top: 0.25rem;\n}\n\nh2[_ngcontent-%COMP%]{\n  width: 100%;\n  color: #9CA3AF;\n}\n\nh3[_ngcontent-%COMP%]{\n  color: #9CA3AF;\n}\n\nhr[_ngcontent-%COMP%]{\n  width: 100%;\n  height: 2px;\n  background-color: darkgray;\n  margin: 1rem 0;\n}\n\nbutton[_ngcontent-%COMP%]{\n  color: #9CA3AF;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInJlc2VydmF0aW9uLWl0ZW0uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQVc7RUFDWCxXQUFXO0VBQ1gsb0JBQW9CO0VBQ3BCLG1CQUFtQjtBQUN2Qjs7QUFFQTtFQUNJLFdBQVc7RUFDWCxjQUFjO0FBQ2xCOztBQUVBO0VBQ0ksY0FBYztBQUNsQjs7QUFFQTtFQUNJLFdBQVc7RUFDWCxXQUFXO0VBQ1gsMEJBQTBCO0VBQzFCLGNBQWM7QUFDbEI7O0FBRUE7RUFDSSxjQUFjO0FBQ2xCIiwiZmlsZSI6InJlc2VydmF0aW9uLWl0ZW0uY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbImltZ3tcclxuICAgIGhlaWdodDoyMHB4O1xyXG4gICAgd2lkdGg6IDIwcHg7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDAuNXJlbTtcclxuICAgIG1hcmdpbi10b3A6IDAuMjVyZW07XHJcbn1cclxuXHJcbmgye1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBjb2xvcjogIzlDQTNBRjtcclxufVxyXG5cclxuaDN7XHJcbiAgICBjb2xvcjogIzlDQTNBRjtcclxufVxyXG5cclxuaHJ7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGhlaWdodDogMnB4O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogZGFya2dyYXk7XHJcbiAgICBtYXJnaW46IDFyZW0gMDtcclxufVxyXG5cclxuYnV0dG9ue1xyXG4gICAgY29sb3I6ICM5Q0EzQUY7XHJcbn1cclxuXHJcbiJdfQ== */"] });
 
 
 /***/ }),
