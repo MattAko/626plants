@@ -8,7 +8,7 @@ import { ManageComponent } from './manage/manage.component';
 import { OrdersComponent } from './manage/orders/orders.component';
 import { ReservationsComponent } from './manage/reservations/reservations.component';
 import { UploadComponent } from './manage/upload/upload.component';
-import { ViewComponent } from './manage/view/view.component';
+import { ShopComponent } from './manage/shop/shop.component';
 
 const appRoutes: Routes = [
   {
@@ -24,7 +24,7 @@ const appRoutes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'view'
+        redirectTo: 'shop'
       },
       {
         path: 'upload',
@@ -39,8 +39,8 @@ const appRoutes: Routes = [
         component: ReservationsComponent
       },
       {
-        path: 'view',
-        component: ViewComponent,
+        path: 'shop',
+        component: ShopComponent,
         children: [
           {
             path: '',

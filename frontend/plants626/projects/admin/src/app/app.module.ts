@@ -10,11 +10,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ManageComponent } from './manage/manage.component';
 import { UploadComponent } from './manage/upload/upload.component';
 import { ReservationsComponent } from './manage/reservations/reservations.component';
-import { ViewComponent } from './manage/view/view.component';
+import { ShopComponent } from './manage/shop/shop.component';
 import { EditComponent } from './manage/edit/edit.component';
 import { EditStartComponent } from './manage/edit/edit-start/edit-start.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { ViewItemComponent } from './manage/view/view-item/view-item.component';
+import { ShopItemComponent } from './manage/shop/shop-item/shop-item.component';
 import { CloseButtonComponent } from './shared/close-button/close-button.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 import { OrdersComponent } from './manage/orders/orders.component';
@@ -33,10 +33,10 @@ import { StatusFormComponent } from './manage/reservations/status-form/status-fo
     ManageComponent,
     UploadComponent,
     ReservationsComponent,
-    ViewComponent,
+    ShopComponent,
     EditComponent,
     EditStartComponent,
-    ViewItemComponent,
+    ShopItemComponent,
     CloseButtonComponent,
     MobileNavComponent,
     OrdersComponent,

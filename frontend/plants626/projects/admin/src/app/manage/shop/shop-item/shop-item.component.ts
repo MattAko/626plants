@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { AdminProduct } from '../../../shared/admin-product.model';
 
 @Component({
-  selector: 'app-view-item',
-  templateUrl: './view-item.component.html',
-  styleUrls: ['./view-item.component.css']
+  selector: 'app-shop-item',
+  templateUrl: './shop-item.component.html',
+  styleUrls: ['./shop-item.component.css']
 })
-export class ViewItemComponent implements OnInit {
+export class ShopItemComponent implements OnInit {
   @Input('item') item: AdminProduct;
   status: string;
 
