@@ -50,7 +50,7 @@ export class UploadComponent implements OnInit {
       date
     );
     this.manage.upload(uploadForm).subscribe((repsonse) => {
-      this.router.navigate(['/manage/view']);
+      this.router.navigate(['/manage/shop']);
     });
   }
 }

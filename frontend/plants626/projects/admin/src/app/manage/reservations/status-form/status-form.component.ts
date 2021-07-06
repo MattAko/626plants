@@ -57,12 +57,16 @@ export class StatusFormComponent implements OnInit {
     if(this.form.valid){
       this.manage.updateReservation(this.reservationId, this.form.value.statusControl);
     }
+    this.isFormEnabled = false;
   }
 
   // Update reservation status to 10 (Status code for cancelled)
   cancelReservation(){
-    this
+    // Update Reservation
     this.manage.updateReservation(this.reservationId, 10)
+
+    // Close form
+    this.isFormEnabled = false;
   }
 
 }
