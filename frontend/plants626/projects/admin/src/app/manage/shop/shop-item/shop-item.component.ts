@@ -27,7 +27,7 @@ export class ShopItemComponent implements OnInit {
 
   onEdit(){
     window.scroll(0,0)
-    this.router.navigate(['/manage/view', this.item.id, 'edit'])
+    this.router.navigate(['/manage/shop', this.item.id, 'edit'])
   }
 
   openLink(){
