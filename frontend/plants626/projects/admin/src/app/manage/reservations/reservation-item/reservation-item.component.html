@@ -40,7 +40,7 @@
 
   <div class="my-4 mr-8">
     <h3>Products</h3>
-    <p *ngFor="let product of reservation.products">{{ product }}</p>
+    <p *ngFor="let product of reservation.products"><a [href]="'https://626plants.com/shop/' + product">{{ product }} </a></p>
   </div>
 
   <div class="my-4 mr-8">

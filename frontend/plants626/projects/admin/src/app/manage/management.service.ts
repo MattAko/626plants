@@ -115,6 +115,8 @@ export class ManagementService {
     }
     return this.http
       .patch<patchResponse>('/api/admin/pickups', {reservationId: reservationId, status: status})
-      .subscribe((response) => {});
+      .subscribe((response) => {
+        this.fetchReservations();
+      });
   } 
 }
