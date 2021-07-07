@@ -109,7 +109,7 @@ ConfirmationComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](50, " We will send you the tracking number for your order within the next few days. ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "p", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](52, " Have a question? Feel free to send us an email at matthew@626plants.com or message us on either Instagram or Facebook! ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](52, " Have a question? Feel free to send us an email at fe@626plants.com or message us on either Instagram or Facebook! ");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2325,7 +2325,7 @@ class FooterComponent {
     }
 }
 FooterComponent.ɵfac = function FooterComponent_Factory(t) { return new (t || FooterComponent)(); };
-FooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: FooterComponent, selectors: [["app-footer"]], decls: 32, vars: 8, consts: [[1, "bg-gray-200", "text-black", "py-20"], [1, "lg:mx-20", "mx-5", "py-5", "grid", "grid-cols-2", "md:grid-cols-3", "lg:grid-cols-4", "content-left", "gap-10"], [1, "font-bold", "text-3xl", "md:text-4xl"], [1, "mb-5"], [1, "font-semibold", "text-xl", "mb-5"], ["href", "https://www.facebook.com/626succulents", "target", "_blank"], ["src", "/assets/img/facebook-logo.svg", 1, "fill-black", "inline-block", "px-1"], ["href", "https://www.instagram.com/626plants/", "target", "_blank"], ["src", "assets/img/instagram-logo.svg", 1, "fill-black", "inline-block", "px-1"], [1, "cursor-pointer", "py-1", 3, "routerLink"], [1, "cursor-pointer", "py-1"], ["href", "https://626plants.com/admin", "target", "_blank"], ["src", "assets/img/paypal.png", 1, "w-60"], [1, "mt-10", "text-center"]], template: function FooterComponent_Template(rf, ctx) { if (rf & 1) {
+FooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: FooterComponent, selectors: [["app-footer"]], decls: 36, vars: 8, consts: [[1, "bg-gray-200", "text-black", "py-20"], [1, "lg:mx-20", "mx-5", "py-5", "grid", "grid-cols-2", "md:grid-cols-3", "lg:grid-cols-4", "content-left", "gap-10"], [1, "font-bold", "text-3xl", "md:text-4xl"], [1, "mb-5"], [1, "font-semibold", "text-xl", "mb-5"], ["href", "https://www.facebook.com/626succulents", "target", "_blank"], ["src", "/assets/img/facebook-logo.svg", 1, "fill-black", "inline-block", "px-1"], ["href", "https://www.instagram.com/626plants/", "target", "_blank"], ["src", "assets/img/instagram-logo.svg", 1, "fill-black", "inline-block", "px-1"], [1, "cursor-pointer", "py-1", 3, "routerLink"], [1, "cursor-pointer", "py-1"], ["href", "https://626plants.com/admin", "target", "_blank"], ["href", "https://github.com/MattAko/626plants", "target", "_blank"], ["src", "assets/img/github.svg", 1, "fill-black", "inline-block", "px-1"], ["src", "assets/img/paypal.png", 1, "w-60"], [1, "mt-10", "text-center"]], template: function FooterComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div");
@@ -2368,13 +2368,19 @@ FooterComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](27, "Admin");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "li", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "a", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](30, " GitHub ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](31, "img", 13);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "div");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](29, "img", 12);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "p", 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "\u00A92021 626Plants. All rights reserved.");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "div");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](33, "img", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "p", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](35, "\u00A92021 626Plants. All rights reserved.");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
