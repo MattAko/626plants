@@ -46,8 +46,15 @@ app.use('/assets/svg', express.static('admin/assets/svg'))
 // ░░░░█░░░░████░███░███░███░███░░░░░░
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
+/**
+ * Hero banner for email purposes
+ */
+app.use('/static/img', express.static('static/img'))
+
+
 // Static files for /
 app.use(express.static('public'))
+
 
 // Assets used by public page
 app.use('/assets', express.static('public/assets'))
@@ -56,8 +63,6 @@ app.use('/assets', express.static('public/assets'))
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html')
 })
-
-
 
 
 //ASCII pages made from fsymbols.com/draw
