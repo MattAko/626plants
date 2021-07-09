@@ -1,5 +1,5 @@
 <a href="https://626plants.com"><p align="center">
-<img height=100 src="https://626plants.com/static/img/banner.png"/>
+<img height=250 src="https://626plants.com/static/img/banner.png"/>
 
 </p></a>
 
